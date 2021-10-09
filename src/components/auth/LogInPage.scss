@@ -1,0 +1,51 @@
+:root {
+  --blue: #00b5ff;
+}
+.welcomePage {
+  height: 100vh;
+  .logoCon {
+    margin-top: 45px;
+    img {
+      width: 55px;
+      height: 55px;
+      margin-right: 10px;
+    }
+    h1 {
+      font-size: 30px;
+      color: var(--blue);
+      margin-left: 10px;
+    }
+  }
+  p {
+    font-size: 17px;
+    color: var(--blue);
+    width: 280px;
+    margin-top: 30px;
+    span {
+      font-size: 40px;
+      font-family: fangsong;
+    }
+  }
+}
+.quoteCon {
+  font-size: 25px !important;
+}
+.logInBtnCon {
+  button {
+    width: 268px;
+    height: 50px;
+    background: var(--blue);
+    border-radius: 25px;
+    color: white;
+    font-size: 25px;
+    margin-top: 45px;
+    box-shadow: 0px 0px 15px 2px var(--blue),
+      0px 0px 8px 0px rgb(0 191 255 / 0%);
+  }
+}
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
