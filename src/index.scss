@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+  --sky-blue: #00b5ff;
+  --white: #ffffff;
+  --gray: #cfcfcf;
+  --blue: #00c4ff;
+  --black: #000000;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -8,7 +15,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: black;
+  background: var(--black);
   font-family: monospace;
   height: 100%;
 }
@@ -18,9 +25,9 @@ code {
     monospace;
 }
 .borderCon {
-  border: 8px solid #00b5ff;
+  border: 8px solid var(--sky-blue);
   height: 100vh;
-  box-shadow: inset 0px 0px 30px 2px #00b5ff,
+  box-shadow: inset 0px 0px 30px 2px var(--sky-blue),
     0px 0px 8px 0px rgb(0 191 255 / 0%);
   width: 100vw;
   position: fixed;
@@ -29,7 +36,7 @@ code {
   pointer-events: none;
 }
 .borderCon::before {
-  border: 8px solid #00b5ff;
+  border: 8px solid var(--sky-blue);
   height: 100vh;
   width: 100vw;
   position: fixed;

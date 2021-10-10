@@ -1,5 +1,6 @@
 {
   "name": "quizapp",
+  "homepage": "https://b1ink0.github.io/Quiz-Time/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,6 +18,8 @@
   },
   "scripts": {
     "start": "craco start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"

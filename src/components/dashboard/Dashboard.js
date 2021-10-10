@@ -121,7 +121,7 @@ export default function Dashboard() {
   }, [profileExist]);
   useEffect(() => {
     let com;
-    if (quizShareName != "") {
+    if (quizShareName !== "") {
       if (currentUser) {
         com = database.quizs
           .doc(quizShareName)
@@ -143,7 +143,7 @@ export default function Dashboard() {
   }, [quizShareAnswerName]);
   useEffect(() => {
     let com;
-    if (quizShareResultName != "") {
+    if (quizShareResultName !== "") {
       if (currentUser) {
         com = database.results
           .doc(quizShareResultName)
@@ -152,11 +152,11 @@ export default function Dashboard() {
             if (doc.exists) {
               if (doc.data()) {
                 if (
-                  doc.data().quizResultContainer.submissions[0] != undefined
+                  doc.data().quizResultContainer.submissions[0] !== undefined
                 ) {
                   let condition = false;
                   doc.data().quizResultContainer.submissions.forEach((r) => {
-                    if (r.uid == currentUser.uid) {
+                    if (r.uid === currentUser.uid) {
                       condition = true;
                       setUserScore(r.userScore);
                       setTotalScore(r.totalScore);
