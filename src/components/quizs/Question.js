@@ -6,6 +6,7 @@ import "./Quiz.scss";
 export default function Question({ quiz }) {
   const { tempAnswer, setTempAnswer, setQuizComplete } = useStateContext();
   const [loading, setLoading] = useState(false);
+  const [submitBtnOn, setSubmitBtnOn] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [quizLength, setQuizLength] = useState(0);
   let arr = tempAnswer;
@@ -36,9 +37,72 @@ export default function Question({ quiz }) {
           solved: true,
         };
         arr[a.qNo - 1] = temp;
+        let inputSelect = document.querySelector(
+          `.${e.target.value}${e.target.name}`
+        );
+        let tempArr = ["a", "b", "c", "d"];
+        tempArr.forEach((r) => {
+          if (r === e.target.value) {
+            if (inputSelect.classList[6] === undefined) {
+              inputSelect.classList.toggle("radioBtnSelected");
+              console.log(e.target.value, e.target.name);
+            }
+          } else {
+            console.log(r);
+            if (
+              document.querySelector(`.${r}${e.target.name}`).classList[6] ===
+              "radioBtnSelected"
+            ) {
+              document
+                .querySelector(`.${r}${e.target.name}`)
+                .classList.toggle("radioBtnSelected");
+            }
+          }
+        });
       }
     });
+    handleUpdateSubmitBtn();
   };
+  const handleUpdateSubmitBtn = () => {
+    let solved = 0;
+    arr.forEach((q) => {
+      if (q.solved) {
+        solved++;
+      }
+    });
+    if (solved === quiz.length) {
+      console.log("completed");
+      setSubmitBtnOn(true);
+    }
+  };
+  const handleSelected = (e, condition) => {
+    if (!condition) {
+      console.log(e);
+      if (arr[e].answer !== "") {
+        try {
+          let temp = arr[e].answer + (parseInt(e) + 1);
+          setTimeout(() => {
+            document.getElementById(temp).classList.toggle("radioBtnSelected");
+          }, 100);
+        } catch {
+          console.log("not active");
+        }
+      }
+    } else if (condition) {
+      if (arr[e - 2].answer !== "") {
+        try {
+          console.log(`.${arr[e - 2].answer}${parseInt(e) - 1}`);
+          let temp = arr[e - 2].answer + (e - 1);
+          setTimeout(() => {
+            document.getElementById(temp).classList.toggle("radioBtnSelected");
+          }, 100);
+        } catch {
+          console.log("not active");
+        }
+      }
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let solved = 0;
@@ -48,20 +112,23 @@ export default function Question({ quiz }) {
       }
     });
     if (solved === quiz.length) {
+      setSubmitBtnOn(true);
       console.log("submited");
       setTempAnswer(arr);
       setQuizComplete(true);
     }
   };
-  const handlePrevBtn = () => {
+  const handlePrevBtn = (e) => {
     if (currentQ > 0) {
       setCurrentQ(currentQ - 1);
     }
+    handleSelected(parseInt(e.target.value), true);
   };
-  const handleNextBtn = () => {
+  const handleNextBtn = (e) => {
     if (currentQ < quizLength) {
       setCurrentQ(currentQ + 1);
     }
+    handleSelected(parseInt(e.target.value), false);
   };
   return (
     <>
@@ -75,49 +142,61 @@ export default function Question({ quiz }) {
           </div>
           <div className="options w-full">
             <div className="optionsRow1 flex justify-evenly items-center">
-              <div className="radioBtnCon relative flex justify-center items-center">
+              <div
+                className={`radioBtnCon relative flex justify-center items-center a${quiz[currentQ].qNo}`}
+                id={`a${quiz[currentQ].qNo}`}
+              >
                 <label>{quiz[currentQ].a}</label>
                 <input
                   className="absolute"
                   type="radio"
                   value="a"
                   name={quiz[currentQ].qNo}
-                  onChange={(e) => handleSelection(e)}
+                  onClick={(e) => handleSelection(e)}
                   required
                 />
               </div>
-              <div className="radioBtnCon relative flex justify-center items-center">
+              <div
+                className={`radioBtnCon relative flex justify-center items-center b${quiz[currentQ].qNo}`}
+                id={`b${quiz[currentQ].qNo}`}
+              >
                 <label>{quiz[currentQ].b}</label>
                 <input
                   className="absolute"
                   type="radio"
                   value="b"
                   name={quiz[currentQ].qNo}
-                  onChange={(e) => handleSelection(e)}
+                  onClick={(e) => handleSelection(e)}
                   required
                 />
               </div>
             </div>
             <div className="optionsRow2 flex justify-evenly items-center">
-              <div className="radioBtnCon relative flex justify-center items-center">
+              <div
+                className={`radioBtnCon relative flex justify-center items-center c${quiz[currentQ].qNo}`}
+                id={`c${quiz[currentQ].qNo}`}
+              >
                 <label>{quiz[currentQ].c}</label>
                 <input
                   className="absolute"
                   type="radio"
                   value="c"
                   name={quiz[currentQ].qNo}
-                  onChange={(e) => handleSelection(e)}
+                  onClick={(e) => handleSelection(e)}
                   required
                 />
               </div>
-              <div className="radioBtnCon relative flex justify-center items-center">
+              <div
+                className={`radioBtnCon relative flex justify-center items-center d${quiz[currentQ].qNo}`}
+                id={`d${quiz[currentQ].qNo}`}
+              >
                 <label>{quiz[currentQ].d}</label>
                 <input
                   className="absolute"
                   type="radio"
                   value="d"
                   name={quiz[currentQ].qNo}
-                  onChange={(e) => handleSelection(e)}
+                  onClick={(e) => handleSelection(e)}
                   required
                 />
               </div>
@@ -130,7 +209,8 @@ export default function Question({ quiz }) {
               <button
                 className="prevBtn"
                 type="button"
-                onClick={() => handlePrevBtn()}
+                value={quiz[currentQ].qNo}
+                onClick={(e) => handlePrevBtn(e)}
               >
                 Prev
               </button>
@@ -141,14 +221,19 @@ export default function Question({ quiz }) {
               <button
                 className="nextBtn"
                 type="button"
-                onClick={() => handleNextBtn()}
+                value={quiz[currentQ].qNo}
+                onClick={(e) => handleNextBtn(e)}
               >
                 Next
               </button>
             )}
           </div>
         </div>
-        <button className="submitCon" type="submit">
+        <button
+          className={`submitCon ${submitBtnOn && "opacitySubmitBtn"}`}
+          disabled={!submitBtnOn}
+          type="submit"
+        >
           Submit
         </button>
       </form>

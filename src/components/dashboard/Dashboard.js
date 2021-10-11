@@ -230,9 +230,11 @@ export default function Dashboard() {
         <img src={logo} alt="logo" />
         <h1>Quiz Time</h1>
       </div>
-      <div className="subTitle">
-        <h1>Avilable Quizes</h1>
-      </div>
+      {displayQuiz && (
+        <div className="subTitle">
+          <h1>Avilable Quizes</h1>
+        </div>
+      )}
       {!profileExist ? (
         <form
           onSubmit={(e) => handleSubmit(e)}
