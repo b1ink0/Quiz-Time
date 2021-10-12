@@ -45,10 +45,8 @@ export default function Question({ quiz }) {
           if (r === e.target.value) {
             if (inputSelect.classList[6] === undefined) {
               inputSelect.classList.toggle("radioBtnSelected");
-              console.log(e.target.value, e.target.name);
             }
           } else {
-            console.log(r);
             if (
               document.querySelector(`.${r}${e.target.name}`).classList[6] ===
               "radioBtnSelected"
@@ -71,7 +69,6 @@ export default function Question({ quiz }) {
       }
     });
     if (solved === quiz.length) {
-      console.log("completed");
       setSubmitBtnOn(true);
     }
   };
@@ -137,6 +134,13 @@ export default function Question({ quiz }) {
         className="qForm relative flex justify-center items-center w-full flex-col text-center"
       >
         <div className="queCon flex justify-center items-center flex-col overflow-hidden">
+          <div className="queTopCon flex justify-between items-center w-full">
+            <h1>Q-{quiz[currentQ].qNo}</h1>
+            <h1>
+              {currentQ + 1}/{quiz.length}
+            </h1>
+          </div>
+
           <div className="qCon">
             <h1>{quiz[currentQ].q}</h1>
           </div>

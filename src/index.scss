@@ -7,7 +7,7 @@
   --gray: #cfcfcf;
   --blue: #00c4ff;
   --black: #000000;
-  --green: #00ff00;
+  --green: #00cc00;
 }
 body {
   margin: 0;
@@ -19,6 +19,7 @@ body {
   background: var(--black);
   font-family: monospace;
   height: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 code {
@@ -26,6 +27,7 @@ code {
     monospace;
 }
 .borderCon {
+  opacity: 0;
   border: 8px solid var(--sky-blue);
   height: 100vh;
   box-shadow: inset 0px 0px 30px 2px var(--sky-blue),
@@ -35,8 +37,10 @@ code {
   top: 0;
   left: 0;
   pointer-events: none;
+  animation: fadeInBorder 0.5s ease forwards;
 }
 .borderCon::before {
+  opacity: 0;
   border: 8px solid var(--sky-blue);
   height: 100vh;
   width: 100vw;
@@ -46,4 +50,13 @@ code {
   pointer-events: none;
   content: "";
   border-radius: 20px;
+  animation: fadeInBorder 0.5s 0.2s ease forwards;
+}
+@keyframes fadeInBorder {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
