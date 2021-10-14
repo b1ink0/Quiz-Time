@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Quiz-Time/static/css/main.f4a96466.chunk.css",
-    "main.js": "/Quiz-Time/static/js/main.373cda1c.chunk.js",
-    "main.js.map": "/Quiz-Time/static/js/main.373cda1c.chunk.js.map",
+    "main.css": "/Quiz-Time/static/css/main.c45fb777.chunk.css",
+    "main.js": "/Quiz-Time/static/js/main.6325a944.chunk.js",
+    "main.js.map": "/Quiz-Time/static/js/main.6325a944.chunk.js.map",
     "runtime-main.js": "/Quiz-Time/static/js/runtime-main.d88b48ba.js",
     "runtime-main.js.map": "/Quiz-Time/static/js/runtime-main.d88b48ba.js.map",
     "static/js/2.133d57a7.chunk.js": "/Quiz-Time/static/js/2.133d57a7.chunk.js",
     "static/js/2.133d57a7.chunk.js.map": "/Quiz-Time/static/js/2.133d57a7.chunk.js.map",
     "index.html": "/Quiz-Time/index.html",
-    "static/css/main.f4a96466.chunk.css.map": "/Quiz-Time/static/css/main.f4a96466.chunk.css.map",
+    "static/css/main.c45fb777.chunk.css.map": "/Quiz-Time/static/css/main.c45fb777.chunk.css.map",
     "static/js/2.133d57a7.chunk.js.LICENSE.txt": "/Quiz-Time/static/js/2.133d57a7.chunk.js.LICENSE.txt",
     "static/media/logoT.72657f0b.svg": "/Quiz-Time/static/media/logoT.72657f0b.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.d88b48ba.js",
     "static/js/2.133d57a7.chunk.js",
-    "static/css/main.f4a96466.chunk.css",
-    "static/js/main.373cda1c.chunk.js"
+    "static/css/main.c45fb777.chunk.css",
+    "static/js/main.6325a944.chunk.js"
   ]
 }
