@@ -36,17 +36,17 @@
   }
 }
 .logoCon {
-  margin-top: 45px;
+  margin-top: 25px;
   opacity: 0;
   transform: translate(0, 10px);
   animation: fadeInOpacity 0.5s 0s ease forwards;
   img {
-    width: 55px;
-    height: 55px;
+    width: 40px;
+    height: 40px;
     margin-right: 10px;
   }
   h1 {
-    font-size: 30px;
+    font-size: 23px;
     color: var(--blue);
     margin-left: 10px;
     text-shadow: 0 0 5px var(--blue), 2px 2px 2px rgb(206 89 55 / 0%);
@@ -93,7 +93,8 @@
 }
 
 .quizCon,
-.queCon {
+.queCon,
+.preBack {
   opacity: 0;
   transform: translate(0, 10px);
   animation: fadeInOpacity 0.5s 0s ease forwards;
@@ -130,7 +131,8 @@
 }
 .submitCon,
 .prevBtn,
-.nextBtn {
+.nextBtn,
+.preBack button {
   width: 150px;
   height: 40px;
   background: var(--blue);
@@ -148,4 +150,71 @@
   border-radius: 25px;
   margin-top: 5px;
   margin-bottom: 10px;
+}
+
+.back {
+  top: 22.5px;
+  left: 25px;
+  width: 40px;
+  height: 40px;
+  img {
+    filter: invert(1);
+  }
+}
+.preBackCon {
+  height: 100vh;
+  position: fixed;
+  background: #000000d1;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  text-align: center;
+  animation: fadeInAlert 0.3s ease forwards;
+  .preBack {
+    background: black;
+    padding: 20px 10px 10px 10px;
+    button {
+      width: 100px;
+      height: 35px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    button:nth-child(2) {
+      background-color: var(--red);
+      box-shadow: 0px 0px 7px 2px var(--red),
+        0px 0px 8px 0px rgb(0 191 255 / 0%);
+    }
+  }
+}
+@keyframes fadeInAlert {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fadeOut {
+  animation: fadeOutAlert 0.4s ease forwards;
+}
+.fadeOut2 {
+  animation: fadeOutAlert2 0.4s ease forwards;
+}
+@keyframes fadeOutAlert {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 10px);
+  }
+}
+@keyframes fadeOutAlert2 {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

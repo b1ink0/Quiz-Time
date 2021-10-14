@@ -13,6 +13,8 @@ export default function Dashboard() {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [update, setUpdate] = useState(false);
+  const [alert, setAlert] = useState(false);
   const { currentUser, logOut } = useAuth("");
   const {
     setLogInCheck,
@@ -224,12 +226,51 @@ export default function Dashboard() {
       setDisplayQuiz(false);
     }
   };
+  const handleBackAlert = () => {
+    setAlert(true);
+  };
+  const handleBackSmooth = () => {
+    document.querySelector(".preBack").classList.toggle("fadeOut");
+    document.querySelector(".preBackCon").classList.toggle("fadeOut2");
+    setTimeout(() => {
+      setAlert(false);
+    }, 410);
+  };
+  const handleBack = () => {
+    handleBackSmooth();
+    setTimeout(() => {
+      setUpdate(!update);
+    }, 410);
+  };
+  useEffect(() => {
+    setDisplayQuiz(true);
+  }, [update, setUpdate]);
   return (
     <>
       <div className="logoCon flex justify-center items-center">
         <img src={logo} alt="logo" />
         <h1>Quiz Time</h1>
       </div>
+      {!displayQuiz && (
+        <div
+          className="back absolute flex justify-center items-center"
+          onClick={() => setAlert(true)}
+        >
+          <img src="https://img.icons8.com/ios-filled/50/000000/left.png" />
+        </div>
+      )}
+      {alert && (
+        <div className="preBackCon w-full flex justify-center items-center">
+          <div className="preBack flex justify-center items-center flex-col">
+            <h1>If you go back your progress will be lost!</h1>
+            <h1>Do you still want to go back ?</h1>
+            <div className="w-full flex justify-evenly items-center">
+              <button onClick={() => handleBackSmooth()}>No</button>
+              <button onClick={() => handleBack()}>Yes</button>
+            </div>
+          </div>
+        </div>
+      )}
       {displayQuiz && (
         <div className="subTitle">
           <h1>Avilable Quizes</h1>
