@@ -15,6 +15,8 @@ export default function Dashboard() {
   const [email, setEmail] = useState("");
   const [update, setUpdate] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [navBurger, setNavBurger] = useState(true);
+  const [nav, setNav] = useState(false);
   const { currentUser, logOut } = useAuth("");
   const {
     setLogInCheck,
@@ -237,10 +239,28 @@ export default function Dashboard() {
     }, 410);
   };
   const handleBack = () => {
+    document.querySelector(".back").classList.toggle("fadeOut2");
     handleBackSmooth();
     setTimeout(() => {
       setUpdate(!update);
     }, 410);
+  };
+  const handleNav = () => {
+    if (!nav) {
+      setNav(true);
+      document.getElementById("burgerSpan1").classList.toggle("burgerSpan1");
+      document.getElementById("burgerSpan2").classList.toggle("burgerSpan2");
+      document.getElementById("burgerSpan3").classList.toggle("burgerSpan3");
+    }
+    if (nav) {
+      document.getElementById("nav").classList.toggle("navFadeOut");
+      document.getElementById("burgerSpan1").classList.toggle("burgerSpan1");
+      document.getElementById("burgerSpan2").classList.toggle("burgerSpan2");
+      document.getElementById("burgerSpan3").classList.toggle("burgerSpan3");
+      setTimeout(() => {
+        setNav(false);
+      }, 500);
+    }
   };
   useEffect(() => {
     setDisplayQuiz(true);
@@ -253,10 +273,12 @@ export default function Dashboard() {
       </div>
       {!displayQuiz && (
         <div
-          className="back absolute flex justify-center items-center"
+          className="back absolute flex justify-center items-center flex-col"
           onClick={() => setAlert(true)}
         >
-          <img src="https://img.icons8.com/ios-filled/50/000000/left.png" />
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       )}
       {alert && (
@@ -270,6 +292,30 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+      )}
+      {navBurger && (
+        <div
+          className="navBurger absolute flex justify-evenly items-center flex-col"
+          onClick={() => handleNav()}
+        >
+          <span id="burgerSpan1"></span>
+          <span id="burgerSpan2"></span>
+          <span id="burgerSpan3"></span>
+        </div>
+      )}
+      {nav && (
+        <nav id="nav" className="flex justify-center items-center flex-col">
+          <div className="navOption flex justify-center items-center flex-col">
+            <div className="logOutCon w-full flex justify-center items-center">
+              <button className="" onClick={handleLogOut}>
+                LogOut
+              </button>
+            </div>
+          </div>
+          <span></span>
+          <span></span>
+          <span></span>
+        </nav>
       )}
       {displayQuiz && (
         <div className="subTitle">
@@ -358,11 +404,6 @@ export default function Dashboard() {
         ))
       )}
       {!displayQuiz && <Quiz />}
-      <div className="logOutCon w-full flex justify-center items-center">
-        <button className="" onClick={handleLogOut}>
-          LogOut
-        </button>
-      </div>
     </>
   );
 }
