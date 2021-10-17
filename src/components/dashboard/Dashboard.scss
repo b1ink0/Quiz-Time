@@ -114,6 +114,7 @@
 .logOutCon {
   opacity: 1;
   transform: translate(0, 50px);
+  z-index: 1;
   button {
     width: 150px;
     height: 40px;
@@ -400,13 +401,13 @@ nav {
     animation: navRod2 0.5s ease 0.8s forwards;
   }
   span:nth-child(4) {
-    background: var(--black-t);
-    border: none;
-    transform: rotate(45deg);
-    width: 100vw;
-    bottom: calc(21vw + 14px);
-    height: 100vw;
-    animation: spanFadeOut 0.3s ease 0.8 forwards;
+    width: 0;
+    height: 0;
+    border-left: 50vw solid transparent;
+    border-right: 50vw solid transparent;
+    border-top: 50vw solid var(--black-t);
+    bottom: 5px;
+    animation: spanFadeOut 0.3s ease 1.3s forwards;
   }
 }
 @keyframes navRod1 {
