@@ -74,7 +74,6 @@ export default function Question({ quiz }) {
   };
   const handleSelected = (e, condition) => {
     if (!condition) {
-      console.log(e);
       if (arr[e].answer !== "") {
         try {
           let temp = arr[e].answer + (parseInt(e) + 1);
@@ -88,7 +87,6 @@ export default function Question({ quiz }) {
     } else if (condition) {
       if (arr[e - 2].answer !== "") {
         try {
-          console.log(`.${arr[e - 2].answer}${parseInt(e) - 1}`);
           let temp = arr[e - 2].answer + (e - 1);
           setTimeout(() => {
             document.getElementById(temp).classList.toggle("radioBtnSelected");

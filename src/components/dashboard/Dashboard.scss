@@ -94,6 +94,7 @@
 
 .quizCon,
 .queCon,
+.leaderboard,
 .preBack {
   opacity: 0;
   transform: translate(0, 10px);
@@ -110,7 +111,22 @@
   overflow: hidden;
   transition: all 0.2s;
 }
-
+.quizCon {
+  p {
+    border: 2px solid var(--blue);
+    border-radius: 10px;
+    margin: 10px;
+    width: 85%;
+    transition: all 0.3s;
+    padding: 6px;
+    box-shadow: 0px 0px 4px 2px #00b5ff, 0px 0px 8px 0px rgb(0 191 255 / 0%),
+      inset 0px 0px 4px 2px #00b5ff;
+  }
+  p:hover {
+    background-color: var(--blue);
+    text-shadow: none;
+  }
+}
 .logOutCon {
   opacity: 1;
   transform: translate(0, 50px);
@@ -378,7 +394,7 @@ nav {
     top: 0;
     background: var(--black-t);
     width: 100vw;
-    height: calc(100vh - 50vw);
+    height: calc(100% - 50vw);
     animation: navOption 0.5s ease 0.8s forwards;
   }
   span {
@@ -432,10 +448,10 @@ nav {
 }
 @keyframes navOption {
   0% {
-    height: calc(100vh - 50vw);
+    height: calc(100% - 50vw);
   }
   100% {
-    height: 100vh;
+    height: 100%;
   }
 }
 @keyframes spanFadeOut {

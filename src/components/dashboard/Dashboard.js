@@ -5,6 +5,7 @@ import { useStateContext } from "../../context/StateContext";
 import "./Dashboard.scss";
 import Quiz from "../quizs/Quiz";
 import logo from "../auth/media/logoT.svg";
+import Leaderboard from "../quizs/Leaderboard";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -29,6 +30,8 @@ export default function Dashboard() {
     quizName,
     displayQuiz,
     setDisplayQuiz,
+    displayLeaderboard,
+    setDisplayLeaderboard,
     setQNo,
     setQuizComplete,
     setTempAnswer,
@@ -46,6 +49,7 @@ export default function Dashboard() {
     setUserScore,
     totalScore,
     setTotalScore,
+    setLeaderboard,
   } = useStateContext("");
   const handleLogOut = async () => {
     try {
@@ -57,6 +61,7 @@ export default function Dashboard() {
       setQuiz([]);
       setQuizName("");
       setDisplayQuiz(true);
+      setDisplayLeaderboard(false);
       setQuizComplete(false);
       setQuizShareName("");
       setQuizShareAnswerName("");
@@ -70,6 +75,7 @@ export default function Dashboard() {
       auth.onAuthStateChanged((user) => {
         if (!user) {
           setLogInCheck(false);
+          window.location.reload();
         }
         return;
       });
@@ -78,7 +84,7 @@ export default function Dashboard() {
       console.log(error);
     }
   };
-  useEffect(() => {
+  const handleProfileExist = () => {
     let com;
     if (currentUser) {
       com = database.users
@@ -98,6 +104,9 @@ export default function Dashboard() {
         });
     }
     return com;
+  };
+  useEffect(() => {
+    handleProfileExist();
   }, []);
   useEffect(() => {
     let com;
@@ -184,8 +193,38 @@ export default function Dashboard() {
           });
       }
     }
+    if (currentUser) {
+      if (quizShareAnswerName) {
+        com = database.results
+          .doc(quizShareResultName)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              if (doc.data()) {
+                let array = [];
+                let arrayLength =
+                  doc.data().quizResultContainer.submissions.length;
+                doc.data().quizResultContainer.submissions.forEach((s) => {
+                  let temp = {
+                    username: s.username,
+                    userScore: s.userScore,
+                    totalScore: s.totalScore,
+                  };
+                  array.push(temp);
+                });
+                if (arrayLength == array.length) {
+                  setLeaderboard(array);
+                }
+              }
+              return;
+            } else {
+            }
+          });
+      }
+    }
     return com;
   }, [quizShareResultName]);
+  useEffect(() => {}, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     var validRegex =
@@ -265,6 +304,16 @@ export default function Dashboard() {
   useEffect(() => {
     setDisplayQuiz(true);
   }, [update, setUpdate]);
+  const handleLeaderboard = () => {
+    if (displayLeaderboard) {
+      document.getElementById("leaderboardCon").classList.toggle("fadeOut");
+      setTimeout(() => {
+        setDisplayLeaderboard(false);
+      }, 400);
+    } else if (!displayLeaderboard) {
+      setDisplayLeaderboard(true);
+    }
+  };
   return (
     <>
       <div className="logoCon flex justify-center items-center">
@@ -379,26 +428,45 @@ export default function Dashboard() {
       ) : (
         displayQuiz &&
         (quizExist ? (
-          <div
-            className="quizPrevCon cursor-pointer flex justify-center items-center w-full flex-col"
-            onClick={() => handleQuizGiven()}
-          >
-            <div className="quizCon flex justify-center items-start flex-col text-center">
-              <h1 className="w-full text-center">Quiz Name: {quizName}</h1>
-              {quizGiven ? (
-                <div className="w-full text-center">
-                  <p className="w-full text-center">
-                    You have already submited the quiz
-                  </p>
-                  <h1 className="w-full text-center">
-                    Score: {userScore}/{totalScore}
-                  </h1>
-                </div>
-              ) : (
-                <p className="w-full text-center">Click To Start The Quiz</p>
-              )}
+          <>
+            <div className="quizPrevCon flex justify-center items-center w-full flex-col">
+              <div className="quizCon flex justify-center items-center flex-col text-center">
+                <h1 className="w-full text-center">Quiz Name: {quizName}</h1>
+                {quizGiven ? (
+                  <div className="flex justify-center items-center flex-col w-full text-center">
+                    <p className="w-full text-center">
+                      You have already submited the quiz
+                    </p>
+                    <p
+                      className="text-center cursor-pointer"
+                      onClick={() => handleLeaderboard()}
+                    >
+                      Leaderboard
+                    </p>
+                    <h1 className="w-full text-center">
+                      Score: {userScore}/{totalScore}
+                    </h1>
+                  </div>
+                ) : (
+                  <>
+                    <p
+                      className="text-center cursor-pointer"
+                      onClick={() => handleQuizGiven()}
+                    >
+                      Click To Start The Quiz
+                    </p>
+                    <p
+                      className="text-center cursor-pointer"
+                      onClick={() => handleLeaderboard()}
+                    >
+                      Leaderboard
+                    </p>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+            {displayLeaderboard && <Leaderboard />}
+          </>
         ) : (
           <h1 className="w-full text-center">"Quiz are not avilable yet!"</h1>
         ))

@@ -19,7 +19,7 @@ export default function Quiz() {
     quizShareAnswerName,
     quizShareResultName,
   } = useStateContext();
-  const handleScore = (data) => {
+  const handleScore = (data, user) => {
     let count = 0;
     data.quizAnswerContainer.quizAnswer.forEach((q) => {
       if (q.answer === tempAnswer[q.qNo - 1].answer) {
@@ -28,6 +28,7 @@ export default function Quiz() {
     });
     setScore(count);
     setLoading(false);
+    let username = user.fullName.username;
     let com;
     if (currentUser) {
       com = database.results
@@ -40,6 +41,7 @@ export default function Quiz() {
             quizName: quizShareName,
             userScore: count,
             totalScore: tempAnswer.length,
+            username: username,
           });
           if (doc.data().quizResultContainer.submissions[0] !== undefined) {
             let condition = false;
@@ -48,7 +50,6 @@ export default function Quiz() {
                 condition = true;
               }
             });
-            console.log(condition);
             if (condition === false) {
               firestore
                 .collection("results")
@@ -94,7 +95,16 @@ export default function Quiz() {
           .get()
           .then((doc) => {
             if (doc.exists) {
-              handleScore(doc.data());
+              database.users
+                .doc(currentUser.uid)
+                .get()
+                .then((user) => {
+                  if (user.exists) {
+                    if (user.data()) {
+                      handleScore(doc.data(), user.data());
+                    }
+                  }
+                });
             }
           });
       }
