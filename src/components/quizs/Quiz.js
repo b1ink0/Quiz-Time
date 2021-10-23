@@ -122,7 +122,7 @@ export default function Quiz() {
           <div className="resultCon w-full flex justify-center items-center">
             <div className="result flex justify-center items-center flex-col">
               <h1>
-                Score: {score}/{tempAnswer.length}
+                Your Score: {score}/{tempAnswer.length}
               </h1>
               <h1>Quiz has been submited!</h1>
             </div>

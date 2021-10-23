@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { auth, database, firestore } from "../../firebase";
+import { auth, database } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
 import { useStateContext } from "../../context/StateContext";
 import "./Dashboard.scss";
@@ -34,7 +34,6 @@ export default function Dashboard() {
     setDisplayLeaderboard,
     setQNo,
     setQuizComplete,
-    setTempAnswer,
     setTempQuizAnswer,
     setScore,
     quizShareName,
@@ -212,8 +211,36 @@ export default function Dashboard() {
                   };
                   array.push(temp);
                 });
-                if (arrayLength == array.length) {
-                  setLeaderboard(array);
+                if (arrayLength === array.length) {
+                  if (array[0] !== undefined) {
+                    for (let i = 0; i < arrayLength; i++) {
+                      for (let j = 0; j < arrayLength - i - 1; j++) {
+                        if (array[j].userScore < array[j + 1].userScore) {
+                          let temp = array[j];
+                          array[j] = array[j + 1];
+                          array[j + 1] = temp;
+                        }
+                      }
+                    }
+                    let rank = 1;
+                    let tempScore = array[0].userScore;
+                    for (let i = 0; i < arrayLength; i++) {
+                      if (array[i].userScore === tempScore) {
+                        array[i] = {
+                          ...array[i],
+                          rank: rank,
+                        };
+                      } else {
+                        rank++;
+                        tempScore = array[i].userScore;
+                        array[i] = {
+                          ...array[i],
+                          rank: rank,
+                        };
+                      }
+                    }
+                    setLeaderboard(array);
+                  }
                 }
               }
               return;
@@ -444,7 +471,7 @@ export default function Dashboard() {
                       Leaderboard
                     </p>
                     <h1 className="w-full text-center">
-                      Score: {userScore}/{totalScore}
+                      Your Score: {userScore}/{totalScore}
                     </h1>
                   </div>
                 ) : (

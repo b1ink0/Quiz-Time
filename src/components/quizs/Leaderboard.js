@@ -1,6 +1,9 @@
 import React from "react";
 import { useStateContext } from "../../context/StateContext";
 import "./Leaderboard.scss";
+import rank_1 from "./media/rank_1.svg";
+import rank_2 from "./media/rank_2.svg";
+import rank_3 from "./media/rank_3.svg";
 
 export default function Leaderboard() {
   const { leaderboard, setDisplayLeaderboard } = useStateContext();
@@ -24,24 +27,35 @@ export default function Leaderboard() {
           <span></span>
         </button>
         <h1>Leaderboard</h1>
-        <div className="flex justify-evenly items-center w-full text-center">
-          <div className="username">
-            <h1>Username</h1>
+        <table className="flex justify-between items-center w-full text-center flex-col">
+          <tbody className="flex justify-between items-center w-full text-center flex-col">
+            <tr>
+              <th>Rank</th>
+              <th>Username</th>
+              <th>Score</th>
+            </tr>
             {leaderboard &&
-              leaderboard.map((u) => (
-                <div key={Math.random()}>{u.username}</div>
+              leaderboard.map((l) => (
+                <tr key={Math.random()}>
+                  <td>
+                    {l.rank === 1 ? (
+                      <img alt="rank_1" src={rank_1} />
+                    ) : l.rank === 2 ? (
+                      <img alt="rank_2" src={rank_2} />
+                    ) : l.rank === 3 ? (
+                      <img alt="rank_2" src={rank_3} />
+                    ) : (
+                      l.rank
+                    )}
+                  </td>
+                  <td>{l.username}</td>
+                  <td>
+                    {l.userScore}/{l.totalScore}
+                  </td>
+                </tr>
               ))}
-          </div>
-          <div className="score">
-            <h1>Score</h1>
-            {leaderboard &&
-              leaderboard.map((s) => (
-                <div key={Math.random()}>
-                  {s.userScore}/{s.totalScore}
-                </div>
-              ))}
-          </div>
-        </div>
+          </tbody>
+        </table>
       </div>
     </div>
   );

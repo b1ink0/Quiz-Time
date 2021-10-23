@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useStateContext } from "../../context/StateContext";
 import "../dashboard/Dashboard.scss";
 import "./Quiz.scss";
 
 export default function Question({ quiz }) {
   const { tempAnswer, setTempAnswer, setQuizComplete } = useStateContext();
-  const [loading, setLoading] = useState(false);
   const [submitBtnOn, setSubmitBtnOn] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [quizLength, setQuizLength] = useState(0);
   let arr = tempAnswer;
   if (arr[0] === undefined) {
-    quiz.map((a) => {
+    quiz.forEach((a) => {
       arr.push({
         qNo: a.qNo,
         answer: "",
