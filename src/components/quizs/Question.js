@@ -142,7 +142,7 @@ export default function Question({ quiz }) {
             <h1>{quiz[currentQ].q}</h1>
           </div>
           <div className="options w-full">
-            <div className="optionsRow1 flex justify-evenly items-center">
+            <div className="optionsRow1 flex justify-evenly items-center flex-col">
               <div
                 className={`radioBtnCon relative flex justify-center items-center a${quiz[currentQ].qNo}`}
                 id={`a${quiz[currentQ].qNo}`}
@@ -172,7 +172,7 @@ export default function Question({ quiz }) {
                 />
               </div>
             </div>
-            <div className="optionsRow2 flex justify-evenly items-center">
+            <div className="optionsRow2 flex justify-evenly items-center flex-col">
               <div
                 className={`radioBtnCon relative flex justify-center items-center c${quiz[currentQ].qNo}`}
                 id={`c${quiz[currentQ].qNo}`}

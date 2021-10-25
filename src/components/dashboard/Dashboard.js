@@ -4,8 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import { useStateContext } from "../../context/StateContext";
 import "./Dashboard.scss";
 import Quiz from "../quizs/Quiz";
-import logo from "../auth/media/logoT.svg";
 import Leaderboard from "../quizs/Leaderboard";
+import Loading from "../sub-components/Loading";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [navBurger, setNavBurger] = useState(true);
   const [nav, setNav] = useState(false);
   const { currentUser, logOut } = useAuth("");
+  const [loading, setLoading] = useState(false);
   const {
     setLogInCheck,
     profileExist,
@@ -105,6 +106,7 @@ export default function Dashboard() {
     return com;
   };
   useEffect(() => {
+    setLoading(true);
     handleProfileExist();
   }, []);
   useEffect(() => {
@@ -174,6 +176,7 @@ export default function Dashboard() {
                       setTotalScore(r.totalScore);
                     }
                   });
+                  setLoading(false);
                   if (condition === false) {
                     setQuizExist(true);
                     setQuizGiven(false);
@@ -294,9 +297,6 @@ export default function Dashboard() {
       setDisplayQuiz(false);
     }
   };
-  const handleBackAlert = () => {
-    setAlert(true);
-  };
   const handleBackSmooth = () => {
     document.querySelector(".preBack").classList.toggle("fadeOut");
     document.querySelector(".preBackCon").classList.toggle("fadeOut2");
@@ -341,16 +341,22 @@ export default function Dashboard() {
       setDisplayLeaderboard(true);
     }
   };
+  const handleDirectBack = () => {
+    if (!quizGiven) {
+      setAlert(true);
+    } else {
+      handleBack();
+    }
+  };
   return (
     <>
       <div className="logoCon flex justify-center items-center">
-        <img src={logo} alt="logo" />
         <h1>Quiz Time</h1>
       </div>
       {!displayQuiz && (
         <div
           className="back absolute flex justify-center items-center flex-col"
-          onClick={() => setAlert(true)}
+          onClick={() => handleDirectBack()}
         >
           <span></span>
           <span></span>
@@ -395,7 +401,7 @@ export default function Dashboard() {
       )}
       {displayQuiz && (
         <div className="subTitle">
-          <h1>Avilable Quizes</h1>
+          <h1>Avilable Quiz</h1>
         </div>
       )}
       {!profileExist ? (
@@ -456,13 +462,13 @@ export default function Dashboard() {
         displayQuiz &&
         (quizExist ? (
           <>
-            <div className="quizPrevCon flex justify-center items-center w-full flex-col">
+            <div className="quizPrevCon flex justify-center items-center w-full flex-col mt-5">
               <div className="quizCon flex justify-center items-center flex-col text-center">
                 <h1 className="w-full text-center">Quiz Name: {quizName}</h1>
                 {quizGiven ? (
                   <div className="flex justify-center items-center flex-col w-full text-center">
                     <p className="w-full text-center">
-                      You have already submited the quiz
+                      You have already submited the quiz!
                     </p>
                     <p
                       className="text-center cursor-pointer"
@@ -499,6 +505,7 @@ export default function Dashboard() {
         ))
       )}
       {!displayQuiz && <Quiz />}
+      {loading && <Loading />}
     </>
   );
 }

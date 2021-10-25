@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
 :root {
   --sky-blue: #00b5ff;
   --white: #ffffff;
@@ -19,7 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--black);
-  font-family: monospace;
+  font-family: "Roboto Mono", monospace;
   height: 100%;
   -webkit-tap-highlight-color: transparent;
 }
@@ -44,7 +45,7 @@ code {
 .borderCon::before {
   opacity: 0;
   border: 8px solid var(--sky-blue);
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   position: fixed;
   top: 0;

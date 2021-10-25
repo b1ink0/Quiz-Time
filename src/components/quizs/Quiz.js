@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useStateContext } from "../../context/StateContext";
 import Question from "./Question";
 import "./Quiz.scss";
+import Loading from "../sub-components/Loading";
 
 export default function Quiz() {
   const { currentUser } = useAuth();
@@ -117,17 +118,17 @@ export default function Quiz() {
         <Question quiz={quiz} />
       ) : !quizComplete ? (
         "Quiz Does Not Exist"
-      ) : (
-        !loading && (
-          <div className="resultCon w-full flex justify-center items-center">
-            <div className="result flex justify-center items-center flex-col">
-              <h1>
-                Your Score: {score}/{tempAnswer.length}
-              </h1>
-              <h1>Quiz has been submited!</h1>
-            </div>
+      ) : !loading ? (
+        <div className="resultCon w-full flex justify-center items-center">
+          <div className="result flex justify-center items-center flex-col">
+            <h1>
+              Your Score: {score}/{tempAnswer.length}
+            </h1>
+            <h1>Quiz has been submited!</h1>
           </div>
-        )
+        </div>
+      ) : (
+        <Loading />
       )}
     </>
   );

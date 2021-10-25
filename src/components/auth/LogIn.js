@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import "./LogInPage.scss";
-import logo from "./media/logoT.svg";
 
 export default function LogIn() {
   const [error, setError] = useState("");
@@ -21,7 +20,6 @@ export default function LogIn() {
     <>
       <div className="welcomePage flex justify-center items-center flex-col">
         <div className="logoCon flex justify-center items-center">
-          <img src={logo} alt="logo" />
           <h1>Quiz Time</h1>
         </div>
         <p className="text-center"></p>
