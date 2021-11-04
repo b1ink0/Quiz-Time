@@ -1,0 +1,120 @@
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+    transform: translate(0, 10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0px);
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(0, 50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0px);
+  }
+}
+@keyframes fadeInHalfOpacity {
+  0% {
+    opacity: 0;
+    transform: translate(0, 50px);
+  }
+  100% {
+    opacity: 0.5;
+    cursor: no-drop;
+    transform: translate(0, 0px);
+  }
+}
+@keyframes fadeInAlert {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fadeOut {
+  animation: fadeOutAlert 0.4s ease forwards !important;
+}
+.fadeOut2 {
+  animation: fadeOutAlert2 0.4s ease forwards !important;
+}
+@keyframes fadeOutAlert {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 10px);
+  }
+}
+@keyframes fadeOutAlert2 {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// Navbar
+@keyframes navRod1 {
+  0% {
+    transform: rotate(45deg);
+    bottom: 15vw;
+  }
+  100% {
+    transform: rotate(90deg);
+    bottom: 0;
+  }
+}
+@keyframes navRod2 {
+  0% {
+    transform: rotate(135deg);
+    bottom: 15vw;
+  }
+  100% {
+    transform: rotate(90deg);
+    bottom: 0;
+  }
+}
+@keyframes navOption {
+  0% {
+    height: calc(100% - 50vw);
+  }
+  100% {
+    height: 100%;
+  }
+}
+@keyframes spanFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.navFadeOut {
+  animation: navFadeOut 0.5s ease forwards;
+}
+@keyframes navFadeIn {
+  0% {
+    transform: translate(0%, -100%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+@keyframes navFadeOut {
+  0% {
+    transform: translate(0%, 0%);
+  }
+  100% {
+    transform: translate(0%, -100%);
+  }
+}

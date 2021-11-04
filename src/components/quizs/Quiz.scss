@@ -5,6 +5,9 @@
   opacity: 0;
   transform: translate(0, 50px);
   animation: fadeIn 0.5s ease forwards;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .submitCon {
   opacity: 0;
@@ -38,37 +41,7 @@
   opacity: 0;
   animation: fadeInOpacity 0.5s 1.2s ease forwards;
 }
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translate(0, 50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0px);
-  }
-}
-@keyframes fadeInHalfOpacity {
-  0% {
-    opacity: 0;
-    transform: translate(0, 50px);
-  }
-  100% {
-    opacity: 0.5;
-    cursor: no-drop;
-    transform: translate(0, 0px);
-  }
-}
-@keyframes fadeInOpacity {
-  0% {
-    opacity: 0;
-    transform: translate(0, 10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0px);
-  }
-}
+
 .options {
   margin-top: 10px;
 }

@@ -37,22 +37,30 @@
         transform: rotate(0);
         stroke-dashoffset: 0;
       }
-      25% {
-        transform: rotate(360deg);
+      16% {
+        transform: rotate(180deg);
         stroke-dashoffset: 0;
       }
-      50% {
-        transform: rotate(360deg);
+      32% {
+        transform: rotate(180deg);
         stroke-dashoffset: 250;
       }
-      75% {
-        transform: rotate(360deg);
+      48% {
+        transform: rotate(180deg);
         stroke-dashoffset: 0;
       }
-      100% {
-        transform: rotate(0);
-        stroke-dashoffset: 0;
-      }
+	  64% {
+		transform: rotate(360deg);
+		stroke-dashoffset: 0;
+	  }
+	  80% {
+		transform: rotate(360deg);
+		stroke-dashoffset: -250;
+	  }
+	  100% {
+		transform: rotate(360deg);
+		stroke-dashoffset: 0;
+	  } 
     }
   }
   @keyframes fadeInLoading {

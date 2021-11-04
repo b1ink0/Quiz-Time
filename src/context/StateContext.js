@@ -8,6 +8,7 @@ export const useStateContext = () => {
 
 export const StateProvider = ({ children }) => {
   const [logInCheck, setLogInCheck] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [profileExist, setProfileExist] = useState(true);
   const [quizExist, setQuizExist] = useState(false);
   const [qNo, setQNo] = useState(1);
@@ -25,11 +26,14 @@ export const StateProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [userScore, setUserScore] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
+  const [update, setUpdate] = useState(false);
   const [tempQuizAnswer, setTempQuizAnswer] = useState({
     quizAnswer: [],
   });
   const value = {
     logInCheck,
+    alert,
+    setAlert,
     setLogInCheck,
     profileExist,
     setProfileExist,
@@ -67,6 +71,8 @@ export const StateProvider = ({ children }) => {
     setTotalScore,
     leaderboard,
     setLeaderboard,
+    update,
+    setUpdate,
   };
 
   return (

@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { auth, database } from "../../firebase";
+import { database } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
 import { useStateContext } from "../../context/StateContext";
 import "./Dashboard.scss";
 import Quiz from "../quizs/Quiz";
 import Leaderboard from "../quizs/Leaderboard";
 import Loading from "../sub-components/Loading";
+import ProfileInput from "../profile/ProfileInput";
+import Navbar from "../navbar/Navbar";
+import Alert from "../sub-components/Alert";
+import Back from "../sub-components/Back";
+import useFunction from "../../hooks/useFunction";
 
 export default function Dashboard() {
-  const [error, setError] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [update, setUpdate] = useState(false);
-  const [alert, setAlert] = useState(false);
   const [navBurger, setNavBurger] = useState(true);
-  const [nav, setNav] = useState(false);
-  const { currentUser, logOut } = useAuth("");
   const [loading, setLoading] = useState(false);
+  const { currentUser, logOut } = useAuth("");
+  const { handleProfileExist, handleQuizShare, handleSetQuiz } = useFunction();
   const {
-    setLogInCheck,
     profileExist,
-    setProfileExist,
+    alert,
     setQuiz,
     setQuizExist,
     quizExist,
@@ -33,16 +29,9 @@ export default function Dashboard() {
     setDisplayQuiz,
     displayLeaderboard,
     setDisplayLeaderboard,
-    setQNo,
-    setQuizComplete,
-    setTempQuizAnswer,
-    setScore,
     quizShareName,
-    setQuizShareName,
     quizShareAnswerName,
-    setQuizShareAnswerName,
     quizShareResultName,
-    setQuizShareResultName,
     quizGiven,
     setQuizGiven,
     userScore,
@@ -50,111 +39,23 @@ export default function Dashboard() {
     totalScore,
     setTotalScore,
     setLeaderboard,
+    update,
+    setUpdate,
   } = useStateContext("");
-  const handleLogOut = async () => {
-    try {
-      logOut();
-      setProfileExist(true);
-      setLogInCheck(false);
-      setQuizExist(false);
-      setQNo(1);
-      setQuiz([]);
-      setQuizName("");
-      setDisplayQuiz(true);
-      setDisplayLeaderboard(false);
-      setQuizComplete(false);
-      setQuizShareName("");
-      setQuizShareAnswerName("");
-      setQuizShareResultName("");
-      setQuizGiven(true);
-      setTempQuizAnswer({
-        quizAnswer: [],
-      });
-      setScore(0);
-      setError("");
-      auth.onAuthStateChanged((user) => {
-        if (!user) {
-          setLogInCheck(false);
-          window.location.reload();
-        }
-        return;
-      });
-    } catch {
-      setError("Failed To LogOut");
-      console.log(error);
-    }
-  };
-  const handleProfileExist = () => {
-    let com;
-    if (currentUser) {
-      com = database.users
-        .doc(currentUser.uid)
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            if (doc.data()) {
-              if (doc.data().uid === currentUser.uid) {
-              }
-            }
-            setProfileExist(true);
-            return;
-          } else {
-            setProfileExist(false);
-          }
-        });
-    }
-    return com;
-  };
+
   useEffect(() => {
     setLoading(true);
     handleProfileExist();
   }, []);
+
   useEffect(() => {
-    let com;
-    if (currentUser) {
-      com = database.quizShare
-        .doc("quizShare")
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            if (doc.data()) {
-              setQuizShareName(doc.data().quizShareContainer.quizName);
-              setQuizShareAnswerName(
-                doc.data().quizShareContainer.quizAnswerName
-              );
-              setQuizShareResultName(
-                doc.data().quizShareContainer.quizResultName
-              );
-            }
-            return;
-          } else {
-          }
-        });
-    }
-    return com;
+    handleQuizShare();
   }, [profileExist]);
+
   useEffect(() => {
-    let com;
-    if (quizShareName !== "") {
-      if (currentUser) {
-        com = database.quizs
-          .doc(quizShareName)
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              if (doc.data()) {
-                setQuiz(doc.data().quizContainer.quiz);
-                setQuizName(doc.data().quizContainer.quizName);
-              }
-              return;
-            } else {
-              setQuizExist(false);
-            }
-          });
-      }
-    }
-    return com;
+    handleSetQuiz();
   }, [quizShareAnswerName]);
+
   useEffect(() => {
     let com;
     if (quizShareResultName !== "") {
@@ -255,77 +156,10 @@ export default function Dashboard() {
     return com;
   }, [quizShareResultName]);
   useEffect(() => {}, []);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    var validRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    let com;
-    if (email.match(validRegex)) {
-      if (currentUser) {
-        com = database.users
-          .doc(currentUser.uid)
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              return;
-            } else {
-              database.users.doc(currentUser.uid).set({
-                fullName: {
-                  firstName: firstName,
-                  middleName: middleName,
-                  lastName: lastName,
-                  username: username,
-                },
-                email: email,
-                uid: currentUser.uid,
-              });
-              setFirstName("");
-              setMiddleName("");
-              setLastName("");
-              setEmail("");
-              setProfileExist(true);
-            }
-          });
-      }
-    } else {
-      window.location.reload();
-    }
-    return com;
-  };
+
   const handleQuizGiven = () => {
     if (quizGiven === false) {
       setDisplayQuiz(false);
-    }
-  };
-  const handleBackSmooth = () => {
-    document.querySelector(".preBack").classList.toggle("fadeOut");
-    document.querySelector(".preBackCon").classList.toggle("fadeOut2");
-    setTimeout(() => {
-      setAlert(false);
-    }, 410);
-  };
-  const handleBack = () => {
-    document.querySelector(".back").classList.toggle("fadeOut2");
-    handleBackSmooth();
-    setTimeout(() => {
-      setUpdate(!update);
-    }, 410);
-  };
-  const handleNav = () => {
-    if (!nav) {
-      setNav(true);
-      document.getElementById("burgerSpan1").classList.toggle("burgerSpan1");
-      document.getElementById("burgerSpan2").classList.toggle("burgerSpan2");
-      document.getElementById("burgerSpan3").classList.toggle("burgerSpan3");
-    }
-    if (nav) {
-      document.getElementById("nav").classList.toggle("navFadeOut");
-      document.getElementById("burgerSpan1").classList.toggle("burgerSpan1");
-      document.getElementById("burgerSpan2").classList.toggle("burgerSpan2");
-      document.getElementById("burgerSpan3").classList.toggle("burgerSpan3");
-      setTimeout(() => {
-        setNav(false);
-      }, 500);
     }
   };
   useEffect(() => {
@@ -341,130 +175,24 @@ export default function Dashboard() {
       setDisplayLeaderboard(true);
     }
   };
-  const handleDirectBack = () => {
-    if (!quizGiven) {
-      setAlert(true);
-    } else {
-      handleBack();
-    }
-  };
+
   return (
     <>
       <div className="logoCon flex justify-center items-center">
         <h1>Quiz Time</h1>
       </div>
-      {!displayQuiz && (
-        <div
-          className="back absolute flex justify-center items-center flex-col"
-          onClick={() => handleDirectBack()}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      )}
-      {alert && (
-        <div className="preBackCon w-full flex justify-center items-center">
-          <div className="preBack flex justify-center items-center flex-col">
-            <h1>If you go back your progress will be lost!</h1>
-            <h1>Do you still want to go back ?</h1>
-            <div className="w-full flex justify-evenly items-center">
-              <button onClick={() => handleBackSmooth()}>No</button>
-              <button onClick={() => handleBack()}>Yes</button>
-            </div>
-          </div>
-        </div>
-      )}
-      {navBurger && (
-        <div
-          className="navBurger absolute flex justify-evenly items-center flex-col"
-          onClick={() => handleNav()}
-        >
-          <span id="burgerSpan1"></span>
-          <span id="burgerSpan2"></span>
-          <span id="burgerSpan3"></span>
-        </div>
-      )}
-      {nav && (
-        <nav id="nav" className="flex justify-center items-center flex-col">
-          <div className="navOption flex justify-center items-center flex-col">
-            <div className="logOutCon w-full flex justify-center items-center">
-              <button className="" onClick={handleLogOut}>
-                LogOut
-              </button>
-            </div>
-          </div>
-          <span></span>
-          <span></span>
-          <span></span>
-        </nav>
-      )}
-      {displayQuiz && (
-        <div className="subTitle">
-          <h1>Avilable Quiz</h1>
-        </div>
-      )}
+      {!displayQuiz && <Back />}
+      {alert && <Alert />}
+      {navBurger && <Navbar />}
       {!profileExist ? (
-        <form
-          onSubmit={(e) => handleSubmit(e)}
-          className="formCon flex justify-start items-center flex-col"
-        >
-          <div className="inputCon">
-            <label>First Name:</label>
-            <input
-              type="text"
-              value={firstName}
-              required
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </div>
-          <div className="inputCon">
-            <label>Middle Name:</label>
-            <input
-              type="text"
-              value={middleName}
-              required
-              onChange={(e) => setMiddleName(e.target.value)}
-            />
-          </div>
-          <div className="inputCon">
-            <label>Last Name:</label>
-            <input
-              type="text"
-              value={lastName}
-              required
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          <div className="inputCon">
-            <label>Username:</label>
-            <input
-              type="text"
-              value={username}
-              required
-              minLength="4"
-              maxLength="10"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="inputCon">
-            <label>Email:</label>
-            <input
-              type="email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <button type="submit">Save</button>
-        </form>
+        <ProfileInput />
       ) : (
         displayQuiz &&
         (quizExist ? (
           <>
             <div className="quizPrevCon flex justify-center items-center w-full flex-col mt-5">
               <div className="quizCon flex justify-center items-center flex-col text-center">
-                <h1 className="w-full text-center">Quiz Name: {quizName}</h1>
+                <h1 className="w-full text-center">{quizName}</h1>
                 {quizGiven ? (
                   <div className="flex justify-center items-center flex-col w-full text-center">
                     <p className="w-full text-center">
@@ -505,7 +233,7 @@ export default function Dashboard() {
         ))
       )}
       {!displayQuiz && <Quiz />}
-      {loading && <Loading />}
+      {loading && !quizExist && profileExist && <Loading />}
     </>
   );
 }
