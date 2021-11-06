@@ -1,9 +1,12 @@
 import React from "react";
 import "./Loading.scss";
 
-export default function Loading() {
+export default function Loading({ flag }) {
   return (
-    <div className="loading w-full flex justify-center items-center">
+    <div
+      className="loading w-full flex justify-center items-center"
+      style={{ background: `${flag && "#000000d4"}` }}
+    >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208.98 97.96">
         <g id="Layer_2" data-name="Layer 2">
           <g id="Layer_1-2" data-name="Layer 1">

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ProfileInput.scss";
-import { auth, database } from "../../firebase";
+import { database } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
 import { useStateContext } from "../../context/StateContext";
 

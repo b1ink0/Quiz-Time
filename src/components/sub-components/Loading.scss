@@ -34,33 +34,33 @@
     }
     @keyframes load {
       0% {
-        transform: rotate(0);
-        stroke-dashoffset: 0;
+        transform: rotate(0deg);
+        stroke-dashoffset: 250;
       }
       16% {
-        transform: rotate(180deg);
+        transform: rotate(0deg);
         stroke-dashoffset: 0;
       }
       32% {
         transform: rotate(180deg);
-        stroke-dashoffset: 250;
+        stroke-dashoffset: 0;
       }
       48% {
         transform: rotate(180deg);
+        stroke-dashoffset: -250;
+      }
+      64% {
+        transform: rotate(180deg);
         stroke-dashoffset: 0;
       }
-	  64% {
-		transform: rotate(360deg);
-		stroke-dashoffset: 0;
-	  }
-	  80% {
-		transform: rotate(360deg);
-		stroke-dashoffset: -250;
-	  }
-	  100% {
-		transform: rotate(360deg);
-		stroke-dashoffset: 0;
-	  } 
+      80% {
+        transform: rotate(360deg);
+        stroke-dashoffset: 0;
+      }
+      100% {
+        transform: rotate(360deg);
+        stroke-dashoffset: 250;
+      }
     }
   }
   @keyframes fadeInLoading {

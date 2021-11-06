@@ -27,6 +27,8 @@ export const StateProvider = ({ children }) => {
   const [userScore, setUserScore] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [update, setUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(false);
   const [tempQuizAnswer, setTempQuizAnswer] = useState({
     quizAnswer: [],
   });
@@ -73,6 +75,10 @@ export const StateProvider = ({ children }) => {
     setLeaderboard,
     update,
     setUpdate,
+    loading,
+    setLoading,
+    leaderboardLoading,
+    setLeaderboardLoading,
   };
 
   return (
