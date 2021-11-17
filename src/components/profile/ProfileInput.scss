@@ -1,3 +1,5 @@
+@import "..//themes/mixin.scss";
+
 .formCon {
   margin-top: 20px;
   box-shadow: 0px 0px 4px 2px #00b5ff, 0px 0px 8px 0px rgba(0, 191, 255, 0),
@@ -6,8 +8,7 @@
   background-color: var(--black-t);
   animation: fadeInOpacity 0.6s 0s ease forwards;
   h1 {
-    color: var(--white);
-    border-bottom: 3px solid var(--blue);
+    @include heading;
   }
   .inputCon {
     label {
@@ -15,35 +16,11 @@
       font-size: 22px;
     }
     input {
-      border: 2px solid var(--blue);
-      background: none;
-      border-radius: 25px;
-      color: white;
-      height: 45px;
-      margin-top: 5px;
-      padding: 0px 15px 0px 15px;
-      font-size: 23px;
-      text-align: center;
-      outline: none;
-      text-shadow: 0 0 5px var(--white), 2px 2px 2px rgb(206 89 55 / 0%);
-      box-shadow: 0px 0px 5px 1px var(--blue),
-        0px 0px 8px 0px rgb(0 191 255 / 0%);
+      @include inputBorder;
     }
   }
   button {
-    width: 200px;
-    height: 50px;
-    background: var(--blue);
-    border-radius: 25px;
-    font-size: 22px;
-    color: white;
-    margin-top: 35px;
-    margin-bottom: 50px;
-    box-shadow: 0px 0px 15px 2px var(--blue),
-      0px 0px 8px 0px rgb(0 191 255 / 0%);
-    opacity: 0;
-    transform: translate(0, 10px);
-    animation: fadeInOpacity 0.6s 1.5s ease forwards;
+    @include submitButton;
   }
   div {
     opacity: 0;

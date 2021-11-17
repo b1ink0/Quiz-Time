@@ -1,0 +1,22 @@
+@import "../../themes/mixin.scss";
+
+.quizSearch {
+  @include neonBorder;
+  form {
+    input::placeholder {
+      text-shadow: none;
+      font-size: 20px;
+    }
+    input {
+      @include inputBorder;
+      font-size: 22px;
+      height: 40px;
+    }
+    button {
+      @include submitButton;
+      margin-bottom: 24px;
+      width: 145px;
+      height: 40px;
+    }
+  }
+}

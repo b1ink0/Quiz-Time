@@ -19,6 +19,8 @@ export default function useFunction() {
     setDisplayQuiz,
     displayLeaderboard,
     setDisplayLeaderboard,
+    displayQuizCreate,
+    setDisplayQuizCreate,
     quizShareResultName,
     quizShareAnswerName,
     setLeaderboard,
@@ -244,6 +246,15 @@ export default function useFunction() {
     }
   };
   //
+  const handleQuizSearch = () => {};
+  //
+  const handelQuizCreateDisplay = () => {
+    if (displayQuizCreate) {
+      setDisplayQuizCreate(false);
+    } else {
+      setDisplayQuizCreate(true);
+    }
+  };
   return {
     handleBackSmooth,
     handleBack,
@@ -254,5 +265,7 @@ export default function useFunction() {
     handleQuizGiven,
     handleLeaderboard,
     handleSetQuizData,
+    handleQuizSearch,
+    handelQuizCreateDisplay,
   };
 }

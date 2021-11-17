@@ -1,0 +1,18 @@
+@import "../../themes/mixin.scss";
+
+.quizCreateStartCon {
+  .quizCreate {
+    @include neonBorder;
+    h1 {
+      margin-top: 10px;
+    }
+    button {
+      @include normalButton;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+    button:hover {
+      @include normalButtonHover;
+    }
+  }
+}

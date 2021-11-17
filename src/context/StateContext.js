@@ -16,6 +16,9 @@ export const StateProvider = ({ children }) => {
   const [quizName, setQuizName] = useState("");
   const [displayQuiz, setDisplayQuiz] = useState(true);
   const [displayLeaderboard, setDisplayLeaderboard] = useState(false);
+  const [displayQuizSearch, setDisplayQuizSearch] = useState(true);
+  const [displayQuizStart, setDisplayQuizStart] = useState(true);
+  const [displayQuizCreate, setDisplayQuizCreate] = useState(false);
   const [quizComplete, setQuizComplete] = useState(false);
   const [quizGiven, setQuizGiven] = useState(true);
   const [tempAnswer, setTempAnswer] = useState([]);
@@ -53,6 +56,12 @@ export const StateProvider = ({ children }) => {
     setDisplayQuiz,
     displayLeaderboard,
     setDisplayLeaderboard,
+    displayQuizSearch,
+    setDisplayQuizSearch,
+    displayQuizStart,
+    setDisplayQuizStart,
+    displayQuizCreate,
+    setDisplayQuizCreate,
     quizComplete,
     setQuizComplete,
     tempAnswer,

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
 :root {
   --sky-blue: #00b5ff;
   --white: #ffffff;
@@ -22,6 +23,7 @@ body {
   background: var(--black);
   font-family: "Roboto Mono", monospace;
   height: 100%;
+  position: relative;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -62,4 +64,9 @@ code {
   100% {
     opacity: 1;
   }
+}
+canvas {
+  position: fixed !important;
+  top: 0;
+  right: 0px;
 }
