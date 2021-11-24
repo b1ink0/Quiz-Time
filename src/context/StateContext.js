@@ -19,6 +19,7 @@ export const StateProvider = ({ children }) => {
   const [displayQuizSearch, setDisplayQuizSearch] = useState(true);
   const [displayQuizStart, setDisplayQuizStart] = useState(true);
   const [displayQuizCreate, setDisplayQuizCreate] = useState(false);
+  const [displaySaveQuiz, setDisplaySaveQuiz] = useState(false);
   const [quizComplete, setQuizComplete] = useState(false);
   const [quizGiven, setQuizGiven] = useState(true);
   const [tempAnswer, setTempAnswer] = useState([]);
@@ -88,6 +89,8 @@ export const StateProvider = ({ children }) => {
     setLoading,
     leaderboardLoading,
     setLeaderboardLoading,
+    displaySaveQuiz,
+    setDisplaySaveQuiz,
   };
 
   return (

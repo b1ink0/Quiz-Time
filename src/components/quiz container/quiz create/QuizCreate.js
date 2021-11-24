@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useStateContext } from "../../../context/StateContext";
+import SaveQuiz from "../save quiz/SaveQuiz";
 import "./QuizCreate.scss";
 
 export default function QuizCreate() {
   const [displayFirstSection, setDisoplayFirstSection] = useState(true);
   const [displaySecondSection, setDisoplaySecondSection] = useState(false);
+  const { displaySaveQuiz, setDisplaySaveQuiz } = useStateContext();
   const [questionCount, setQuestionCount] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [createQuizName, setCreateQuizName] = useState("");
@@ -50,7 +53,9 @@ export default function QuizCreate() {
   };
 
   const handleSave = () => {
-    console.log(tempQuiz, tempAnswer);
+    if (tempQuiz[0] !== undefined) {
+      setDisplaySaveQuiz(true);
+    }
   };
 
   const handleRemove = () => {
@@ -239,245 +244,255 @@ export default function QuizCreate() {
     });
   };
   return (
-    <div className="createQuizCon w-full flex justify-center items-center mt-6 mb-8 text-center ">
-      <form
-        className="flex justify-center items-center flex-col text-center"
-        onSubmit={(e) => handleAdd(e)}
-      >
-        {displayFirstSection && (
-          <>
-            <h1 className="w-full pb-3">Create Quiz</h1>
-            <div className="quizNameInput w-full flex justify-center items-center flex-col">
-              <label className="mt-3 mb-3">Enter Quiz Name</label>
-              <input
-                className="w-5/6"
-                type="text"
-                minLength="1"
-                maxLength="20"
-                value={createQuizName}
-                onChange={(e) => setCreateQuizName(e.target.value)}
-                required
-              />
-              <button
-                onClick={() => handleFirstSectionDisplay()}
-                disabled={createQuizName === "" ? true : false}
-                className={createQuizName === "" ? "nextBtn" : undefined}
-              >
-                Next
-              </button>
-            </div>
-          </>
-        )}
-        {displaySecondSection && (
-          <>
-            <h1>{createQuizName}</h1>
-            <div className="flex justify-center items-center flex-col w-full mt-3">
-              <div className="textAreaCon flex justify-center items-center flex-col w-full">
-                <label>Question-{currentQuestion}</label>
-                <textarea
-                  id="questionInputId"
-                  className="w-5/6 "
-                  type="text"
-                  required
-                  value={createQuizQuestion}
-                  minLength="1"
-                  maxLength="500"
-                  onChange={(e) => handleQuestionInput(e)}
-                />
-              </div>
-              <div className="flex justify-center items-center flex-col w-full">
-                <label>Option-A</label>
+    <>
+      {displaySaveQuiz && (
+        <SaveQuiz
+          quiz={tempQuiz}
+          answer={tempAnswer}
+          questionCount={questionCount}
+          quizName={createQuizName}
+        />
+      )}
+      <div className="createQuizCon w-full flex justify-center items-center mt-6 mb-8 text-center ">
+        <form
+          className="flex justify-center items-center flex-col text-center"
+          onSubmit={(e) => handleAdd(e)}
+        >
+          {displayFirstSection && (
+            <>
+              <h1 className="w-full pb-3">Create Quiz</h1>
+              <div className="quizNameInput w-full flex justify-center items-center flex-col">
+                <label className="mt-3 mb-3">Enter Quiz Name</label>
                 <input
                   className="w-5/6"
                   type="text"
-                  required
                   minLength="1"
-                  maxLength="100"
-                  value={createOptionA}
-                  onChange={(e) => setCreateOptionA(e.target.value)}
-                />
-              </div>
-              <div className="flex justify-center items-center flex-col w-full">
-                <label>Option-B</label>
-                <input
-                  className="w-5/6"
-                  type="text"
+                  maxLength="20"
+                  value={createQuizName}
+                  onChange={(e) => setCreateQuizName(e.target.value)}
                   required
-                  minLength="1"
-                  maxLength="100"
-                  value={createOptionB}
-                  onChange={(e) => setCreateOptionB(e.target.value)}
                 />
+                <button
+                  onClick={() => handleFirstSectionDisplay()}
+                  disabled={createQuizName === "" ? true : false}
+                  className={createQuizName === "" ? "nextBtn" : undefined}
+                >
+                  Next
+                </button>
               </div>
-              <div className="flex justify-center items-center flex-col w-full">
-                <label>Option-C</label>
-                <input
-                  className="w-5/6"
-                  type="text"
-                  required
-                  minLength="1"
-                  maxLength="100"
-                  value={createOptionC}
-                  onChange={(e) => setCreateOptionC(e.target.value)}
-                />
-              </div>
-              <div className="flex justify-center items-center flex-col w-full">
-                <label>Option-D</label>
-                <input
-                  className="w-5/6"
-                  type="text"
-                  required
-                  minLength="1"
-                  maxLength="100"
-                  value={createOptionD}
-                  onChange={(e) => setCreateOptionD(e.target.value)}
-                />
-              </div>
-              <div className="answerOption flex justify-center items-center flex-col w-full mt-3">
-                <h1>Answer</h1>
-                <div className="answerSelectCon flex justify-between items-center w-full mt-5">
-                  <div className="answerSelect flex justify-center items-center flex-col relative">
-                    <label className="absolute" id="a">
-                      A
-                    </label>
-                    <input
-                      className="absolute"
-                      id="ai"
-                      type="radio"
-                      value="a"
-                      required
-                      name="answer"
-                      onClick={(e) => handleAnswerSelection(e)}
-                    />
+            </>
+          )}
+          {displaySecondSection && (
+            <>
+              <h1>{createQuizName}</h1>
+              <div className="flex justify-center items-center flex-col w-full mt-3">
+                <div className="textAreaCon flex justify-center items-center flex-col w-full">
+                  <label>Question-{currentQuestion}</label>
+                  <textarea
+                    id="questionInputId"
+                    className="w-5/6 "
+                    type="text"
+                    required
+                    value={createQuizQuestion}
+                    minLength="1"
+                    maxLength="500"
+                    onChange={(e) => handleQuestionInput(e)}
+                  />
+                </div>
+                <div className="flex justify-center items-center flex-col w-full">
+                  <label>Option-A</label>
+                  <input
+                    className="w-5/6"
+                    type="text"
+                    required
+                    minLength="1"
+                    maxLength="100"
+                    value={createOptionA}
+                    onChange={(e) => setCreateOptionA(e.target.value)}
+                  />
+                </div>
+                <div className="flex justify-center items-center flex-col w-full">
+                  <label>Option-B</label>
+                  <input
+                    className="w-5/6"
+                    type="text"
+                    required
+                    minLength="1"
+                    maxLength="100"
+                    value={createOptionB}
+                    onChange={(e) => setCreateOptionB(e.target.value)}
+                  />
+                </div>
+                <div className="flex justify-center items-center flex-col w-full">
+                  <label>Option-C</label>
+                  <input
+                    className="w-5/6"
+                    type="text"
+                    required
+                    minLength="1"
+                    maxLength="100"
+                    value={createOptionC}
+                    onChange={(e) => setCreateOptionC(e.target.value)}
+                  />
+                </div>
+                <div className="flex justify-center items-center flex-col w-full">
+                  <label>Option-D</label>
+                  <input
+                    className="w-5/6"
+                    type="text"
+                    required
+                    minLength="1"
+                    maxLength="100"
+                    value={createOptionD}
+                    onChange={(e) => setCreateOptionD(e.target.value)}
+                  />
+                </div>
+                <div className="answerOption flex justify-center items-center flex-col w-full mt-3">
+                  <h1>Answer</h1>
+                  <div className="answerSelectCon flex justify-between items-center w-full mt-5">
+                    <div className="answerSelect flex justify-center items-center flex-col relative">
+                      <label className="absolute" id="a">
+                        A
+                      </label>
+                      <input
+                        className="absolute"
+                        id="ai"
+                        type="radio"
+                        value="a"
+                        required
+                        name="answer"
+                        onClick={(e) => handleAnswerSelection(e)}
+                      />
+                    </div>
+                    <div className="answerSelect flex justify-center items-center flex-col relative">
+                      <label className="absolute" id="b">
+                        B
+                      </label>
+                      <input
+                        className="absolute"
+                        id="bi"
+                        type="radio"
+                        value="b"
+                        required
+                        name="answer"
+                        onClick={(e) => handleAnswerSelection(e)}
+                      />
+                    </div>
                   </div>
-                  <div className="answerSelect flex justify-center items-center flex-col relative">
-                    <label className="absolute" id="b">
-                      B
-                    </label>
-                    <input
-                      className="absolute"
-                      id="bi"
-                      type="radio"
-                      value="b"
-                      required
-                      name="answer"
-                      onClick={(e) => handleAnswerSelection(e)}
-                    />
+                  <div className="answerSelect flex justify-between items-center w-full mt-5 ">
+                    <div className="flex justify-center items-center flex-col relative">
+                      <label className="absolute" id="c">
+                        C
+                      </label>
+                      <input
+                        className="absolute"
+                        id="ci"
+                        type="radio"
+                        value="c"
+                        required
+                        name="answer"
+                        onClick={(e) => handleAnswerSelection(e)}
+                      />
+                    </div>
+                    <div className="answerSelect flex justify-center items-center flex-col relative">
+                      <label className="absolute" id="d">
+                        D
+                      </label>
+                      <input
+                        className="absolute"
+                        id="di"
+                        type="radio"
+                        value="d"
+                        required
+                        name="answer"
+                        onClick={(e) => handleAnswerSelection(e)}
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="answerSelect flex justify-between items-center w-full mt-5 ">
-                  <div className="flex justify-center items-center flex-col relative">
-                    <label className="absolute" id="c">
-                      C
-                    </label>
-                    <input
-                      className="absolute"
-                      id="ci"
-                      type="radio"
-                      value="c"
-                      required
-                      name="answer"
-                      onClick={(e) => handleAnswerSelection(e)}
-                    />
-                  </div>
-                  <div className="answerSelect flex justify-center items-center flex-col relative">
-                    <label className="absolute" id="d">
-                      D
-                    </label>
-                    <input
-                      className="absolute"
-                      id="di"
-                      type="radio"
-                      value="d"
-                      required
-                      name="answer"
-                      onClick={(e) => handleAnswerSelection(e)}
-                    />
-                  </div>
-                </div>
               </div>
-            </div>
-            <div className="btnCon w-full mt-5">
-              <div className="w-full pt-8">
-                <div className="btnControl w-full flex justify-center items-center">
-                  {questionCount === currentQuestion ? (
-                    <button type="submit">Add+</button>
-                  ) : (
+              <div className="btnCon w-full mt-5">
+                <div className="w-full pt-8">
+                  <div className="btnControl w-full flex justify-center items-center">
+                    {questionCount === currentQuestion ? (
+                      <button type="submit">Add+</button>
+                    ) : (
+                      <>
+                        <button
+                          className="removeBtn flex justify-center items-center mr-3"
+                          type="button"
+                          onClick={() => handleRemove()}
+                        >
+                          Remove
+                        </button>
+                        <button
+                          className="saveBtn flex justify-center items-center ml-3"
+                          type="button"
+                          onClick={() => handleUpdate()}
+                        >
+                          Update
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  <div className="controlBtnCon w-full flex justify-center items-center mt-8">
                     <>
                       <button
-                        className="removeBtn flex justify-center items-center mr-3"
                         type="button"
-                        onClick={() => handleRemove()}
+                        className={
+                          questionCount === 1 || currentQuestion === 1
+                            ? "lastBtn"
+                            : undefined
+                        }
+                        disabled={
+                          questionCount === 1 || currentQuestion === 1
+                            ? true
+                            : false
+                        }
+                        onClick={() =>
+                          questionCount === 1 || currentQuestion === 1
+                            ? {}
+                            : handlePrevQ()
+                        }
                       >
-                        Remove
+                        Q-{currentQuestion - 1}
+                      </button>
+                      <button type="button" className="middleBtn">
+                        {currentQuestion}
                       </button>
                       <button
-                        className="saveBtn flex justify-center items-center ml-3"
                         type="button"
-                        onClick={() => handleUpdate()}
+                        className={
+                          questionCount === currentQuestion
+                            ? "lastBtn"
+                            : undefined
+                        }
+                        disabled={
+                          questionCount === currentQuestion ? true : false
+                        }
+                        onClick={() =>
+                          questionCount === currentQuestion ? {} : handleNextQ()
+                        }
                       >
-                        Update
+                        Q-{currentQuestion + 1}
                       </button>
                     </>
-                  )}
-                </div>
-                <div className="controlBtnCon w-full flex justify-center items-center mt-8">
-                  <>
-                    <button
-                      type="button"
-                      className={
-                        questionCount === 1 || currentQuestion === 1
-                          ? "lastBtn"
-                          : undefined
-                      }
-                      disabled={
-                        questionCount === 1 || currentQuestion === 1
-                          ? true
-                          : false
-                      }
-                      onClick={() =>
-                        questionCount === 1 || currentQuestion === 1
-                          ? {}
-                          : handlePrevQ()
-                      }
-                    >
-                      Q-{currentQuestion - 1}
-                    </button>
-                    <button type="button" className="middleBtn">
-                      {currentQuestion}
-                    </button>
-                    <button
-                      type="button"
-                      className={
-                        questionCount === currentQuestion
-                          ? "lastBtn"
-                          : undefined
-                      }
-                      disabled={
-                        questionCount === currentQuestion ? true : false
-                      }
-                      onClick={() =>
-                        questionCount === currentQuestion ? {} : handleNextQ()
-                      }
-                    >
-                      Q-{currentQuestion + 1}
-                    </button>
-                  </>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="saveBtn w-full mt-1 pt-6 pb-5 flex justify-center items-center">
-              <button
-                className="flex justify-center items-center"
-                type="button"
-                onClick={() => handleSave()}
-              >
-                Save
-              </button>
-            </div>
-          </>
-        )}
-      </form>
-    </div>
+              <div className="saveBtn w-full mt-1 pt-6 pb-5 flex justify-center items-center">
+                <button
+                  className="flex justify-center items-center"
+                  type="button"
+                  onClick={() => handleSave()}
+                >
+                  Save
+                </button>
+              </div>
+            </>
+          )}
+        </form>
+      </div>
+    </>
   );
 }

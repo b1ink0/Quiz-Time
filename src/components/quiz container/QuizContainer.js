@@ -2,6 +2,7 @@ import React from "react";
 import { useStateContext } from "../../context/StateContext";
 import useFunction from "../../hooks/useFunction";
 import Leaderboard from "../leaderboard/Leaderboard";
+import Back from "../sub-components/Back";
 import Loading from "../sub-components/Loading";
 import QuizCreateStart from "./quiz create start/QuizCreateStart";
 import QuizCreate from "./quiz create/QuizCreate";
@@ -25,7 +26,10 @@ export default function QuizContainer() {
   return (
     <>
       {displayQuizCreate ? (
-        <QuizCreate />
+        <>
+          <Back option={2} />
+          <QuizCreate />
+        </>
       ) : (
         <>
           {displayQuizSearch && <QuizSearch />}

@@ -15,8 +15,6 @@ export default function QuizJoin() {
         >
           <input
             type="number"
-            min="100000"
-            max="999999"
             value={quizCode}
             onChange={(e) => setQuizCode(e.target.value)}
             className="bg-transparent w-10/12 rounded-full"
