@@ -2,6 +2,7 @@ import React from "react";
 import { useStateContext } from "../../context/StateContext";
 import useFunction from "../../hooks/useFunction";
 import Leaderboard from "../leaderboard/Leaderboard";
+import MyQuizzes from "../my quizzes/MyQuizzes";
 import Back from "../sub-components/Back";
 import Loading from "../sub-components/Loading";
 import QuizCreateStart from "./quiz create start/QuizCreateStart";
@@ -21,6 +22,7 @@ export default function QuizContainer() {
     displayQuizSearch,
     displayQuizStart,
     displayQuizCreate,
+    myQuizzes,
   } = useStateContext();
   const { handleLeaderboard, handleQuizGiven } = useFunction();
   return (
@@ -33,12 +35,21 @@ export default function QuizContainer() {
       ) : (
         <>
           {displayQuizSearch && <QuizSearch />}
-          <div className="quizContainerHr w-full flex justify-center items-center mt-5 mb-5">
-            <span className="w-10/12 rounded-full"></span>
-            <h1 className="text-center">OR</h1>
-            <span className="w-10/12 rounded-full"></span>
-          </div>
-          {displayQuizStart && <QuizCreateStart />}
+          {myQuizzes[0] === undefined ? (
+            <>
+              <div className="quizContainerHr w-full flex justify-center items-center mt-5 mb-5">
+                <span className="w-10/12 rounded-full"></span>
+                <h1 className="text-center">OR</h1>
+                <span className="w-10/12 rounded-full"></span>
+              </div>
+              {displayQuizStart && <QuizCreateStart />}
+            </>
+          ) : (
+            <>
+              {displayQuizStart && <QuizCreateStart margin={true} />}
+              <MyQuizzes />
+            </>
+          )}
         </>
       )}
       {/* <div className="quizPrevCon flex justify-center items-center w-full flex-col mt-5">

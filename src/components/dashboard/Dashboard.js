@@ -17,6 +17,7 @@ export default function Dashboard() {
     handleQuizShare,
     handleSetQuiz,
     handleSetQuizData,
+    handleMyQuizzes,
   } = useFunction();
   const {
     profileExist,
@@ -35,6 +36,7 @@ export default function Dashboard() {
   useEffect(() => {
     setLoading(true);
     handleProfileExist();
+    handleMyQuizzes();
   }, []);
 
   useEffect(() => {

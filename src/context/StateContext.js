@@ -36,6 +36,7 @@ export const StateProvider = ({ children }) => {
   const [tempQuizAnswer, setTempQuizAnswer] = useState({
     quizAnswer: [],
   });
+  const [myQuizzes, setMyQuizzes] = useState([]);
   const value = {
     logInCheck,
     alert,
@@ -91,6 +92,8 @@ export const StateProvider = ({ children }) => {
     setLeaderboardLoading,
     displaySaveQuiz,
     setDisplaySaveQuiz,
+    myQuizzes,
+    setMyQuizzes,
   };
 
   return (

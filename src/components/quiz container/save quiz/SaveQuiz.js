@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useStateContext } from "../../../context/StateContext";
 import { database } from "../../../firebase";
+import rn from "random-number";
+import copySvg from "../../media/copy.svg";
+import copiedSvg from "../../media/copied.svg";
 import "./SaveQuiz.scss";
 
 export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
   const { setDisplaySaveQuiz, setDisplayQuizCreate } = useStateContext();
+  const [copied, setCopied] = useState(false);
   const [code, setCode] = useState();
   const { currentUser } = useAuth();
   useEffect(() => {
@@ -30,30 +34,63 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
       tA.push(ta);
       count++;
     }
+    const randomNumber = rn.generator({
+      min: 100000,
+      max: 999999,
+      integer: true,
+    });
     if (currentUser) {
-      let quizCode = Math.floor(Math.random() * 1000000).toString();
+      let quizCode = randomNumber();
       setCode(quizCode);
       com = database.quizs
-        .doc(quizCode)
+        .doc(quizCode.toString())
         .get()
-        .then((doc) => {
+        .then(async (doc) => {
           if (doc.exists) {
             return;
           } else {
-            // database.quizs.doc(quizCode).set({
-            //   quizContainer: {
-            //     quiz: tQ,
-            //     quizName: quizName,
-            //   },
-            //   uid: currentUser.uid,
-            // });
-            // database.answers.doc(quizCode).set({
-            //   quizAnswerContainer: {
-            //     quizAnswer: tA,
-            //     quizName: quizName,
-            //   },
-            //   uid: currentUser.uid,
-            // });
+            database.quizs.doc(quizCode.toString()).set({
+              quizContainer: {
+                quiz: [
+                  {
+                    quiz: tQ,
+                    quizName: quizName,
+                  },
+                ],
+              },
+              uid: currentUser.uid,
+            });
+            database.answers.doc(quizCode.toString()).set({
+              quizAnswerContainer: {
+                quizAnswer: [
+                  {
+                    quizAnswer: tA,
+                    quizName: quizName,
+                  },
+                ],
+              },
+              uid: currentUser.uid,
+            });
+            let temp = database.users
+              .doc(currentUser.uid)
+              .get()
+              .then((doc) => {
+                return doc.data().quizzes;
+              });
+            temp.then((data) => {
+              let arr = [];
+              if (data !== undefined) {
+                arr = data;
+              }
+              let t = {
+                quizName: quizName,
+                quizCode: quizCode,
+              };
+              arr.push(t);
+              database.users.doc(currentUser.uid).update({
+                quizzes: arr,
+              });
+            });
           }
         });
     }
@@ -66,25 +103,32 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
     input.select();
     var result = document.execCommand("copy");
     document.body.removeChild(input);
+    setCopied(true);
     return result;
   };
   const handleClose = () => {
-    console.log("run");
     setDisplaySaveQuiz(false);
     setDisplayQuizCreate(false);
   };
   return (
     <div className="save-wrapper fixed top-0 left-0 w-full h-full flex justify-center items-center">
       <div className="save-wrapper-1 w-5/6 text-center flex justify-center items-center flex-col">
-        <h1 className="mb-1">Quiz Name: {quizName}</h1>
-        <h1 className="mb-2">Total Questions: {questionCount - 1}</h1>
-        <h3>Copy The Code Below</h3>
+        <h1 className="mb-1">
+          Quiz Name: <span>{quizName}</span>
+        </h1>
+        <h1 className="mb-2">
+          Total Questions: <span>{questionCount - 1}</span>
+        </h1>
+        <h3 className="w-full pt-2">Copy The Code Below</h3>
         <p
-          className="w-5/6 rounded-full flex justify-center items-center mt-2 mb-2 p-1 font-black"
+          className="w-5/6 relative rounded-full flex justify-center items-center mt-2 mb-2 p-1 font-black"
           onClick={(e) => handleCopyCode(e)}
         >
-          <h2 className="mr-1">{code}</h2>
-          <span className="ml-1">copy</span>
+          <span className="mr-1 text-xl">{code}</span>
+          <img
+            className="w-6 h-6 absolute right-5 pointer-events-none"
+            src={copied ? copiedSvg : copySvg}
+          />
         </p>
         <button onClick={() => handleClose()}>OK</button>
       </div>

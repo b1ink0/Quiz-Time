@@ -1,0 +1,33 @@
+@import ".././themes/mixin.scss";
+.myQuizzesCon {
+  .myQuizzes {
+    @include neonBorder;
+    h1 {
+    }
+    .quizzes {
+      div {
+        @include normalButton;
+        padding: 6px 25px 6px 25px;
+        .imgEdit {
+          // background-color: var(--blue);
+        }
+        p {
+          box-shadow: 0px 0px 5px 1px var(--blue),
+            0px 0px 8px 0px rgb(0 191 255 / 0%);
+          border: 2px solid var(--blue);
+          text-shadow: none;
+          transition: all 0.3s;
+          img {
+            transition: all 0.3s;
+          }
+        }
+        p:hover {
+          background-color: var(--blue-light);
+          img {
+            filter: grayscale(1);
+          }
+        }
+      }
+    }
+  }
+}

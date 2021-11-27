@@ -12,6 +12,7 @@ export default function Back({ option }) {
         handleDirectBack();
         break;
       case 2:
+        
         setDisplayQuizCreate(false);
         break;
       default:

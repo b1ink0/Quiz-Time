@@ -29,6 +29,8 @@ export default function useFunction() {
     setUserScore,
     setTotalScore,
     setQuizGiven,
+    myQuizzes,
+    setMyQuizzes,
   } = useStateContext();
   const { currentUser } = useAuth();
   //
@@ -255,6 +257,23 @@ export default function useFunction() {
       setDisplayQuizCreate(true);
     }
   };
+  //
+  const handleMyQuizzes = () => {
+    let com;
+    if (currentUser) {
+      com = database.users
+        .doc(currentUser.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            if (doc.data().quizzes) {
+              setMyQuizzes(doc.data().quizzes);
+            }
+          }
+        });
+    }
+    return com;
+  };
   return {
     handleBackSmooth,
     handleBack,
@@ -267,5 +286,6 @@ export default function useFunction() {
     handleSetQuizData,
     handleQuizSearch,
     handelQuizCreateDisplay,
+    handleMyQuizzes,
   };
 }

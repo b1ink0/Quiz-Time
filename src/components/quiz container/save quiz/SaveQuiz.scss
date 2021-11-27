@@ -4,11 +4,16 @@
   z-index: 2;
   .save-wrapper-1 {
     @include neonBorder;
+    padding: 10px 0 10px 0;
     background-color: var(--black);
     h1 {
-      @include heading;
-      width: -moz-fit-content;
-      width: fit-content;
+      color: var(--blue);
+      span {
+        color: var(--white);
+      }
+    }
+    h3 {
+      border-top: 3px solid var(--blue);
     }
     p {
       box-shadow: 0px 0px 5px 1px var(--blue),

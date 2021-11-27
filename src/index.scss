@@ -8,10 +8,14 @@
   --white: #ffffff;
   --gray: #cfcfcf;
   --blue: #00c4ff;
+  --blue-light: #00c3ff77;
   --black: #000000;
   --black-t: #000000e3;
   --green: #00cc00;
   --red: #e60000;
+}
+html {
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;

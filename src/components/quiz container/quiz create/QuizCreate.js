@@ -18,12 +18,20 @@ export default function QuizCreate() {
   const [createAnswer, setCreateAnswer] = useState("");
   const [tempQuiz, setTempQuiz] = useState([]);
   const [tempAnswer, setTempAnswer] = useState([]);
-
+  useEffect(() => {
+    if (document.getElementById("quizNameInput")) {
+      document.getElementById("quizNameInput").focus();
+    }
+  }, []);
+  useEffect(() => {
+    if (document.getElementById("questionInputId")) {
+      document.getElementById("questionInputId").focus();
+    }
+  }, [displaySecondSection]);
   const handleFirstSectionDisplay = () => {
     setDisoplayFirstSection(false);
     setDisoplaySecondSection(true);
   };
-
   const handleTextAreaResize = (e) => {
     const h = document.getElementById(e.target.id);
     h.style.height = "auto";
@@ -242,6 +250,9 @@ export default function QuizCreate() {
         ai.toggle("activeInput");
       }
     });
+    if (document.getElementById("questionInputId")) {
+      document.getElementById("questionInputId").focus();
+    }
   };
   return (
     <>
@@ -265,6 +276,7 @@ export default function QuizCreate() {
                 <label className="mt-3 mb-3">Enter Quiz Name</label>
                 <input
                   className="w-5/6"
+                  id="quizNameInput"
                   type="text"
                   minLength="1"
                   maxLength="20"
