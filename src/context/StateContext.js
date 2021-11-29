@@ -33,6 +33,11 @@ export const StateProvider = ({ children }) => {
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
+  const [myQuizEdit, setMyQuizEdit] = useState(false);
+  const [myQuizEditCon, setMyQuizEditCon] = useState({
+    quizCode: "",
+    quizName: "",
+  });
   const [tempQuizAnswer, setTempQuizAnswer] = useState({
     quizAnswer: [],
   });
@@ -94,6 +99,10 @@ export const StateProvider = ({ children }) => {
     setDisplaySaveQuiz,
     myQuizzes,
     setMyQuizzes,
+    myQuizEdit,
+    setMyQuizEdit,
+    myQuizEditCon,
+    setMyQuizEditCon,
   };
 
   return (

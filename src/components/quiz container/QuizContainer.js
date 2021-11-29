@@ -29,7 +29,7 @@ export default function QuizContainer() {
     <>
       {displayQuizCreate ? (
         <>
-          <Back option={2} />
+          <Back option={1} />
           <QuizCreate />
         </>
       ) : (

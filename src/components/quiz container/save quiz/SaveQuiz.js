@@ -6,9 +6,11 @@ import rn from "random-number";
 import copySvg from "../../media/copy.svg";
 import copiedSvg from "../../media/copied.svg";
 import "./SaveQuiz.scss";
+import useFunction from "../../../hooks/useFunction";
 
 export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
   const { setDisplaySaveQuiz, setDisplayQuizCreate } = useStateContext();
+  const { handleMyQuizzes } = useFunction();
   const [copied, setCopied] = useState(false);
   const [code, setCode] = useState();
   const { currentUser } = useAuth();
@@ -87,9 +89,14 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
                 quizCode: quizCode,
               };
               arr.push(t);
-              database.users.doc(currentUser.uid).update({
-                quizzes: arr,
-              });
+              database.users
+                .doc(currentUser.uid)
+                .update({
+                  quizzes: arr,
+                })
+                .then(() => {
+                  handleMyQuizzes();
+                });
             });
           }
         });

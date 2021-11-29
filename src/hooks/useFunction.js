@@ -274,6 +274,41 @@ export default function useFunction() {
     }
     return com;
   };
+  //
+  const handleDeleteQuiz = async (quizCode) => {
+    let com;
+    if (currentUser) {
+      com = await database.users
+        .doc(currentUser.uid)
+        .get()
+        .then(async (doc) => {
+          if (doc.exists) {
+            if (doc.data().quizzes) {
+              let arr = doc.data().quizzes;
+              for (let i = 0; i < arr.length; i++) {
+                if (quizCode === arr[i].quizCode) {
+                  arr.splice(i, i + 1);
+                  await database.users
+                    .doc(currentUser.uid)
+                    .update({
+                      quizzes: arr,
+                    })
+                    .then(() => {
+                      database.quizs
+                        .doc(quizCode.toString())
+                        .delete()
+                        .then(() => {
+                          database.answers.doc(quizCode.toString()).delete();
+                          setMyQuizzes(arr);
+                        });
+                    });
+                }
+              }
+            }
+          }
+        });
+    }
+  };
   return {
     handleBackSmooth,
     handleBack,
@@ -287,5 +322,6 @@ export default function useFunction() {
     handleQuizSearch,
     handelQuizCreateDisplay,
     handleMyQuizzes,
+    handleDeleteQuiz,
   };
 }

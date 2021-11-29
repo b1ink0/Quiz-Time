@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useStateContext } from "../../../context/StateContext";
 import SaveQuiz from "../save quiz/SaveQuiz";
 import "./QuizCreate.scss";
+import editSvg from "../../media/edit.svg";
+import QuizCreateFirstSection from "./QuizCreateFirstSection";
 
 export default function QuizCreate() {
-  const [displayFirstSection, setDisoplayFirstSection] = useState(true);
-  const [displaySecondSection, setDisoplaySecondSection] = useState(false);
   const { displaySaveQuiz, setDisplaySaveQuiz } = useStateContext();
+  const [displayFirstSection, setDisplayFirstSection] = useState(true);
+  const [displaySecondSection, setDisplaySecondSection] = useState(false);
   const [questionCount, setQuestionCount] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [createQuizName, setCreateQuizName] = useState("");
@@ -18,6 +20,7 @@ export default function QuizCreate() {
   const [createAnswer, setCreateAnswer] = useState("");
   const [tempQuiz, setTempQuiz] = useState([]);
   const [tempAnswer, setTempAnswer] = useState([]);
+  const quizNameInputRef = useRef();
   useEffect(() => {
     if (document.getElementById("quizNameInput")) {
       document.getElementById("quizNameInput").focus();
@@ -29,8 +32,8 @@ export default function QuizCreate() {
     }
   }, [displaySecondSection]);
   const handleFirstSectionDisplay = () => {
-    setDisoplayFirstSection(false);
-    setDisoplaySecondSection(true);
+    setDisplayFirstSection(false);
+    setDisplaySecondSection(true);
   };
   const handleTextAreaResize = (e) => {
     const h = document.getElementById(e.target.id);
@@ -254,6 +257,10 @@ export default function QuizCreate() {
       document.getElementById("questionInputId").focus();
     }
   };
+  const handleEditQuizName = () => {
+    setDisplayFirstSection(true);
+    setDisplaySecondSection(false);
+  };
   return (
     <>
       {displaySaveQuiz && (
@@ -270,33 +277,22 @@ export default function QuizCreate() {
           onSubmit={(e) => handleAdd(e)}
         >
           {displayFirstSection && (
-            <>
-              <h1 className="w-full pb-3">Create Quiz</h1>
-              <div className="quizNameInput w-full flex justify-center items-center flex-col">
-                <label className="mt-3 mb-3">Enter Quiz Name</label>
-                <input
-                  className="w-5/6"
-                  id="quizNameInput"
-                  type="text"
-                  minLength="1"
-                  maxLength="20"
-                  value={createQuizName}
-                  onChange={(e) => setCreateQuizName(e.target.value)}
-                  required
-                />
-                <button
-                  onClick={() => handleFirstSectionDisplay()}
-                  disabled={createQuizName === "" ? true : false}
-                  className={createQuizName === "" ? "nextBtn" : undefined}
-                >
-                  Next
-                </button>
-              </div>
-            </>
+            <QuizCreateFirstSection
+              quizNameInputRef={quizNameInputRef}
+              createQuizName={createQuizName}
+              setCreateQuizName={setCreateQuizName}
+              handleFirstSectionDisplay={handleFirstSectionDisplay}
+            />
           )}
           {displaySecondSection && (
             <>
-              <h1>{createQuizName}</h1>
+              <button
+                className="w-6 h-6 absolute top-4 right-4"
+                onClick={() => handleEditQuizName()}
+              >
+                <img src={editSvg} />
+              </button>
+              <h1 className="w-3/5 break-words">{createQuizName}</h1>
               <div className="flex justify-center items-center flex-col w-full mt-3">
                 <div className="textAreaCon flex justify-center items-center flex-col w-full">
                   <label>Question-{currentQuestion}</label>
