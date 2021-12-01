@@ -72,11 +72,49 @@ export default function QuizCreate() {
   const handleRemove = () => {
     if (currentQuestion === 1 && questionCount === 2) {
       handleFirst();
+      console.log("1");
+    } else if (currentQuestion === 1 && questionCount > 2) {
+      console.log("2");
+
+      let currentQ = tempQuiz;
+      let currentA = tempAnswer;
+      currentQ.shift();
+      currentA.shift();
+      console.log(currentQ, currentA);
+      setTempQuiz(currentQ);
+      setTempAnswer(currentA);
+      setTimeout(() => {
+        setQuestionCount(questionCount - 1);
+      }, 100);
+      if (questionCount === 3) {
+        setCreateQuizQuestion(currentQ[0].q);
+        setCreateOptionA(currentQ[0].a);
+        setCreateOptionB(currentQ[0].b);
+        setCreateOptionC(currentQ[0].c);
+        setCreateOptionD(currentQ[0].d);
+        setCreateAnswer(currentA[0].answer);
+        let arr = ["a", "b", "c", "d"];
+        arr.forEach((o) => {
+          let ai = document.getElementById(o).classList;
+          let input = document.getElementById(`${currentA[0].answer}i`);
+          if (o === currentA[0].answer) {
+            if (ai[1] === undefined) {
+              input.checked = true;
+              ai.toggle("activeInput");
+            }
+          } else {
+            if (ai[1] === "activeInput") {
+              ai.toggle("activeInput");
+            }
+          }
+        });
+      }
+      // handleNextQ();
     } else {
-      console.log("run");
-      setTempQuiz(tempQuiz.filter((t) => t != tempQuiz[currentQuestion - 1]));
+      console.log("3");
+      setTempQuiz(tempQuiz.filter((t) => t !== tempQuiz[currentQuestion - 1]));
       setTempAnswer(
-        tempAnswer.filter((t) => t != tempAnswer[currentQuestion - 1])
+        tempAnswer.filter((t) => t !== tempAnswer[currentQuestion - 1])
       );
       handlePrevQ();
       setQuestionCount(questionCount - 1);
@@ -260,6 +298,7 @@ export default function QuizCreate() {
   const handleEditQuizName = () => {
     setDisplayFirstSection(true);
     setDisplaySecondSection(false);
+    console.log("why");
   };
   return (
     <>
@@ -288,9 +327,10 @@ export default function QuizCreate() {
             <>
               <button
                 className="w-6 h-6 absolute top-4 right-4"
+                type="button"
                 onClick={() => handleEditQuizName()}
               >
-                <img src={editSvg} />
+                <img src={editSvg} alt="edit" />
               </button>
               <h1 className="w-3/5 break-words">{createQuizName}</h1>
               <div className="flex justify-center items-center flex-col w-full mt-3">

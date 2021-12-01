@@ -3,23 +3,26 @@
 .quizSearch {
   @include neonBorder;
   form {
-    input::placeholder {
-      text-shadow: none;
-      font-size: 20px;
-    }
-    input {
-      @include inputBorder;
-      font-size: 22px;
-      height: 40px;
+    div {
+      input {
+        @include inputBorder;
+        font-size: 22px;
+        height: 40px;
+      }
+      span {
+        text-shadow: none;
+      }
     }
     button {
       @include submitButton;
       margin-bottom: 24px;
       width: 145px;
-      height: 40px;
+      height: 35px;
       animation: none;
       opacity: 1;
       margin: 20px 0 25px 0;
+      padding-bottom: 2px;
+      font-size: 20px;
     }
   }
 }

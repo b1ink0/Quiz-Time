@@ -29,7 +29,6 @@ export default function useFunction() {
     setUserScore,
     setTotalScore,
     setQuizGiven,
-    myQuizzes,
     setMyQuizzes,
   } = useStateContext();
   const { currentUser } = useAuth();
@@ -248,7 +247,10 @@ export default function useFunction() {
     }
   };
   //
-  const handleQuizSearch = () => {};
+  const handleQuizSearch = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
   //
   const handelQuizCreateDisplay = () => {
     if (displayQuizCreate) {
