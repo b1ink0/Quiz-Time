@@ -13,6 +13,16 @@
         text-shadow: none;
       }
     }
+    .quizCodeInvalid {
+      h1 {
+        text-shadow: 0 0 5px var(--red), 2px 2px 2px rgb(206 89 55 / 0%);
+      }
+    }
+    .quizSubmitted {
+      h1 {
+        text-shadow: 0 0 5px var(--green), 2px 2px 2px rgb(206 89 55 / 0%);
+      }
+    }
     button {
       @include submitButton;
       margin-bottom: 24px;
@@ -20,9 +30,14 @@
       height: 35px;
       animation: none;
       opacity: 1;
-      margin: 20px 0 25px 0;
+      margin: 10px 0 25px 0;
       padding-bottom: 2px;
       font-size: 20px;
     }
+  }
+  .dash {
+    height: 3px;
+    background: var(--blue);
+    box-shadow: 0px 0px 8px 1px #00b5ff;
   }
 }

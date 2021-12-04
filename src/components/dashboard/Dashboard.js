@@ -2,58 +2,25 @@ import React, { useState, useEffect } from "react";
 import { useStateContext } from "../../context/StateContext";
 import "./Dashboard.scss";
 import Quiz from "../quizs/Quiz";
-import Loading from "../sub-components/Loading";
 import ProfileInput from "../profile/ProfileInput";
 import Navbar from "../navbar/Navbar";
 import Alert from "../sub-components/Alert";
 import Back from "../sub-components/Back";
 import useFunction from "../../hooks/useFunction";
 import QuizContainer from "../quiz container/QuizContainer";
+import Loading from "../sub-components/Loading";
 
 export default function Dashboard() {
   const [navBurger, setNavBurger] = useState(true);
-  const {
-    handleProfileExist,
-    handleQuizShare,
-    handleSetQuiz,
-    handleSetQuizData,
-    handleMyQuizzes,
-  } = useFunction();
-  const {
-    profileExist,
-    alert,
-    quizExist,
-    displayQuiz,
-    setDisplayQuiz,
-    quizShareAnswerName,
-    quizShareResultName,
-    update,
-    setUpdate,
-    loading,
-    setLoading,
-  } = useStateContext("");
+  const { handleProfileExist, handleMyQuizzes } = useFunction();
+  const { profileExist, alert, displayQuiz, setLoading, loading } =
+    useStateContext("");
 
   useEffect(() => {
-    setLoading(true);
     handleProfileExist();
     handleMyQuizzes();
+    setLoading(true);
   }, []);
-
-  useEffect(() => {
-    handleQuizShare();
-  }, [profileExist]);
-
-  useEffect(() => {
-    handleSetQuiz();
-  }, [quizShareAnswerName]);
-
-  useEffect(() => {
-    handleSetQuizData();
-  }, [quizShareResultName]);
-
-  useEffect(() => {
-    setDisplayQuiz(true);
-  }, [update, setUpdate]);
 
   return (
     <>
@@ -65,7 +32,7 @@ export default function Dashboard() {
       {navBurger && <Navbar />}
       {!profileExist ? <ProfileInput /> : displayQuiz && <QuizContainer />}
       {!displayQuiz && <Quiz />}
-      {loading && !quizExist && profileExist && <Loading flag={false} />}
+      {loading && <Loading />}
     </>
   );
 }

@@ -14,14 +14,19 @@ export const StateProvider = ({ children }) => {
   const [qNo, setQNo] = useState(1);
   const [quiz, setQuiz] = useState([]);
   const [quizName, setQuizName] = useState("");
+  const [quizCode, setQuizCode] = useState("");
+  const [quizViewCode, setQuizViewCode] = useState("");
   const [displayQuiz, setDisplayQuiz] = useState(true);
   const [displayLeaderboard, setDisplayLeaderboard] = useState(false);
   const [displayQuizSearch, setDisplayQuizSearch] = useState(true);
   const [displayQuizStart, setDisplayQuizStart] = useState(true);
   const [displayQuizCreate, setDisplayQuizCreate] = useState(false);
   const [displaySaveQuiz, setDisplaySaveQuiz] = useState(false);
+  const [displayQuiz_1, setDisplayQuiz_2] = useState(false);
+  const [displayGivenQuiz, setDisplayGivenQuiz] = useState(false);
   const [quizComplete, setQuizComplete] = useState(false);
   const [quizGiven, setQuizGiven] = useState(true);
+  const [quizGivenName, setQuizGivenName] = useState("");
   const [tempAnswer, setTempAnswer] = useState([]);
   const [quizShareAnswerName, setQuizShareAnswerName] = useState("");
   const [leaderboard, setLeaderboard] = useState([]);
@@ -32,6 +37,7 @@ export const StateProvider = ({ children }) => {
   const [totalScore, setTotalScore] = useState(0);
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loading_1, setLoading_1] = useState(false);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
   const [myQuizEdit, setMyQuizEdit] = useState(false);
   const [myQuizEditCon, setMyQuizEditCon] = useState({
@@ -42,6 +48,8 @@ export const StateProvider = ({ children }) => {
     quizAnswer: [],
   });
   const [myQuizzes, setMyQuizzes] = useState([]);
+  const [givenQuizzes, setGivenQuizzes] = useState([]);
+
   const value = {
     logInCheck,
     alert,
@@ -103,6 +111,20 @@ export const StateProvider = ({ children }) => {
     setMyQuizEdit,
     myQuizEditCon,
     setMyQuizEditCon,
+    displayQuiz_1,
+    setDisplayQuiz_2,
+    quizCode,
+    setQuizCode,
+    loading_1,
+    setLoading_1,
+    givenQuizzes,
+    setGivenQuizzes,
+    displayGivenQuiz,
+    setDisplayGivenQuiz,
+    quizViewCode,
+    setQuizViewCode,
+    quizGivenName,
+    setQuizGivenName,
   };
 
   return (

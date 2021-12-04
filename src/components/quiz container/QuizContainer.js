@@ -3,8 +3,10 @@ import { useStateContext } from "../../context/StateContext";
 import useFunction from "../../hooks/useFunction";
 import Leaderboard from "../leaderboard/Leaderboard";
 import MyQuizzes from "../my quizzes/MyQuizzes";
+import Quiz from "../quizs/Quiz";
 import Back from "../sub-components/Back";
 import Loading from "../sub-components/Loading";
+import ViewGivenQuiz from "./given quizzes/ViewGivenQuiz";
 import QuizCreateStart from "./quiz create start/QuizCreateStart";
 import QuizCreate from "./quiz create/QuizCreate";
 import QuizSearch from "./quiz join/QuizJoin";
@@ -23,6 +25,8 @@ export default function QuizContainer() {
     displayQuizStart,
     displayQuizCreate,
     myQuizzes,
+    displayQuiz_1,
+    displayGivenQuiz,
   } = useStateContext();
   const { handleLeaderboard, handleQuizGiven } = useFunction();
   return (
@@ -34,20 +38,34 @@ export default function QuizContainer() {
         </>
       ) : (
         <>
-          {displayQuizSearch && <QuizSearch />}
-          {myQuizzes[0] === undefined ? (
+          {displayQuiz_1 ? (
             <>
-              <div className="quizContainerHr w-full flex justify-center items-center mt-5 mb-5">
-                <span className="w-10/12 rounded-full"></span>
-                <h1 className="text-center">OR</h1>
-                <span className="w-10/12 rounded-full"></span>
-              </div>
-              {displayQuizStart && <QuizCreateStart />}
+              <Back option={2} />
+              <Quiz />
+            </>
+          ) : displayGivenQuiz ? (
+            <>
+              <Back option={3} />
+              <ViewGivenQuiz />
             </>
           ) : (
             <>
-              {displayQuizStart && <QuizCreateStart margin={true} />}
-              <MyQuizzes />
+              {displayQuizSearch && <QuizSearch />}
+              {myQuizzes[0] === undefined ? (
+                <>
+                  <div className="quizContainerHr w-full flex justify-center items-center mt-5 mb-5">
+                    <span className="w-10/12 rounded-full"></span>
+                    <h1 className="text-center">OR</h1>
+                    <span className="w-10/12 rounded-full"></span>
+                  </div>
+                  {displayQuizStart && <QuizCreateStart />}
+                </>
+              ) : (
+                <>
+                  {displayQuizStart && <QuizCreateStart margin={true} />}
+                  <MyQuizzes />
+                </>
+              )}
             </>
           )}
         </>

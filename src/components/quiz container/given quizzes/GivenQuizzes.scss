@@ -1,0 +1,11 @@
+@import "../../themes/mixin.scss";
+.givenQuizzesCon {
+  .givenQuizzes {
+    button {
+      @include normalButton;
+      &:hover {
+        @include normalButtonHover;
+      }
+    }
+  }
+}

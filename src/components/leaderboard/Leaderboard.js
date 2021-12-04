@@ -4,29 +4,28 @@ import "./Leaderboard.scss";
 import rank_1 from "./media/rank_1.svg";
 import rank_2 from "./media/rank_2.svg";
 import rank_3 from "./media/rank_3.svg";
+import edit from "../media/edit.svg";
 
-export default function Leaderboard() {
-  const { leaderboard, setDisplayLeaderboard } = useStateContext();
-  const handleLeaderboard = () => {
-    document.getElementById("leaderboardCon").classList.toggle("fadeOut");
-    setTimeout(() => {
-      setDisplayLeaderboard(false);
-    }, 400);
+export default function Leaderboard({ setDisplayDelete }) {
+  const { leaderboard, quizGivenName } = useStateContext();
+  const handleClick = () => {
+    setDisplayDelete(true);
   };
   return (
     <div
       className="leaderboardCon flex justify-center items-center flex-col w-full"
       id="leaderboardCon"
     >
-      <div className="leaderboard flex justify-center items-center flex-col">
-        <button
-          className="flex justify-center items-center"
-          onClick={() => handleLeaderboard()}
-        >
-          <span></span>
-          <span></span>
-        </button>
+      <div className="leaderboard flex justify-center items-center flex-col w-full relative">
+        <h1 className="w-10/12 text-center pb-2 mb-2">{quizGivenName}</h1>
         <h1>Leaderboard</h1>
+        <button
+          type="button"
+          className="absolute flex justify-center items-center"
+          onClick={() => handleClick()}
+        >
+          <img src={edit} alt="edit" className="pointer-events-none" />
+        </button>
         <table className="flex justify-between items-center w-full text-center flex-col">
           <tbody className="flex justify-between items-center w-full text-center flex-col">
             <tr>

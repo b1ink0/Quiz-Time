@@ -5,8 +5,15 @@ import Alert from "./Alert";
 import "./Back.scss";
 
 export default function Back({ option }) {
-  const { setDisplayQuizCreate } = useStateContext();
-  const { handleDirectBack } = useFunction();
+  const {
+    quizComplete,
+    setQuiz,
+    setTempAnswer,
+    setQuizComplete,
+    setQuizCode,
+    setDisplayQuiz_2,
+    setDisplayGivenQuiz,
+  } = useStateContext();
   const [displayAlert, setDisplayAlert] = useState(false);
   const handleAlert = () => {
     if (!displayAlert) {
@@ -19,7 +26,18 @@ export default function Back({ option }) {
         handleAlert();
         break;
       case 2:
-        setDisplayQuizCreate(false);
+        if (quizComplete) {
+          setQuiz([]);
+          setTempAnswer([]);
+          setQuizComplete(false);
+          setQuizCode("");
+          setDisplayQuiz_2(false);
+        } else {
+          handleAlert();
+        }
+        break;
+      case 3:
+        setDisplayGivenQuiz(false);
         break;
       default:
         break;
@@ -27,7 +45,9 @@ export default function Back({ option }) {
   };
   return (
     <>
-      {displayAlert && <Alert setDisplayAlert={setDisplayAlert} />}
+      {displayAlert && (
+        <Alert setDisplayAlert={setDisplayAlert} option={option} />
+      )}
       <div
         className="back absolute flex justify-center items-center flex-col"
         onClick={() => handleBack()}

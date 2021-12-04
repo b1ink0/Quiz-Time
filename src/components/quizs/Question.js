@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useStateContext } from "../../context/StateContext";
+import useFunction from "../../hooks/useFunction";
 import "../dashboard/Dashboard.scss";
 import "./Quiz.scss";
 
 export default function Question({ quiz }) {
-  const { tempAnswer, setTempAnswer, setQuizComplete } = useStateContext();
+  const { tempAnswer, setTempAnswer, setQuizComplete, setLoading } =
+    useStateContext();
+  const { handleSubmission } = useFunction();
   const [submitBtnOn, setSubmitBtnOn] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [quizLength, setQuizLength] = useState(0);
@@ -106,10 +109,11 @@ export default function Question({ quiz }) {
       }
     });
     if (solved === quiz.length) {
-      setSubmitBtnOn(true);
-      console.log("submited");
       setTempAnswer(arr);
-      setQuizComplete(true);
+      setSubmitBtnOn(true);
+      // setQuizComplete(true);
+      handleSubmission();
+      setLoading(true);
     }
   };
   const handlePrevBtn = (e) => {

@@ -2,11 +2,31 @@ import React, { useRef, useState } from "react";
 import { useStateContext } from "../../context/StateContext";
 import "./Alert.scss";
 
-export default function Alert({ setDisplayAlert }) {
-  const { setDisplayQuizCreate } = useStateContext();
+export default function Alert({ setDisplayAlert, option }) {
+  const {
+    setDisplayQuizCreate,
+    setDisplayQuiz_2,
+    setQuiz,
+    setTempAnswer,
+    setQuizComplete,
+    setQuizCode,
+  } = useStateContext();
   const preBackConRef = useRef();
   const handleYes = () => {
-    setDisplayQuizCreate(false);
+    switch (option) {
+      case 1:
+        setDisplayQuizCreate(false);
+        break;
+      case 2:
+        setQuiz([]);
+        setTempAnswer([]);
+        setQuizComplete(false);
+        setQuizCode("");
+        setDisplayQuiz_2(false);
+        break;
+      default:
+        break;
+    }
   };
   const handleNo = () => {
     preBackConRef.current.classList.toggle("fadeOut");

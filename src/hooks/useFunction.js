@@ -9,13 +9,7 @@ export default function useFunction() {
     update,
     quizGiven,
     setProfileExist,
-    setQuizShareAnswerName,
-    setQuizShareName,
-    setQuizShareResultName,
-    quizShareName,
     setQuiz,
-    setQuizName,
-    setQuizExist,
     setDisplayQuiz,
     displayLeaderboard,
     setDisplayLeaderboard,
@@ -26,10 +20,19 @@ export default function useFunction() {
     setLeaderboard,
     setLoading,
     setLeaderboardLoading,
-    setUserScore,
-    setTotalScore,
-    setQuizGiven,
     setMyQuizzes,
+    setDisplayQuiz_2,
+    quizComplete,
+    quizCode,
+    tempAnswer,
+    setScore,
+    setQuizComplete,
+    givenQuizzes,
+    setGivenQuizzes,
+    quizViewCode,
+    setQuizViewCode,
+    setDisplayGivenQuiz,
+    setQuizGivenName,
   } = useStateContext();
   const { currentUser } = useAuth();
   //
@@ -40,6 +43,7 @@ export default function useFunction() {
         .doc(currentUser.uid)
         .get()
         .then((doc) => {
+          setLoading(false);
           if (doc.exists) {
             if (doc.data()) {
               if (doc.data().uid === currentUser.uid) {
@@ -55,96 +59,6 @@ export default function useFunction() {
     return com;
   };
   //
-  const handleQuizShare = () => {
-    let com;
-    if (currentUser) {
-      com = database.quizShare
-        .doc("quizShare")
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            if (doc.data()) {
-              setQuizShareName(doc.data().quizShareContainer.quizName);
-              setQuizShareAnswerName(
-                doc.data().quizShareContainer.quizAnswerName
-              );
-              setQuizShareResultName(
-                doc.data().quizShareContainer.quizResultName
-              );
-            }
-            return;
-          } else {
-          }
-        });
-    }
-    return com;
-  };
-  //
-  const handleSetQuiz = () => {
-    let com;
-    if (quizShareName !== "") {
-      if (currentUser) {
-        com = database.quizs
-          .doc(quizShareName)
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              if (doc.data()) {
-                setQuiz(doc.data().quizContainer.quiz);
-                setQuizName(doc.data().quizContainer.quizName);
-              }
-              return;
-            } else {
-              setQuizExist(false);
-            }
-          });
-      }
-    }
-    return com;
-  };
-  //
-  const handleSetQuizData = () => {
-    let com;
-    if (quizShareResultName !== "") {
-      if (currentUser) {
-        com = database.results
-          .doc(quizShareResultName)
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              if (doc.data()) {
-                if (
-                  doc.data().quizResultContainer.submissions[0] !== undefined
-                ) {
-                  let condition = false;
-                  doc.data().quizResultContainer.submissions.forEach((r) => {
-                    if (r.uid === currentUser.uid) {
-                      condition = true;
-                      setUserScore(r.userScore);
-                      setTotalScore(r.totalScore);
-                    }
-                  });
-                  setLoading(false);
-                  if (condition === false) {
-                    setQuizExist(true);
-                    setQuizGiven(false);
-                  } else {
-                    setQuizExist(true);
-                    setQuizGiven(true);
-                  }
-                } else {
-                  setQuizExist(true);
-                  setQuizGiven(false);
-                }
-              }
-              return;
-            } else {
-            }
-          });
-      }
-    }
-    return com;
-  };
   const handleBackSmooth = () => {
     document.querySelector(".preBack").classList.toggle("fadeOut");
     document.querySelector(".preBackCon").classList.toggle("fadeOut2");
@@ -175,81 +89,104 @@ export default function useFunction() {
     }
   };
   //
-  const handleLeaderboard = () => {
+  const handleLeaderboard = (quizCode) => {
     let com;
-    if (!displayLeaderboard) {
-      setLeaderboardLoading(true);
-      if (currentUser) {
-        if (quizShareAnswerName) {
-          com = database.results
-            .doc(quizShareResultName)
-            .get()
-            .then((doc) => {
-              if (doc.exists) {
-                if (doc.data()) {
-                  let array = [];
-                  let arrayLength =
-                    doc.data().quizResultContainer.submissions.length;
-                  doc.data().quizResultContainer.submissions.forEach((s) => {
-                    let temp = {
-                      username: s.username,
-                      userScore: s.userScore,
-                      totalScore: s.totalScore,
-                    };
-                    array.push(temp);
-                  });
-                  if (arrayLength === array.length) {
-                    if (array[0] !== undefined) {
-                      for (let i = 0; i < arrayLength; i++) {
-                        for (let j = 0; j < arrayLength - i - 1; j++) {
-                          if (array[j].userScore < array[j + 1].userScore) {
-                            let temp = array[j];
-                            array[j] = array[j + 1];
-                            array[j + 1] = temp;
-                          }
+    setLeaderboardLoading(true);
+    if (currentUser) {
+      if (quizCode) {
+        com = database.results
+          .doc(quizCode)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              if (doc.data()) {
+                let array = [];
+                let arrayLength =
+                  doc.data().quizResultContainer.submissions.length;
+                doc.data().quizResultContainer.submissions.forEach((s) => {
+                  let temp = {
+                    username: s.username,
+                    userScore: s.userScore,
+                    totalScore: s.totalScore,
+                  };
+                  array.push(temp);
+                });
+                if (arrayLength === array.length) {
+                  if (array[0] !== undefined) {
+                    for (let i = 0; i < arrayLength; i++) {
+                      for (let j = 0; j < arrayLength - i - 1; j++) {
+                        if (array[j].userScore < array[j + 1].userScore) {
+                          let temp = array[j];
+                          array[j] = array[j + 1];
+                          array[j + 1] = temp;
                         }
-                      }
-                      let rank = 1;
-                      let tempScore = array[0].userScore;
-                      for (let i = 0; i < arrayLength; i++) {
-                        if (array[i].userScore === tempScore) {
-                          array[i] = {
-                            ...array[i],
-                            rank: rank,
-                          };
-                        } else {
-                          rank++;
-                          tempScore = array[i].userScore;
-                          array[i] = {
-                            ...array[i],
-                            rank: rank,
-                          };
-                        }
-                      }
-                      setLeaderboard(array);
-                      if (!displayLeaderboard) {
-                        setLeaderboardLoading(false);
-                        setDisplayLeaderboard(true);
                       }
                     }
+                    let rank = 1;
+                    let tempScore = array[0].userScore;
+                    for (let i = 0; i < arrayLength; i++) {
+                      if (array[i].userScore === tempScore) {
+                        array[i] = {
+                          ...array[i],
+                          rank: rank,
+                        };
+                      } else {
+                        rank++;
+                        tempScore = array[i].userScore;
+                        array[i] = {
+                          ...array[i],
+                          rank: rank,
+                        };
+                      }
+                    }
+                    setLeaderboard(array);
+                    setQuizGivenName(doc.data().quizResultContainer.quizName);
                   }
                 }
-                return com;
               }
-            });
-        }
+            }
+          });
       }
-    } else if (displayLeaderboard) {
-      document.getElementById("leaderboardCon").classList.toggle("fadeOut");
-      setTimeout(() => {
-        setDisplayLeaderboard(false);
-      }, 400);
     }
+    return com;
   };
   //
-  const handleQuizSearch = (e) => {
+  const handleQuizSearch = (e, quizCode, setFlag_1, setFlag_2) => {
     e.preventDefault();
-    console.log(e);
+    setLoading(true);
+    let com = database.quizs
+      .doc(quizCode)
+      .get()
+      .then((doc_1) => {
+        if (doc_1.exists) {
+          database.results
+            .doc(quizCode)
+            .get()
+            .then((doc) => {
+              let condition = false;
+              doc.data().quizResultContainer.submissions.forEach((r) => {
+                if (r.uid === currentUser.uid) {
+                  condition = true;
+                }
+              });
+              if (condition) {
+                setFlag_1(false);
+                setFlag_2(true);
+                setLoading(false);
+              } else {
+                setQuiz(doc_1.data().quizContainer.quiz[0].quiz);
+                setFlag_1(false);
+                setDisplayQuiz_2(true);
+                setLoading(false);
+              }
+            });
+        } else {
+          setFlag_1(true);
+          setFlag_2(false);
+          setLoading(false);
+        }
+      });
+    return com;
   };
   //
   const handelQuizCreateDisplay = () => {
@@ -300,8 +237,17 @@ export default function useFunction() {
                         .doc(quizCode.toString())
                         .delete()
                         .then(() => {
-                          database.answers.doc(quizCode.toString()).delete();
-                          setMyQuizzes(arr);
+                          database.answers
+                            .doc(quizCode.toString())
+                            .delete()
+                            .then(() => {
+                              database.results
+                                .doc(quizCode.toString())
+                                .delete()
+                                .then(() => {
+                                  setMyQuizzes(arr);
+                                });
+                            });
                         });
                     });
                 }
@@ -311,19 +257,202 @@ export default function useFunction() {
         });
     }
   };
+  //
+  const handleScore = (data, user) => {
+    let count = 0;
+    console.log(data);
+    data.quizAnswerContainer.quizAnswer[0].quizAnswer.forEach((q) => {
+      if (q.answer === tempAnswer[q.qNo - 1].answer) {
+        count++;
+        console.log(count);
+      }
+    });
+    setScore(count);
+    setLoading(false);
+    setQuizComplete(true);
+    let username = user.fullName.username;
+    let com;
+    if (currentUser) {
+      com = database.results
+        .doc(quizCode)
+        .get()
+        .then((doc) => {
+          let arr = doc.data().quizResultContainer.submissions;
+          arr.push({
+            uid: currentUser.uid,
+            quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
+            userScore: count,
+            totalScore: tempAnswer.length,
+            username: username,
+          });
+          if (doc.data().quizResultContainer.submissions[0] !== undefined) {
+            let condition = false;
+            doc.data().quizResultContainer.submissions.forEach((r) => {
+              if (r.uid === currentUser.uid) {
+                condition = true;
+              }
+            });
+            if (condition === false) {
+              database.results
+                .doc(quizCode)
+                .update({
+                  quizResultContainer: {
+                    quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
+                    submissions: arr,
+                  },
+                })
+                .then(() => {
+                  let temp = database.users
+                    .doc(currentUser.uid)
+                    .get()
+                    .then((doc) => {
+                      return doc.data().givenQuizzes;
+                    });
+                  temp.then((data_1) => {
+                    let arr = [];
+                    if (data !== undefined) {
+                      arr = data_1;
+                    }
+                    console.log(data);
+                    let t = {
+                      quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
+                      quizCode: quizCode,
+                    };
+                    arr.push(t);
+                    database.users.doc(currentUser.uid).update({
+                      givenQuizzes: arr,
+                    });
+                  });
+                });
+            }
+          } else {
+            let condition = false;
+            doc.data().quizResultContainer.submissions.forEach((r) => {
+              if (r.uid === currentUser.uid) {
+                condition = true;
+              }
+            });
+            if (condition === false) {
+              database.results
+                .doc(quizCode)
+                .update({
+                  quizResultContainer: {
+                    quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
+                    submissions: arr,
+                  },
+                })
+                .then(() => {
+                  let temp = database.users
+                    .doc(currentUser.uid)
+                    .get()
+                    .then((doc) => {
+                      return doc.data().givenQuizzes;
+                    });
+                  temp.then((data_1) => {
+                    let arr = [];
+                    if (data_1 !== undefined) {
+                      arr = data_1;
+                    }
+                    let t = {
+                      quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
+                      quizCode: quizCode,
+                    };
+                    arr.push(t);
+                    database.users.doc(currentUser.uid).update({
+                      givenQuizzes: arr,
+                    });
+                  });
+                });
+            }
+          }
+          count = 0;
+        });
+    }
+    return com;
+  };
+  //
+  const handleSubmission = () => {
+    let com;
+    console.log(quizComplete);
+    if (currentUser) {
+      com = database.answers
+        .doc(quizCode)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            console.log(doc.data().quizAnswerContainer.quizAnswer[0].quizName);
+            database.users
+              .doc(currentUser.uid)
+              .get()
+              .then((user) => {
+                if (user.exists) {
+                  if (user.data()) {
+                    handleScore(doc.data(), user.data());
+                  }
+                }
+              });
+          }
+        });
+    }
+    return com;
+  };
+  //
+  const handleGivenQuizzes = () => {
+    let com;
+    if (currentUser) {
+      com = database.users
+        .doc(currentUser.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            setGivenQuizzes(doc.data().givenQuizzes);
+          }
+        });
+    }
+    return com;
+  };
+  //
+  const handleViewGivenQuiz = (quizCode) => {
+    setQuizViewCode(quizCode);
+    setDisplayGivenQuiz(true);
+    handleLeaderboard(quizCode);
+  };
+  //
+  const handleDeleteGivenQuiz = (quizCode) => {
+    let com;
+    if (currentUser) {
+      com = database.users
+        .doc(currentUser.uid)
+        .get()
+        .then((doc) => {
+          let arr = doc.data().givenQuizzes;
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i].quizCode === quizCode) {
+              arr.splice(i, 1);
+              database.users.doc(currentUser.uid).update({
+                givenQuizzes: arr,
+              });
+              break;
+            }
+          }
+        });
+    }
+    return com;
+  };
   return {
     handleBackSmooth,
     handleBack,
     handleDirectBack,
     handleProfileExist,
-    handleQuizShare,
-    handleSetQuiz,
     handleQuizGiven,
     handleLeaderboard,
-    handleSetQuizData,
     handleQuizSearch,
     handelQuizCreateDisplay,
     handleMyQuizzes,
     handleDeleteQuiz,
+    handleSubmission,
+    handleGivenQuizzes,
+    handleViewGivenQuiz,
+    handleDeleteGivenQuiz,
   };
 }

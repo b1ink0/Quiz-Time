@@ -73,6 +73,12 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
               },
               uid: currentUser.uid,
             });
+            database.results.doc(quizCode.toString()).set({
+              quizResultContainer: {
+                quizName: quizName,
+                submissions: [],
+              },
+            });
             let temp = database.users
               .doc(currentUser.uid)
               .get()
