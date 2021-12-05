@@ -10,6 +10,7 @@ export const StateProvider = ({ children }) => {
   const [logInCheck, setLogInCheck] = useState(false);
   const [alert, setAlert] = useState(false);
   const [profileExist, setProfileExist] = useState(true);
+  const [username, setUsername] = useState("");
   const [quizExist, setQuizExist] = useState(false);
   const [qNo, setQNo] = useState(1);
   const [quiz, setQuiz] = useState([]);
@@ -57,6 +58,8 @@ export const StateProvider = ({ children }) => {
     setLogInCheck,
     profileExist,
     setProfileExist,
+    username,
+    setUsername,
     quizExist,
     setQuizExist,
     qNo,

@@ -1,3 +1,4 @@
+@import "../themes/mixin.scss";
 .navBurger {
   width: 40px;
   height: 40px;
@@ -130,6 +131,23 @@ nav {
     width: 100vw;
     height: calc(100% - 50vw);
     animation: navOption 0.5s ease 0.8s forwards;
+    .profileCon {
+      .usernameCon {
+        color: var(--white);
+      }
+    }
+    .aboutCon,
+    .contactCon,
+    .logOutCon {
+      button {
+        @include submitButton;
+        animation: none;
+        opacity: 1;
+        height: 40px;
+        margin: 40px 0 10px 0;
+        width: 80%;
+      }
+    }
   }
   span {
     // width: 70.7106781187vw;

@@ -3,6 +3,9 @@ import { useAuth } from "../../context/AuthContext";
 import { auth } from "../../firebase";
 import { useStateContext } from "../../context/StateContext";
 import "./Navbar.scss";
+import profile from "../media/profile.svg";
+import About from "./about/About";
+import Contact from "./contact/Contact";
 
 export default function Navbar() {
   const { logOut } = useAuth();
@@ -22,9 +25,12 @@ export default function Navbar() {
     setQuizShareAnswerName,
     setQuizShareResultName,
     setQuizGiven,
+    username,
   } = useStateContext();
   const [error, setError] = useState("");
   const [nav, setNav] = useState(false);
+  const [about, setAbout] = useState(false);
+  const [contact, setContact] = useState(false);
 
   const handleLogOut = async () => {
     try {
@@ -78,6 +84,8 @@ export default function Navbar() {
   };
   return (
     <>
+      {about && <About setAbout={setAbout} />}
+      {contact && <Contact setContact={setContact} />}
       <div
         className="navBurger absolute flex justify-evenly items-center flex-col"
         onClick={() => handleNav()}
@@ -88,11 +96,39 @@ export default function Navbar() {
       </div>
       {nav && (
         <nav id="nav" className="flex justify-center items-center flex-col">
-          <div className="navOption flex justify-center items-center flex-col">
-            <div className="logOutCon w-full flex justify-center items-center">
-              <button className="" onClick={handleLogOut}>
-                LogOut
+          <div className="navOption flex justify-start items-center flex-col">
+            <div className="profileCon w-full flex justify-center items-center flex-col mt-24">
+              <div className="profileImgCon w-24 h-24 rounded-full">
+                <img src={profile} alt="Profile" />
+              </div>
+              <div className="usernameCon w-full flex justify-center items-center mt-2">
+                <h1 className="font-bold tracking-wider text-2xl">
+                  {username}
+                </h1>
+              </div>
+            </div>
+            <div className="aboutCon w-full flex justify-center items-center">
+              <button
+                onClick={() => {
+                  setAbout(true);
+                  handleNav();
+                }}
+              >
+                About
               </button>
+            </div>
+            <div className="contactCon w-full flex justify-center items-center">
+              <button
+                onClick={() => {
+                  setContact(true);
+                  handleNav();
+                }}
+              >
+                Contact
+              </button>
+            </div>
+            <div className="logOutCon w-full flex justify-center items-center">
+              <button onClick={handleLogOut}>Log-out</button>
             </div>
           </div>
           <span></span>

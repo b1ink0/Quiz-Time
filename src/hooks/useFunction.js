@@ -11,12 +11,8 @@ export default function useFunction() {
     setProfileExist,
     setQuiz,
     setDisplayQuiz,
-    displayLeaderboard,
-    setDisplayLeaderboard,
     displayQuizCreate,
     setDisplayQuizCreate,
-    quizShareResultName,
-    quizShareAnswerName,
     setLeaderboard,
     setLoading,
     setLeaderboardLoading,
@@ -27,12 +23,11 @@ export default function useFunction() {
     tempAnswer,
     setScore,
     setQuizComplete,
-    givenQuizzes,
     setGivenQuizzes,
-    quizViewCode,
     setQuizViewCode,
     setDisplayGivenQuiz,
     setQuizGivenName,
+    setUsername,
   } = useStateContext();
   const { currentUser } = useAuth();
   //
@@ -47,6 +42,8 @@ export default function useFunction() {
           if (doc.exists) {
             if (doc.data()) {
               if (doc.data().uid === currentUser.uid) {
+                setUsername(doc.data().fullName.username);
+                console.log(doc.data().fullName.username);
               }
             }
             setProfileExist(true);
