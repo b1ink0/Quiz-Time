@@ -1,26 +1,28 @@
 {
   "files": {
-    "main.css": "/Quiz-Time/static/css/main.632c1bb0.chunk.css",
-    "main.js": "/Quiz-Time/static/js/main.9aa84125.chunk.js",
-    "main.js.map": "/Quiz-Time/static/js/main.9aa84125.chunk.js.map",
+    "main.css": "/Quiz-Time/static/css/main.9029f732.chunk.css",
+    "main.js": "/Quiz-Time/static/js/main.d204d823.chunk.js",
+    "main.js.map": "/Quiz-Time/static/js/main.d204d823.chunk.js.map",
     "runtime-main.js": "/Quiz-Time/static/js/runtime-main.d88b48ba.js",
     "runtime-main.js.map": "/Quiz-Time/static/js/runtime-main.d88b48ba.js.map",
-    "static/js/2.8dbc52a4.chunk.js": "/Quiz-Time/static/js/2.8dbc52a4.chunk.js",
-    "static/js/2.8dbc52a4.chunk.js.map": "/Quiz-Time/static/js/2.8dbc52a4.chunk.js.map",
+    "static/js/2.b31cce53.chunk.js": "/Quiz-Time/static/js/2.b31cce53.chunk.js",
+    "static/js/2.b31cce53.chunk.js.map": "/Quiz-Time/static/js/2.b31cce53.chunk.js.map",
     "index.html": "/Quiz-Time/index.html",
-    "static/css/main.632c1bb0.chunk.css.map": "/Quiz-Time/static/css/main.632c1bb0.chunk.css.map",
-    "static/js/2.8dbc52a4.chunk.js.LICENSE.txt": "/Quiz-Time/static/js/2.8dbc52a4.chunk.js.LICENSE.txt",
+    "static/css/main.9029f732.chunk.css.map": "/Quiz-Time/static/css/main.9029f732.chunk.css.map",
+    "static/js/2.b31cce53.chunk.js.LICENSE.txt": "/Quiz-Time/static/js/2.b31cce53.chunk.js.LICENSE.txt",
     "static/media/copied.739aac08.svg": "/Quiz-Time/static/media/copied.739aac08.svg",
     "static/media/copy.43b5481e.svg": "/Quiz-Time/static/media/copy.43b5481e.svg",
     "static/media/edit.1cd86f8f.svg": "/Quiz-Time/static/media/edit.1cd86f8f.svg",
+    "static/media/logo.c7241fb8.svg": "/Quiz-Time/static/media/logo.c7241fb8.svg",
+    "static/media/profile.e9e1f9ff.svg": "/Quiz-Time/static/media/profile.e9e1f9ff.svg",
     "static/media/rank_1.9cdeb73b.svg": "/Quiz-Time/static/media/rank_1.9cdeb73b.svg",
     "static/media/rank_2.3e55031c.svg": "/Quiz-Time/static/media/rank_2.3e55031c.svg",
     "static/media/rank_3.4d4a08b6.svg": "/Quiz-Time/static/media/rank_3.4d4a08b6.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.d88b48ba.js",
-    "static/js/2.8dbc52a4.chunk.js",
-    "static/css/main.632c1bb0.chunk.css",
-    "static/js/main.9aa84125.chunk.js"
+    "static/js/2.b31cce53.chunk.js",
+    "static/css/main.9029f732.chunk.css",
+    "static/js/main.d204d823.chunk.js"
   ]
 }
