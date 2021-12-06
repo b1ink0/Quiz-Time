@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 
 const StateContext = React.createContext();
 
@@ -38,6 +38,7 @@ export const StateProvider = ({ children }) => {
   const [totalScore, setTotalScore] = useState(0);
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const loadingRef = useRef(null);
   const [loading_1, setLoading_1] = useState(false);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
   const [myQuizEdit, setMyQuizEdit] = useState(false);
@@ -104,6 +105,7 @@ export const StateProvider = ({ children }) => {
     setUpdate,
     loading,
     setLoading,
+    loadingRef,
     leaderboardLoading,
     setLeaderboardLoading,
     displaySaveQuiz,

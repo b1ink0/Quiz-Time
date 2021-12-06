@@ -1,10 +1,13 @@
 import React from "react";
+import { useStateContext } from "../../context/StateContext";
 import "./Loading.scss";
 
 export default function Loading({ flag }) {
+  const { loadingRef } = useStateContext();
   return (
     <div
-      className="loading w-full flex justify-center items-center"
+      ref={loadingRef}
+      className="loading w-full flex justify-center items-center z-10"
       style={{ background: `${flag && "#000000d4"}` }}
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208.98 97.96">

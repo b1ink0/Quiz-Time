@@ -1,5 +1,6 @@
 @import "../../themes/mixin.scss";
-.aboutCon {
+.aboutCon,
+.logoutCon {
   opacity: 0;
   transform: translate(0, 50px);
   animation: fadeIn 0.4s ease forwards;

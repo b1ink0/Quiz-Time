@@ -14,7 +14,9 @@ export default function useFunction() {
     displayQuizCreate,
     setDisplayQuizCreate,
     setLeaderboard,
+    loading,
     setLoading,
+    loadingRef,
     setLeaderboardLoading,
     setMyQuizzes,
     setDisplayQuiz_2,
@@ -38,12 +40,11 @@ export default function useFunction() {
         .doc(currentUser.uid)
         .get()
         .then((doc) => {
-          setLoading(false);
+          handleLoading();
           if (doc.exists) {
             if (doc.data()) {
               if (doc.data().uid === currentUser.uid) {
                 setUsername(doc.data().fullName.username);
-                console.log(doc.data().fullName.username);
               }
             }
             setProfileExist(true);
@@ -169,18 +170,18 @@ export default function useFunction() {
               if (condition) {
                 setFlag_1(false);
                 setFlag_2(true);
-                setLoading(false);
+                handleLoading();
               } else {
                 setQuiz(doc_1.data().quizContainer.quiz[0].quiz);
                 setFlag_1(false);
                 setDisplayQuiz_2(true);
-                setLoading(false);
+                handleLoading();
               }
             });
         } else {
           setFlag_1(true);
           setFlag_2(false);
-          setLoading(false);
+          handleLoading();
         }
       });
     return com;
@@ -214,6 +215,7 @@ export default function useFunction() {
   const handleDeleteQuiz = async (quizCode) => {
     let com;
     if (currentUser) {
+      setLoading(true);
       com = await database.users
         .doc(currentUser.uid)
         .get()
@@ -243,6 +245,7 @@ export default function useFunction() {
                                 .delete()
                                 .then(() => {
                                   setMyQuizzes(arr);
+                                  handleLoading();
                                 });
                             });
                         });
@@ -253,6 +256,7 @@ export default function useFunction() {
           }
         });
     }
+    return com;
   };
   //
   const handleScore = (data, user) => {
@@ -265,7 +269,7 @@ export default function useFunction() {
       }
     });
     setScore(count);
-    setLoading(false);
+    handleLoading();
     setQuizComplete(true);
     let username = user.fullName.username;
     let com;
@@ -418,6 +422,7 @@ export default function useFunction() {
   const handleDeleteGivenQuiz = (quizCode) => {
     let com;
     if (currentUser) {
+      setLoading(true);
       com = database.users
         .doc(currentUser.uid)
         .get()
@@ -426,15 +431,27 @@ export default function useFunction() {
           for (let i = 0; i < arr.length; i++) {
             if (arr[i].quizCode === quizCode) {
               arr.splice(i, 1);
-              database.users.doc(currentUser.uid).update({
-                givenQuizzes: arr,
-              });
+              database.users
+                .doc(currentUser.uid)
+                .update({
+                  givenQuizzes: arr,
+                })
+                .then(() => {
+                  handleLoading();
+                });
               break;
             }
           }
         });
     }
     return com;
+  };
+  //
+  const handleLoading = () => {
+    loadingRef.current.classList.toggle("fadeOut");
+    setTimeout(() => {
+      setLoading(false);
+    }, 400);
   };
   return {
     handleBackSmooth,

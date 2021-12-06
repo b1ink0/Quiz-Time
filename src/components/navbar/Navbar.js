@@ -6,6 +6,7 @@ import "./Navbar.scss";
 import profile from "../media/profile.svg";
 import About from "./about/About";
 import Contact from "./contact/Contact";
+import Logout from "./logout/Logout";
 
 export default function Navbar() {
   const { logOut } = useAuth();
@@ -31,6 +32,7 @@ export default function Navbar() {
   const [nav, setNav] = useState(false);
   const [about, setAbout] = useState(false);
   const [contact, setContact] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   const handleLogOut = async () => {
     try {
@@ -86,6 +88,7 @@ export default function Navbar() {
     <>
       {about && <About setAbout={setAbout} />}
       {contact && <Contact setContact={setContact} />}
+      {logout && <Logout setLogout={setLogout} handleLogOut={handleLogOut} />}
       <div
         className="navBurger absolute flex justify-evenly items-center flex-col"
         onClick={() => handleNav()}
@@ -128,7 +131,7 @@ export default function Navbar() {
               </button>
             </div>
             <div className="logOutCon w-full flex justify-center items-center">
-              <button onClick={handleLogOut}>Log-out</button>
+              <button onClick={() => setLogout(true)}>Log-out</button>
             </div>
           </div>
           <span></span>
