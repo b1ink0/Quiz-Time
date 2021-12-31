@@ -31,16 +31,18 @@ export default function MyQuizzesSub({ q }) {
         <img
           src={edit}
           onClick={() => handleEdit(q.quizCode, q.quizName)}
-          className="imgEdit w-6 h-6 absolute right-2 top-2 rounded-full"
+          className="imgEdit w-6 h-6 absolute right-2 top-2 rounded-full cursor-pointer"
+          alt="copy"
         />
         <p
-          className="w-11/12 relative rounded-full flex justify-center items-center mt-2 mb-3 p-1 font-black"
+          className="w-11/12 relative rounded-full flex justify-center items-center mt-2 mb-3 p-1 font-black cursor-pointer"
           onClick={(e) => handleCopyCode(e)}
         >
           <span>{q.quizCode}</span>
           <img
             className="w-6 h-6 absolute pointer-events-none right-3"
             src={copySvg}
+            alt="copy"
           />
         </p>
       </div>

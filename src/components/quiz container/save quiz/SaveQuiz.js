@@ -134,13 +134,14 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
         </h1>
         <h3 className="w-full pt-2">Copy The Code Below</h3>
         <p
-          className="w-5/6 relative rounded-full flex justify-center items-center mt-2 mb-2 p-1 font-black"
+          className="w-5/6 relative rounded-full flex justify-center items-center mt-2 mb-2 p-1 font-black cursor-pointer"
           onClick={(e) => handleCopyCode(e)}
         >
           <span className="mr-1 text-xl">{code}</span>
           <img
             className="w-6 h-6 absolute right-5 pointer-events-none"
             src={copied ? copiedSvg : copySvg}
+            alt="copy"
           />
         </p>
         <button onClick={() => handleClose()}>OK</button>

@@ -34,6 +34,36 @@ body {
   }
 }
 
+body::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: var(--sky-blue);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: var(--black);
+  outline: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+textarea {
+  overflow: hidden;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -64,6 +94,20 @@ code {
   border-radius: 20px;
   animation: fadeInBorder 0.5s 0.2s ease forwards;
 }
+
+@media only screen and (min-width: 1024px) {
+  body {
+    margin-right: 0.5em;
+  }
+  .borderCon,
+  .borderCon::before {
+    width: calc(100vw - 0.5em);
+    height: calc(100vh - 42px);
+    bottom: 0px;
+    top: unset;
+  }
+}
+
 @keyframes fadeInBorder {
   0% {
     opacity: 0;

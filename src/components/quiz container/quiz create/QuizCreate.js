@@ -338,7 +338,7 @@ export default function QuizCreate() {
                   <label>Question-{currentQuestion}</label>
                   <textarea
                     id="questionInputId"
-                    className="w-5/6 "
+                    className="w-5/6"
                     type="text"
                     required
                     value={createQuizQuestion}
@@ -347,63 +347,67 @@ export default function QuizCreate() {
                     onChange={(e) => handleQuestionInput(e)}
                   />
                 </div>
-                <div className="flex justify-center items-center flex-col w-full">
-                  <label>Option-A</label>
-                  <input
-                    className="w-5/6"
-                    type="text"
-                    required
-                    minLength="1"
-                    maxLength="100"
-                    value={createOptionA}
-                    onChange={(e) => setCreateOptionA(e.target.value)}
-                  />
+                <div className="flex justify-center items-center flex-col w-full lg:w-5/6 lg:flex-row">
+                  <div className="flex justify-center items-center flex-col w-full lg:w-5/6 lg:mr-2">
+                    <label>Option-A</label>
+                    <input
+                      className="w-5/6 lg:w-full"
+                      type="text"
+                      required
+                      minLength="1"
+                      maxLength="100"
+                      value={createOptionA}
+                      onChange={(e) => setCreateOptionA(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex justify-center items-center flex-col w-full lg:w-5/6 lg:ml-2">
+                    <label>Option-B</label>
+                    <input
+                      className="w-5/6 lg:w-full"
+                      type="text"
+                      required
+                      minLength="1"
+                      maxLength="100"
+                      value={createOptionB}
+                      onChange={(e) => setCreateOptionB(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div className="flex justify-center items-center flex-col w-full">
-                  <label>Option-B</label>
-                  <input
-                    className="w-5/6"
-                    type="text"
-                    required
-                    minLength="1"
-                    maxLength="100"
-                    value={createOptionB}
-                    onChange={(e) => setCreateOptionB(e.target.value)}
-                  />
-                </div>
-                <div className="flex justify-center items-center flex-col w-full">
-                  <label>Option-C</label>
-                  <input
-                    className="w-5/6"
-                    type="text"
-                    required
-                    minLength="1"
-                    maxLength="100"
-                    value={createOptionC}
-                    onChange={(e) => setCreateOptionC(e.target.value)}
-                  />
-                </div>
-                <div className="flex justify-center items-center flex-col w-full">
-                  <label>Option-D</label>
-                  <input
-                    className="w-5/6"
-                    type="text"
-                    required
-                    minLength="1"
-                    maxLength="100"
-                    value={createOptionD}
-                    onChange={(e) => setCreateOptionD(e.target.value)}
-                  />
+                <div className="flex justify-center items-center flex-col w-full lg:w-5/6 lg:flex-row">
+                  <div className="flex justify-center items-center flex-col w-full lg:w-5/6 lg:mr-2">
+                    <label>Option-C</label>
+                    <input
+                      className="w-5/6 lg:w-full"
+                      type="text"
+                      required
+                      minLength="1"
+                      maxLength="100"
+                      value={createOptionC}
+                      onChange={(e) => setCreateOptionC(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex justify-center items-center flex-col w-full lg:w-5/6 lg:ml-2">
+                    <label>Option-D</label>
+                    <input
+                      className="w-5/6 lg:w-full"
+                      type="text"
+                      required
+                      minLength="1"
+                      maxLength="100"
+                      value={createOptionD}
+                      onChange={(e) => setCreateOptionD(e.target.value)}
+                    />
+                  </div>
                 </div>
                 <div className="answerOption flex justify-center items-center flex-col w-full mt-3">
                   <h1>Answer</h1>
                   <div className="answerSelectCon flex justify-between items-center w-full mt-5">
-                    <div className="answerSelect flex justify-center items-center flex-col relative">
+                    <div className="answerSelect flex justify-center items-center flex-col relative cursor-pointer">
                       <label className="absolute" id="a">
                         A
                       </label>
                       <input
-                        className="absolute"
+                        className="absolute cursor-pointer"
                         id="ai"
                         type="radio"
                         value="a"
@@ -412,12 +416,12 @@ export default function QuizCreate() {
                         onClick={(e) => handleAnswerSelection(e)}
                       />
                     </div>
-                    <div className="answerSelect flex justify-center items-center flex-col relative">
+                    <div className="answerSelect flex justify-center items-center flex-col relative cursor-pointer">
                       <label className="absolute" id="b">
                         B
                       </label>
                       <input
-                        className="absolute"
+                        className="absolute cursor-pointer"
                         id="bi"
                         type="radio"
                         value="b"
@@ -428,12 +432,12 @@ export default function QuizCreate() {
                     </div>
                   </div>
                   <div className="answerSelect flex justify-between items-center w-full mt-5 ">
-                    <div className="flex justify-center items-center flex-col relative">
+                    <div className="flex justify-center items-center flex-col relative cursor-pointer">
                       <label className="absolute" id="c">
                         C
                       </label>
                       <input
-                        className="absolute"
+                        className="absolute cursor-pointer"
                         id="ci"
                         type="radio"
                         value="c"
@@ -442,12 +446,12 @@ export default function QuizCreate() {
                         onClick={(e) => handleAnswerSelection(e)}
                       />
                     </div>
-                    <div className="answerSelect flex justify-center items-center flex-col relative">
+                    <div className="answerSelect flex justify-center items-center flex-col relative cursor-pointer">
                       <label className="absolute" id="d">
                         D
                       </label>
                       <input
-                        className="absolute"
+                        className="absolute cursor-pointer"
                         id="di"
                         type="radio"
                         value="d"
@@ -489,7 +493,7 @@ export default function QuizCreate() {
                         type="button"
                         className={
                           questionCount === 1 || currentQuestion === 1
-                            ? "lastBtn"
+                            ? "lastBtn cursor-not-allowed"
                             : undefined
                         }
                         disabled={
@@ -505,14 +509,17 @@ export default function QuizCreate() {
                       >
                         Q-{currentQuestion - 1}
                       </button>
-                      <button type="button" className="middleBtn">
+                      <button
+                        type="button"
+                        className="middleBtn cursor-default"
+                      >
                         {currentQuestion}
                       </button>
                       <button
                         type="button"
                         className={
                           questionCount === currentQuestion
-                            ? "lastBtn"
+                            ? "lastBtn cursor-not-allowed"
                             : undefined
                         }
                         disabled={

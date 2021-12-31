@@ -49,7 +49,7 @@ export default function Back({ option }) {
         <Alert setDisplayAlert={setDisplayAlert} option={option} />
       )}
       <div
-        className="back absolute flex justify-center items-center flex-col"
+        className="back absolute flex justify-center items-center flex-col cursor-pointer"
         onClick={() => handleBack()}
       >
         <span></span>

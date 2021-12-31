@@ -24,8 +24,23 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="logoCon flex justify-center items-center">
-        <h1>Quiz Time</h1>
+      <div className="logoCon flex justify-center items-center lg:fixed lg:top-0 lg:mt-0 lg:z-10 ">
+        <nav className="w-full h-full flex justify-center items-center pr-8 pl-8 relative lg:justify-start">
+          <div className="navBorderFirst hidden absolute left-0 w-full h-full pointer-events-none lg:block"></div>
+          <div className="navBorderSecond hidden absolute left-0 w-full h-full pointer-events-none lg:block"></div>
+          <h1 className="w-1/5">Quiz Time</h1>
+          <div className="navBtnCon hidden justify-around items-center w-4/5 h-full lg:flex">
+            <button className="h-full text-center font-bold text-xl cursor-pointer">
+              About
+            </button>
+            <button className="h-full text-center font-bold text-xl cursor-pointer">
+              Contact
+            </button>
+            <button className="h-full text-center font-bold text-xl cursor-pointer">
+              Profile
+            </button>
+          </div>
+        </nav>
       </div>
       {!displayQuiz && <Back />}
       {alert && <Alert />}

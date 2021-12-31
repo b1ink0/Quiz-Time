@@ -90,7 +90,7 @@ export default function Navbar() {
       {contact && <Contact setContact={setContact} />}
       {logout && <Logout setLogout={setLogout} handleLogOut={handleLogOut} />}
       <div
-        className="navBurger absolute flex justify-evenly items-center flex-col"
+        className="navBurger absolute flex justify-evenly items-center flex-col lg:hidden"
         onClick={() => handleNav()}
       >
         <span id="burgerSpan1"></span>

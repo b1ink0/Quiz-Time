@@ -1,0 +1,45 @@
+@media only screen and (min-width: 1024px) {
+  body {
+    margin-top: 80px;
+  }
+  #root {
+    display: flex;
+    align-items: flex-start;
+  }
+  .logoCon {
+    width: calc(100vw - 0.5em);
+    height: 50px;
+    background: var(--black);
+    margin-top: 0;
+    nav {
+      div {
+        &:nth-child(1) {
+          border: 8px solid var(--sky-blue);
+        }
+        &:nth-child(2) {
+          border-radius: 20px;
+          border: 8px solid var(--sky-blue);
+          box-shadow: inset 0px 0px 10px 2px var(--sky-blue),
+            0px 0px 8px 0px rgb(0 191 255 / 0%);
+        }
+      }
+    }
+  }
+  .quizCreate {
+    height: 195px;
+    h1 {
+      margin: 0;
+    }
+  }
+  .preBack,
+  .quizEdit {
+    width: 300px !important;
+  }
+  .save-wrapper-1 {
+    width: 400px !important;
+  }
+  .options {
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+}

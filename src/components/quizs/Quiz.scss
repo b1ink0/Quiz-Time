@@ -73,7 +73,7 @@
 }
 .radioBtnCon:hover {
   transition: 0.5s !important;
-  transform: scale(1.05) !important;
+  background-color: var(--blue-light);
 }
 .radioBtnSelected {
   background-color: var(--green) !important;

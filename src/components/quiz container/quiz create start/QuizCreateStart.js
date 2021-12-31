@@ -10,7 +10,7 @@ export default function QuizCreateStart({ margin = false }) {
         margin && "mt-5"
       }`}
     >
-      <div className="quizCreate w-4/5 flex justify-center items-center flex-col">
+      <div className="quizCreate w-4/5 flex justify-center items-center flex-col lg:justify-start">
         <h1 className="text-center">Create New Quiz</h1>
         <button onClick={() => handelQuizCreateDisplay()} className="">
           Create +
