@@ -51,7 +51,9 @@ export const StateProvider = ({ children }) => {
   });
   const [myQuizzes, setMyQuizzes] = useState([]);
   const [givenQuizzes, setGivenQuizzes] = useState([]);
-
+  const [about, setAbout] = useState(false);
+  const [contact, setContact] = useState(false);
+  const [logout, setLogout] = useState(false);
   const value = {
     logInCheck,
     alert,
@@ -130,6 +132,12 @@ export const StateProvider = ({ children }) => {
     setQuizViewCode,
     quizGivenName,
     setQuizGivenName,
+    about,
+    setAbout,
+    contact,
+    setContact,
+    logout,
+    setLogout,
   };
 
   return (

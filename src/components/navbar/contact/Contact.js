@@ -15,7 +15,7 @@ export default function Contact({ setContact }) {
       className="aboutCon w-screen h-screen fixed top-0 left-0 flex justify-start items-center flex-col z-10"
     >
       <div
-        className="aboutCancel absolute flex justify-evenly items-center flex-col top-3 right-3"
+        className="aboutCancel absolute flex justify-evenly items-center flex-col top-3 right-3 cursor-pointer"
         onClick={handleCancel}
       >
         <span className="w-full rounded-full absolute"></span>

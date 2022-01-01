@@ -48,7 +48,6 @@
 .radioBtnCon {
   width: -webkit-fill-available;
   color: var(--white);
-  height: 35px;
   border-radius: 25px;
   background-color: var(--blue);
   margin: 0 10px 20px 10px;
@@ -72,8 +71,8 @@
   }
 }
 .radioBtnCon:hover {
-  transition: 0.5s !important;
-  background-color: var(--blue-light);
+  transition: 0.3s !important;
+  background-color: var(--blue-dark);
 }
 .radioBtnSelected {
   background-color: var(--green) !important;

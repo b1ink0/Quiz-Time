@@ -67,9 +67,14 @@
               border: none;
               opacity: 0;
             }
+            &:hover {
+              label {
+                background-color: var(--blue-light);
+              }
+            }
             .activeInput {
               @include neonShadow;
-              background-color: var(--blue);
+              background-color: var(--blue) !important;
               text-shadow: none;
             }
           }

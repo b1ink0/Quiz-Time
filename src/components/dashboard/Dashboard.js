@@ -13,8 +13,15 @@ import Loading from "../sub-components/Loading";
 export default function Dashboard() {
   const [navBurger, setNavBurger] = useState(true);
   const { handleProfileExist, handleMyQuizzes } = useFunction();
-  const { profileExist, alert, displayQuiz, setLoading, loading } =
-    useStateContext("");
+  const {
+    profileExist,
+    alert,
+    displayQuiz,
+    setLoading,
+    loading,
+    setAbout,
+    setContact,
+  } = useStateContext("");
 
   useEffect(() => {
     handleProfileExist();
@@ -28,12 +35,18 @@ export default function Dashboard() {
         <nav className="w-full h-full flex justify-center items-center pr-8 pl-8 relative lg:justify-start">
           <div className="navBorderFirst hidden absolute left-0 w-full h-full pointer-events-none lg:block"></div>
           <div className="navBorderSecond hidden absolute left-0 w-full h-full pointer-events-none lg:block"></div>
-          <h1 className="w-1/5">Quiz Time</h1>
+          <h1 className="lg:w-1/5">Quiz Time</h1>
           <div className="navBtnCon hidden justify-around items-center w-4/5 h-full lg:flex">
-            <button className="h-full text-center font-bold text-xl cursor-pointer">
+            <button
+              className="h-full text-center font-bold text-xl cursor-pointer"
+              onClick={() => setAbout(true)}
+            >
               About
             </button>
-            <button className="h-full text-center font-bold text-xl cursor-pointer">
+            <button
+              className="h-full text-center font-bold text-xl cursor-pointer"
+              onClick={() => setContact(true)}
+            >
               Contact
             </button>
             <button className="h-full text-center font-bold text-xl cursor-pointer">

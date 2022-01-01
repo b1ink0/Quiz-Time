@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useStateContext } from "../../context/StateContext";
 import useFunction from "../../hooks/useFunction";
 import "../dashboard/Dashboard.scss";
 import "./Quiz.scss";
 
 export default function Question({ quiz }) {
-  const { tempAnswer, setTempAnswer, setQuizComplete, setLoading } =
-    useStateContext();
+  const { tempAnswer, setTempAnswer, setLoading } = useStateContext();
   const { handleSubmission } = useFunction();
   const [submitBtnOn, setSubmitBtnOn] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [quizLength, setQuizLength] = useState(0);
+  const [optionHeight, setOptionHeight] = useState("auto");
+  const optionA = useRef(null);
+  const optionB = useRef(null);
+  const optionC = useRef(null);
+  const optionD = useRef(null);
   let arr = tempAnswer;
   if (arr[0] === undefined) {
     quiz.forEach((a) => {
@@ -117,17 +121,39 @@ export default function Question({ quiz }) {
     }
   };
   const handlePrevBtn = (e) => {
+    setOptionHeight("auto");
     if (currentQ > 0) {
       setCurrentQ(currentQ - 1);
     }
     handleSelected(parseInt(e.target.value), true);
   };
   const handleNextBtn = (e) => {
+    setOptionHeight("auto");
     if (currentQ < quizLength) {
       setCurrentQ(currentQ + 1);
     }
     handleSelected(parseInt(e.target.value), false);
   };
+
+  useEffect(() => {
+    console.log(
+      Math.max(
+        optionA.current.offsetHeight,
+        optionB.current.offsetHeight,
+        optionC.current.offsetHeight,
+        optionD.current.offsetHeight
+      ).toString()
+    );
+    setOptionHeight(
+      Math.max(
+        optionA.current.offsetHeight,
+        optionB.current.offsetHeight,
+        optionC.current.offsetHeight,
+        optionD.current.offsetHeight
+      ).toString()
+    );
+  }, [currentQ]);
+
   return (
     <>
       <form
@@ -141,9 +167,8 @@ export default function Question({ quiz }) {
               {currentQ + 1}/{quiz.length}
             </h1>
           </div>
-
-          <div className="qCon">
-            <h1>{quiz[currentQ].q}</h1>
+          <div className="qCon mt-2">
+            <h1 className="break-all p-2">{quiz[currentQ].q}</h1>
           </div>
           <div className="options w-full">
             <div className="optionsRow1 flex justify-evenly items-center flex-col lg:flex-row">
@@ -151,7 +176,16 @@ export default function Question({ quiz }) {
                 className={`radioBtnCon relative flex justify-center items-center a${quiz[currentQ].qNo}`}
                 id={`a${quiz[currentQ].qNo}`}
               >
-                <label>{quiz[currentQ].a}</label>
+                <label
+                  className="break-all p-2"
+                  ref={optionA}
+                  style={{
+                    height:
+                      optionHeight === "auto" ? "auto" : optionHeight + "px",
+                  }}
+                >
+                  {quiz[currentQ].a}
+                </label>
                 <input
                   className="absolute cursor-pointer"
                   type="radio"
@@ -165,7 +199,16 @@ export default function Question({ quiz }) {
                 className={`radioBtnCon relative flex justify-center items-center b${quiz[currentQ].qNo}`}
                 id={`b${quiz[currentQ].qNo}`}
               >
-                <label>{quiz[currentQ].b}</label>
+                <label
+                  className="break-all p-2"
+                  ref={optionB}
+                  style={{
+                    height:
+                      optionHeight === "auto" ? "auto" : optionHeight + "px",
+                  }}
+                >
+                  {quiz[currentQ].b}
+                </label>
                 <input
                   className="absolute cursor-pointer"
                   type="radio"
@@ -181,7 +224,16 @@ export default function Question({ quiz }) {
                 className={`radioBtnCon relative flex justify-center items-center c${quiz[currentQ].qNo}`}
                 id={`c${quiz[currentQ].qNo}`}
               >
-                <label>{quiz[currentQ].c}</label>
+                <label
+                  className="break-all p-2"
+                  ref={optionC}
+                  style={{
+                    height:
+                      optionHeight === "auto" ? "auto" : optionHeight + "px",
+                  }}
+                >
+                  {quiz[currentQ].c}
+                </label>
                 <input
                   className="absolute cursor-pointer"
                   type="radio"
@@ -195,7 +247,16 @@ export default function Question({ quiz }) {
                 className={`radioBtnCon relative flex justify-center items-center d${quiz[currentQ].qNo}`}
                 id={`d${quiz[currentQ].qNo}`}
               >
-                <label>{quiz[currentQ].d}</label>
+                <label
+                  className="break-all p-2"
+                  ref={optionD}
+                  style={{
+                    height:
+                      optionHeight === "auto" ? "auto" : optionHeight + "px",
+                  }}
+                >
+                  {quiz[currentQ].d}
+                </label>
                 <input
                   className="absolute cursor-pointer"
                   type="radio"

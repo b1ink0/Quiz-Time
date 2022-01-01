@@ -27,12 +27,15 @@ export default function Navbar() {
     setQuizShareResultName,
     setQuizGiven,
     username,
+    about,
+    setAbout,
+    contact,
+    setContact,
+    logout,
+    setLogout,
   } = useStateContext();
   const [error, setError] = useState("");
   const [nav, setNav] = useState(false);
-  const [about, setAbout] = useState(false);
-  const [contact, setContact] = useState(false);
-  const [logout, setLogout] = useState(false);
 
   const handleLogOut = async () => {
     try {

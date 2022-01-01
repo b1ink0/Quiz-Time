@@ -39,7 +39,7 @@ export default function Alert({ setDisplayAlert, option }) {
       className="preBackCon w-full flex justify-center items-center"
       ref={preBackConRef}
     >
-      <div className="preBack flex justify-center items-center flex-col lg:w-80">
+      <div className="preBack flex justify-center items-center flex-col">
         <h1>If you go back your progress will be lost!</h1>
         <h1>Do you still want to go back ?</h1>
         <div className="w-full flex justify-evenly items-center">
