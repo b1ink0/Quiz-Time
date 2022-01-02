@@ -14,7 +14,6 @@ export default function useFunction() {
     displayQuizCreate,
     setDisplayQuizCreate,
     setLeaderboard,
-    loading,
     setLoading,
     loadingRef,
     setLeaderboardLoading,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./MyQuizzesSub.scss";
 import copySvg from ".././media/copy.svg";
 import edit from ".././media/edit.svg";

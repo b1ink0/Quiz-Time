@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useStateContext } from "../../context/StateContext";
 import "./Dashboard.scss";
 import Quiz from "../quizs/Quiz";
@@ -11,7 +11,6 @@ import QuizContainer from "../quiz container/QuizContainer";
 import Loading from "../sub-components/Loading";
 
 export default function Dashboard() {
-  const [navBurger, setNavBurger] = useState(true);
   const { handleProfileExist, handleMyQuizzes } = useFunction();
   const {
     profileExist,
@@ -21,6 +20,7 @@ export default function Dashboard() {
     loading,
     setAbout,
     setContact,
+    setProfile,
   } = useStateContext("");
 
   useEffect(() => {
@@ -31,25 +31,32 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="logoCon flex justify-center items-center lg:fixed lg:top-0 lg:mt-0 lg:z-10 ">
+      <div
+        className={`${
+          !profileExist && "hidden"
+        } logoCon flex justify-center items-center lg:fixed lg:top-0 lg:mt-0 lg:z-10 `}
+      >
         <nav className="w-full h-full flex justify-center items-center pr-8 pl-8 relative lg:justify-start">
           <div className="navBorderFirst hidden absolute left-0 w-full h-full pointer-events-none lg:block"></div>
           <div className="navBorderSecond hidden absolute left-0 w-full h-full pointer-events-none lg:block"></div>
           <h1 className="lg:w-1/5">Quiz Time</h1>
           <div className="navBtnCon hidden justify-around items-center w-4/5 h-full lg:flex">
             <button
-              className="h-full text-center font-bold text-xl cursor-pointer"
+              className="h-full text-center font-bold text-xl cursor-pointer w-32"
               onClick={() => setAbout(true)}
             >
               About
             </button>
             <button
-              className="h-full text-center font-bold text-xl cursor-pointer"
+              className="h-full text-center font-bold text-xl cursor-pointer w-32"
               onClick={() => setContact(true)}
             >
               Contact
             </button>
-            <button className="h-full text-center font-bold text-xl cursor-pointer">
+            <button
+              className="h-full text-center font-bold text-xl cursor-pointer w-32"
+              onClick={() => setProfile(true)}
+            >
               Profile
             </button>
           </div>
@@ -57,7 +64,7 @@ export default function Dashboard() {
       </div>
       {!displayQuiz && <Back />}
       {alert && <Alert />}
-      {navBurger && <Navbar />}
+      <Navbar />
       {!profileExist ? <ProfileInput /> : displayQuiz && <QuizContainer />}
       {!displayQuiz && <Quiz />}
       {loading && <Loading />}

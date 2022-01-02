@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useStateContext } from "../../context/StateContext";
-import useFunction from "../../hooks/useFunction";
 import Alert from "./Alert";
 import "./Back.scss";
 

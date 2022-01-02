@@ -53,6 +53,7 @@ export const StateProvider = ({ children }) => {
   const [givenQuizzes, setGivenQuizzes] = useState([]);
   const [about, setAbout] = useState(false);
   const [contact, setContact] = useState(false);
+  const [profile, setProfile] = useState(false);
   const [logout, setLogout] = useState(false);
   const value = {
     logInCheck,
@@ -138,6 +139,8 @@ export const StateProvider = ({ children }) => {
     setContact,
     logout,
     setLogout,
+    profile,
+    setProfile,
   };
 
   return (

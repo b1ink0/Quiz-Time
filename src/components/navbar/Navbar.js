@@ -3,10 +3,10 @@ import { useAuth } from "../../context/AuthContext";
 import { auth } from "../../firebase";
 import { useStateContext } from "../../context/StateContext";
 import "./Navbar.scss";
-import profile from "../media/profile.svg";
 import About from "./about/About";
 import Contact from "./contact/Contact";
 import Logout from "./logout/Logout";
+import Profile from "./profile/Profile";
 
 export default function Navbar() {
   const { logOut } = useAuth();
@@ -33,6 +33,8 @@ export default function Navbar() {
     setContact,
     logout,
     setLogout,
+    profile,
+    setProfile,
   } = useStateContext();
   const [error, setError] = useState("");
   const [nav, setNav] = useState(false);
@@ -61,7 +63,7 @@ export default function Navbar() {
       auth.onAuthStateChanged((user) => {
         if (!user) {
           setLogInCheck(false);
-          window.location.reload();
+          // window.location.reload();
         }
         return;
       });
@@ -91,6 +93,7 @@ export default function Navbar() {
     <>
       {about && <About setAbout={setAbout} />}
       {contact && <Contact setContact={setContact} />}
+      {profile && <Profile setProfile={setProfile} setLogout={setLogout} />}
       {logout && <Logout setLogout={setLogout} handleLogOut={handleLogOut} />}
       <div
         className="navBurger absolute flex justify-evenly items-center flex-col lg:hidden"

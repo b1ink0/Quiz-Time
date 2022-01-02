@@ -27,20 +27,22 @@ export default function About({ setAbout }) {
         <h1 className="font-bold text-2xl mt-3">Quiz-Time</h1>
       </div>
       <div className="points flex justify-center items-center w-full mt-4">
-        <h1 className="text-center w-5/6 text-lg">Create Quiz</h1>
+        <h1 className="text-center w-5/6 text-lg lg:w-96">Create Quiz</h1>
       </div>
       <div className="points flex justify-center items-center w-full mt-4">
-        <h1 className="text-center w-5/6 text-lg">Share Quiz With Quiz-Code</h1>
+        <h1 className="text-center w-5/6 text-lg lg:w-96">
+          Share Quiz With Quiz-Code
+        </h1>
       </div>
       <div className="points flex justify-center items-center w-full mt-4">
-        <h1 className="text-center w-5/6 text-lg">Quiz Leaderboard</h1>
+        <h1 className="text-center w-5/6 text-lg lg:w-96">Quiz Leaderboard</h1>
       </div>
       <div className="points flex justify-center items-center w-full mt-4">
         <a
           href="https://github.com/b1ink0/Quiz-Time"
           rel="noreferrer"
           target="_blank"
-          className="text-center w-5/6 text-lg"
+          className="text-center w-5/6 text-lg lg:w-96"
         >
           Quiz-Time Source-Code
         </a>

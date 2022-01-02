@@ -11,6 +11,9 @@
     height: 50px;
     background: var(--black);
     margin-top: 0;
+    animation: none !important;
+    opacity: 1;
+    transform: none !important;
     nav {
       div {
         &:nth-child(1) {
@@ -33,7 +36,8 @@
     }
   }
   .preBack,
-  .quizEdit {
+  .quizEdit,
+  .logout {
     width: 300px !important;
   }
   .save-wrapper-1 {
@@ -42,5 +46,8 @@
   .options {
     margin-top: 30px;
     margin-bottom: 10px;
+  }
+  .points {
+    width: 400px;
   }
 }

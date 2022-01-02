@@ -1,0 +1,39 @@
+@import "../../themes/mixin.scss";
+.profileCon {
+  opacity: 0;
+  transform: translate(0, 50px);
+  animation: fadeIn 0.4s ease forwards;
+  background-color: var(--black-t);
+  .profileCancel {
+    width: 40px;
+    height: 40px;
+    span {
+      height: 5px;
+      background-color: var(--blue);
+      &:nth-child(1) {
+        transform: rotate(45deg);
+      }
+      &:nth-child(2) {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+  .logo {
+    h1 {
+      color: var(--blue);
+      text-shadow: 0 0 5px var(--blue), 2px 2px 2px rgb(206 89 55 / 0%);
+    }
+  }
+  .logOutBtnCon {
+    button {
+      @include submitButton;
+      width: 145px;
+      height: 35px;
+      animation: none;
+      opacity: 1;
+      margin: 10px 0 25px 0;
+      padding-bottom: 2px;
+      font-size: 20px;
+    }
+  }
+}

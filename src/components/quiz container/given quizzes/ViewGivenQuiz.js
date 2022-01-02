@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useStateContext } from "../../../context/StateContext";
 import Leaderboard from "../../leaderboard/Leaderboard";
 import DeleteGivenQuiz from "./DeleteGivenQuiz";
 import "./ViewGivenQuiz.scss";

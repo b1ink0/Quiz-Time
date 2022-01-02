@@ -17,6 +17,16 @@
   }
   .navBtnCon {
     color: var(--blue);
+    button {
+      background-color: none;
+      transition: 0.3s all;
+      border-right: 8px solid transparent;
+      border-left: 8px solid transparent;
+      &:hover {
+        border-right: 8px solid var(--sky-blue);
+        border-left: 8px solid var(--sky-blue);
+      }
+    }
   }
 }
 
