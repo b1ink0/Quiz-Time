@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { auth } from "../../firebase";
 import { useStateContext } from "../../context/StateContext";
 import "./Navbar.scss";
+import ProfileSvg from "../media/profile.svg";
 import About from "./about/About";
 import Contact from "./contact/Contact";
 import Logout from "./logout/Logout";
@@ -108,7 +109,7 @@ export default function Navbar() {
           <div className="navOption flex justify-start items-center flex-col">
             <div className="profileCon w-full flex justify-center items-center flex-col mt-24">
               <div className="profileImgCon w-24 h-24 rounded-full">
-                <img src={profile} alt="Profile" />
+                <img src={ProfileSvg} alt="Profile" />
               </div>
               <div className="usernameCon w-full flex justify-center items-center mt-2">
                 <h1 className="font-bold tracking-wider text-2xl">
