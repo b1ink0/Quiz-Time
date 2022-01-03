@@ -1,5 +1,29 @@
 var CACHE_NAME = "quizTimeCache";
-var urlsToCache = [];
+var urlsToCache = [
+  "/Quiz-Time/index.html",
+  "/Quiz-Time/asset-manifest.json",
+  "/Quiz-Time/favicon.ico",
+  "/Quiz-Time/logo192.png",
+  "/Quiz-Time/logo512.png",
+  "/Quiz-Time/manifest.json",
+  "/Quiz-Time/maskable192.png",
+  "/Quiz-Time/maskable512.png",
+  "/Quiz-Time/robots.txt",
+  "/Quiz-Time/worker.js",
+  "/Quiz-Time/star.png",
+  "/Quiz-Time/three.min.js",
+  "/Quiz-Time/static/media/contact.b80a2194.jpeg",
+  "/Quiz-Time/static/media/copied.739aac08.svg",
+  "/Quiz-Time/static/media/copy.43b5481e.svg",
+  "/Quiz-Time/static/media/edit.1cd86f8f.svg",
+  "/Quiz-Time/static/media/logo.c7241fb8.svg",
+  "/Quiz-Time/static/media/profile.e9e1f9ff.svg",
+  "/Quiz-Time/static/media/rank_1.9cdeb73b.svg",
+  "/Quiz-Time/static/media/rank_2.3e55031c.svg",
+  "/Quiz-Time/static/media/rank_3.4d4a08b6.svg",
+  "/Quiz-Time/static/css/main.1888ad0d.chunk.css",
+  "/Quiz-Time/static/css/main.1888ad0d.chunk.css.map",
+];
 
 // Install a service worker
 self.addEventListener("install", (event) => {
