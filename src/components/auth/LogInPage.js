@@ -18,5 +18,17 @@ export default function LogInPage() {
       return;
     });
   }
-  return <>{logInCheck ? <Dashboard /> : <LogIn />}</>;
+
+  return (
+    <>
+      {logInCheck ? <Dashboard /> : <LogIn />}
+      <div
+        className="borderCon"
+        id="borderCon"
+        style={{ height: logInCheck ? "" : "100vh" }}
+      >
+        <span style={{ height: logInCheck ? "" : "100vh" }}></span>
+      </div>
+    </>
+  );
 }
