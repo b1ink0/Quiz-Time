@@ -64,7 +64,7 @@ export default function Dashboard() {
       </div>
       {!displayQuiz && <Back />}
       {alert && <Alert />}
-      <Navbar />
+      {profileExist && <Navbar />}
       {!profileExist ? <ProfileInput /> : displayQuiz && <QuizContainer />}
       {!displayQuiz && <Quiz />}
       {loading && <Loading />}
