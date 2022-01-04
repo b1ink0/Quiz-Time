@@ -260,11 +260,9 @@ export default function useFunction() {
   //
   const handleScore = (data, user) => {
     let count = 0;
-    console.log(data);
     data.quizAnswerContainer.quizAnswer[0].quizAnswer.forEach((q) => {
       if (q.answer === tempAnswer[q.qNo - 1].answer) {
         count++;
-        console.log(count);
       }
     });
     setScore(count);
@@ -313,7 +311,6 @@ export default function useFunction() {
                     if (data !== undefined) {
                       arr = data_1;
                     }
-                    console.log(data);
                     let t = {
                       quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
                       quizCode: quizCode,
@@ -373,14 +370,12 @@ export default function useFunction() {
   //
   const handleSubmission = () => {
     let com;
-    console.log(quizComplete);
     if (currentUser) {
       com = database.answers
         .doc(quizCode)
         .get()
         .then((doc) => {
           if (doc.exists) {
-            console.log(doc.data().quizAnswerContainer.quizAnswer[0].quizName);
             database.users
               .doc(currentUser.uid)
               .get()

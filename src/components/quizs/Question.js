@@ -136,14 +136,6 @@ export default function Question({ quiz }) {
   };
 
   useEffect(() => {
-    console.log(
-      Math.max(
-        optionA.current.offsetHeight,
-        optionB.current.offsetHeight,
-        optionC.current.offsetHeight,
-        optionD.current.offsetHeight
-      ).toString()
-    );
     setOptionHeight(
       Math.max(
         optionA.current.offsetHeight,
