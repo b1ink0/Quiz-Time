@@ -64,7 +64,7 @@ export default function Navbar() {
       auth.onAuthStateChanged((user) => {
         if (!user) {
           setLogInCheck(false);
-          window.location.reload();
+          // window.location.reload();
         }
         return;
       });

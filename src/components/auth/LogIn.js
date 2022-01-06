@@ -24,7 +24,9 @@ export default function LogIn() {
         </div>
         <p className="text-center"></p>
         <div className="logInBtnCon flex justify-center items-center font-mono">
-          <button onClick={handleLogIn}>Log In</button>
+          <button onClick={handleLogIn} type="button">
+            Log In
+          </button>
         </div>
         <p className="quoteCon text-center">
           <span>"</span>You should know little about a lot<span>"</span>

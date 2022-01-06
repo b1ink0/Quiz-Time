@@ -25,9 +25,11 @@ export default function LogInPage() {
       <div
         className="borderCon"
         id="borderCon"
-        style={{ height: profileExist ? "" : "100vh" }}
+        style={{ height: profileExist && logInCheck ? "" : "100vh" }}
       >
-        <span style={{ height: profileExist ? "" : "100vh" }}></span>
+        <span
+          style={{ height: profileExist && logInCheck ? "" : "100vh" }}
+        ></span>
       </div>
     </>
   );
