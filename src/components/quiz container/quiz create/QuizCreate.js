@@ -4,11 +4,14 @@ import SaveQuiz from "../save quiz/SaveQuiz";
 import "./QuizCreate.scss";
 import editSvg from "../../media/edit.svg";
 import QuizCreateFirstSection from "./QuizCreateFirstSection";
+import QuizCreateImageUpload from "./QuizCreateImageUpload";
 
 export default function QuizCreate() {
   const { displaySaveQuiz, setDisplaySaveQuiz } = useStateContext();
   const [displayFirstSection, setDisplayFirstSection] = useState(true);
   const [displaySecondSection, setDisplaySecondSection] = useState(false);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [questionCount, setQuestionCount] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [createQuizName, setCreateQuizName] = useState("");
@@ -18,6 +21,7 @@ export default function QuizCreate() {
   const [createOptionC, setCreateOptionC] = useState("");
   const [createOptionD, setCreateOptionD] = useState("");
   const [createAnswer, setCreateAnswer] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [tempQuiz, setTempQuiz] = useState([]);
   const [tempAnswer, setTempAnswer] = useState([]);
   const quizNameInputRef = useRef();
@@ -31,6 +35,10 @@ export default function QuizCreate() {
       document.getElementById("questionInputId").focus();
     }
   }, [displaySecondSection]);
+
+  useEffect(() => {
+    console.log(imageUrl);
+  }, [imageUrl]);
   const handleFirstSectionDisplay = () => {
     setDisplayFirstSection(false);
     setDisplaySecondSection(true);
@@ -88,6 +96,7 @@ export default function QuizCreate() {
       }, 100);
       if (questionCount === 3) {
         setCreateQuizQuestion(currentQ[0].q);
+        setImageUrl(currentQ[0].imageUrl);
         setCreateOptionA(currentQ[0].a);
         setCreateOptionB(currentQ[0].b);
         setCreateOptionC(currentQ[0].c);
@@ -132,6 +141,7 @@ export default function QuizCreate() {
       setQuestionCount(1);
     }, 100);
     setCreateQuizQuestion("");
+    setImageUrl("");
     setCreateOptionA("");
     setCreateOptionB("");
     setCreateOptionC("");
@@ -161,6 +171,7 @@ export default function QuizCreate() {
       b: createOptionB,
       c: createOptionC,
       d: createOptionD,
+      imageUrl: imageUrl,
     };
     currentA[currentQuestion - 1] = {
       answer: createAnswer,
@@ -174,6 +185,7 @@ export default function QuizCreate() {
       let currentQ = tempQuiz[currentQuestion - 2];
       let currentA = tempAnswer[currentQuestion - 2];
       setCreateQuizQuestion(currentQ.q);
+      setImageUrl(currentQ.imageUrl);
       setCreateOptionA(currentQ.a);
       setCreateOptionB(currentQ.b);
       setCreateOptionC(currentQ.c);
@@ -205,6 +217,7 @@ export default function QuizCreate() {
         let currentQ = tempQuiz[currentQuestion];
         let currentA = tempAnswer[currentQuestion];
         setCreateQuizQuestion(currentQ.q);
+        setImageUrl(currentQ.imageUrl);
         setCreateOptionA(currentQ.a);
         setCreateOptionB(currentQ.b);
         setCreateOptionC(currentQ.c);
@@ -227,6 +240,7 @@ export default function QuizCreate() {
         });
       } else {
         setCreateQuizQuestion("");
+        setImageUrl("");
         setCreateOptionA("");
         setCreateOptionB("");
         setCreateOptionC("");
@@ -262,6 +276,7 @@ export default function QuizCreate() {
         b: createOptionB,
         c: createOptionC,
         d: createOptionD,
+        imageUrl: imageUrl,
       },
     ];
     tempA = [
@@ -275,6 +290,7 @@ export default function QuizCreate() {
     setQuestionCount(questionCount + 1);
     setCurrentQuestion(currentQuestion + 1);
     setCreateQuizQuestion("");
+    setImageUrl("");
     setCreateOptionA("");
     setCreateOptionB("");
     setCreateOptionC("");
@@ -298,7 +314,6 @@ export default function QuizCreate() {
   const handleEditQuizName = () => {
     setDisplayFirstSection(true);
     setDisplaySecondSection(false);
-    console.log("why");
   };
   return (
     <>
@@ -308,6 +323,8 @@ export default function QuizCreate() {
           answer={tempAnswer}
           questionCount={questionCount}
           quizName={createQuizName}
+          startTime={startTime}
+          endTime={endTime}
         />
       )}
       <div className="createQuizCon w-full flex justify-center items-center mt-6 mb-8 text-center ">
@@ -317,6 +334,10 @@ export default function QuizCreate() {
         >
           {displayFirstSection && (
             <QuizCreateFirstSection
+              startTime={startTime}
+              endTime={endTime}
+              setStartTime={setStartTime}
+              setEndTime={setEndTime}
               quizNameInputRef={quizNameInputRef}
               createQuizName={createQuizName}
               setCreateQuizName={setCreateQuizName}
@@ -347,6 +368,18 @@ export default function QuizCreate() {
                     onChange={(e) => handleQuestionInput(e)}
                   />
                 </div>
+                <QuizCreateImageUpload setImageUrl={setImageUrl} />
+                {imageUrl !== "" && (
+                  <div className="questionImageContainer flex justify-center items-center flex-col w-full mt-4">
+                    <div className="flex justify-center items-center flex-col w-5/6">
+                      <img
+                        className="questionImage"
+                        alt="placeholder"
+                        src={imageUrl}
+                      />
+                    </div>
+                  </div>
+                )}
                 <div className="flex justify-center items-center flex-col w-full lg:w-5/6 lg:flex-row">
                   <div className="flex justify-center items-center flex-col w-full lg:w-5/6 lg:mr-2">
                     <label>Option-A</label>

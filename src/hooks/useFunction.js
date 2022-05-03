@@ -97,6 +97,7 @@ export default function useFunction() {
           .then((doc) => {
             if (doc.exists) {
               if (doc.data()) {
+                console.log(doc.data());
                 let array = [];
                 let arrayLength =
                   doc.data().quizResultContainer.submissions.length;
@@ -105,6 +106,10 @@ export default function useFunction() {
                     username: s.username,
                     userScore: s.userScore,
                     totalScore: s.totalScore,
+                    timeTaken: handleTimeDifference(
+                      s.startTime,
+                      s.submissionTime
+                    ),
                   };
                   array.push(temp);
                 });
@@ -136,6 +141,8 @@ export default function useFunction() {
                         };
                       }
                     }
+
+                    // handleTimeDifference()
                     setLeaderboard(array);
                     setQuizGivenName(doc.data().quizResultContainer.quizName);
                   }
@@ -148,7 +155,14 @@ export default function useFunction() {
     return com;
   };
   //
-  const handleQuizSearch = (e, quizCode, setFlag_1, setFlag_2) => {
+  const handleQuizSearch = (
+    e,
+    quizCode,
+    setFlag_1,
+    setFlag_2,
+    setFlag_3,
+    setFlag_4
+  ) => {
     e.preventDefault();
     setLoading(true);
     let com = database.quizs
@@ -171,9 +185,50 @@ export default function useFunction() {
                 setFlag_2(true);
                 handleLoading();
               } else {
-                setQuiz(doc_1.data().quizContainer.quiz[0].quiz);
-                setFlag_1(false);
-                setDisplayQuiz_2(true);
+                console.log(doc_1.data().quizContainer.quiz[0].startTime);
+                let st = doc_1.data().quizContainer.quiz[0].startTime;
+                let et = doc_1.data().quizContainer.quiz[0].endTime;
+
+                st = st + ":00";
+                et = et + ":00";
+
+                let cd = new Date();
+
+                let sd = new Date(cd.getTime());
+                sd.setHours(st.split(":")[0]);
+                sd.setMinutes(st.split(":")[1]);
+                sd.setSeconds(st.split(":")[2]);
+
+                let ed = new Date(cd.getTime());
+                ed.setHours(et.split(":")[0]);
+                ed.setMinutes(et.split(":")[1]);
+                ed.setSeconds(et.split(":")[2]);
+
+                console.log(sd < cd && ed > cd);
+                console.log(cd && ed > sd);
+                console.log(cd && ed > cd);
+                if (sd < cd && ed > cd) {
+                  setQuiz(doc_1.data().quizContainer.quiz[0].quiz);
+                  setFlag_1(false);
+                  setFlag_2(false);
+                  setFlag_3(false);
+                  setFlag_4(false);
+                  setDisplayQuiz_2(true);
+                } else {
+                  if (cd && ed > cd) {
+                    if (cd && ed > sd) {
+                      setFlag_1(false);
+                      setFlag_2(false);
+                      setFlag_4(false);
+                      setFlag_3(true);
+                    }
+                  } else {
+                    setFlag_1(false);
+                    setFlag_2(false);
+                    setFlag_3(false);
+                    setFlag_4(true);
+                  }
+                }
                 handleLoading();
               }
             });
@@ -258,6 +313,48 @@ export default function useFunction() {
     return com;
   };
   //
+  const handleTime = () => {
+    let a;
+    let h = new Date().getHours();
+    let m = new Date().getMinutes();
+    let s = new Date().getSeconds();
+    if (h < 10) {
+      h = "0" + h;
+    }
+    if (m < 10) {
+      m = "0" + m;
+    }
+    if (s < 10) {
+      s = "0" + s;
+    }
+    a = h + ":" + m + ":" + s;
+    return a;
+  };
+  //
+  const handleTimeInMS = (s) => {
+    var ms = s % 1000;
+    s = (s - ms) / 1000;
+    var secs = s % 60;
+    s = (s - secs) / 60;
+    var mins = s % 60;
+    var hrs = (s - mins) / 60;
+
+    return hrs + ":" + mins + ":" + secs;
+  };
+  //
+  const handleTimeDifference = (st, et) => {
+    var time_start = new Date();
+    var time_end = new Date();
+    st = st + ":00";
+
+    var value_start = st.split(":");
+    var value_end = et.split(":");
+
+    time_start.setHours(value_start[0], value_start[1], value_start[2], 0);
+    time_end.setHours(value_end[0], value_end[1], value_end[2], 0);
+    return handleTimeInMS(time_end - time_start); // millisecond
+  };
+  //
   const handleScore = (data, user) => {
     let count = 0;
     data.quizAnswerContainer.quizAnswer[0].quizAnswer.forEach((q) => {
@@ -282,6 +379,9 @@ export default function useFunction() {
             userScore: count,
             totalScore: tempAnswer.length,
             username: username,
+            submissionTime: handleTime(),
+            startTime: data.quizAnswerContainer.quizAnswer[0].startTime,
+            endTime: data.quizAnswerContainer.quizAnswer[0].endTime,
           });
           if (doc.data().quizResultContainer.submissions[0] !== undefined) {
             let condition = false;
@@ -315,6 +415,7 @@ export default function useFunction() {
                       quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
                       quizCode: quizCode,
                     };
+                    console.log(t);
                     arr.push(t);
                     database.users.doc(currentUser.uid).update({
                       givenQuizzes: arr,
@@ -462,5 +563,6 @@ export default function useFunction() {
     handleGivenQuizzes,
     handleViewGivenQuiz,
     handleDeleteGivenQuiz,
+    handleTimeDifference,
   };
 }

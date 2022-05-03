@@ -8,7 +8,14 @@ import copiedSvg from "../../media/copied.svg";
 import "./SaveQuiz.scss";
 import useFunction from "../../../hooks/useFunction";
 
-export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
+export default function SaveQuiz({
+  quiz,
+  answer,
+  questionCount,
+  quizName,
+  startTime,
+  endTime,
+}) {
   const { setDisplaySaveQuiz, setDisplayQuizCreate } = useStateContext();
   const { handleMyQuizzes } = useFunction();
   const [copied, setCopied] = useState(false);
@@ -27,6 +34,7 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
         b: quiz[i].b,
         c: quiz[i].c,
         d: quiz[i].d,
+        imageUrl: quiz[i].imageUrl,
       };
       let ta = {
         qNo: count,
@@ -57,6 +65,8 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
                   {
                     quiz: tQ,
                     quizName: quizName,
+                    startTime: startTime,
+                    endTime: endTime,
                   },
                 ],
               },
@@ -68,6 +78,8 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
                   {
                     quizAnswer: tA,
                     quizName: quizName,
+                    startTime: startTime,
+                    endTime: endTime,
                   },
                 ],
               },
@@ -77,6 +89,8 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
               quizResultContainer: {
                 quizName: quizName,
                 submissions: [],
+                startTime: startTime,
+                endTime: endTime,
               },
             });
             let temp = database.users
@@ -109,6 +123,7 @@ export default function SaveQuiz({ quiz, answer, questionCount, quizName }) {
     }
     return com;
   }, []);
+
   const handleCopyCode = (e) => {
     var input = document.createElement("input");
     input.setAttribute("value", e.target.innerText);

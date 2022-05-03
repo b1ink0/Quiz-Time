@@ -29,7 +29,9 @@ export default function ProfileInput() {
                 username: username,
               },
               uid: currentUser.uid,
+              givenQuizzes: [],
             });
+
             setFirstName("");
             setLastName("");
             setProfileExist(true);

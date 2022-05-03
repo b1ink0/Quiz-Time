@@ -1,0 +1,42 @@
+@import "../../themes/mixin.scss";
+
+.imageUploadContainer {
+    margin-top: 50px;
+    .subImageUploadContainer {
+        @include inputBorder;
+        height: 200px;
+        padding: 10px 0 10px 0;
+    }
+    div {
+        label, input {
+            @include normalButton;
+            width: 200px;
+        }
+    }
+    button {
+        @include submitButton;
+        animation: none;
+        opacity: 1;
+        margin: 0;
+        height: 35px;
+    }
+    progress {
+        @include inputBorder;
+        padding: 0;
+        margin-top: 35px;
+        margin-bottom: 10px;
+        width: 200px;
+        height: 15px;
+    }
+    progress[value]::-webkit-progress-bar {
+        background-color: rgba(255, 255, 255, 0);
+        border-radius: 10px; 
+      }
+      progress[value]::-webkit-progress-value {
+        background-image:
+        -webkit-linear-gradient(90deg, var(--blue) 0%, var(--blue) 100%);
+      
+          border-radius: 10px; 
+          background-size: 35px 20px, 100% 100%, 100% 100%;
+      }
+}

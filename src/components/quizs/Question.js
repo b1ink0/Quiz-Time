@@ -161,6 +161,7 @@ export default function Question({ quiz }) {
           </div>
           <div className="qCon mt-2">
             <h1 className="break-all p-2">{quiz[currentQ].q}</h1>
+            {quiz[currentQ].imageUrl && <img src={quiz[currentQ].imageUrl} />}
           </div>
           <div className="options w-full">
             <div className="optionsRow1 flex justify-evenly items-center flex-col lg:flex-row">

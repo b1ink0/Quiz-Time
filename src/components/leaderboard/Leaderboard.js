@@ -32,6 +32,7 @@ export default function Leaderboard({ setDisplayDelete }) {
               <th>Rank</th>
               <th>Username</th>
               <th>Score</th>
+              <th>Time Taken</th>
             </tr>
             {leaderboard &&
               leaderboard.map((l) => (
@@ -51,6 +52,7 @@ export default function Leaderboard({ setDisplayDelete }) {
                   <td>
                     {l.userScore}/{l.totalScore}
                   </td>
+                  <td>{l.timeTaken}</td>
                 </tr>
               ))}
           </tbody>

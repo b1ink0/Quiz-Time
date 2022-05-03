@@ -45,6 +45,19 @@
           @include inputBorder;
           height: 40px;
         }
+
+       
+      }
+      .questionImageContainer {
+        height: 250px;
+        div {
+          @include inputBorder;
+          height: 100%;
+          img {
+            width: 250px;
+            height: auto;
+          }
+        }
       }
       .answerOption {
         padding: 0 9% 0 9%;

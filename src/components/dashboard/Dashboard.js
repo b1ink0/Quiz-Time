@@ -9,6 +9,7 @@ import Back from "../sub-components/Back";
 import useFunction from "../../hooks/useFunction";
 import QuizContainer from "../quiz container/QuizContainer";
 import Loading from "../sub-components/Loading";
+import Test from "../sub-components/Test";
 
 export default function Dashboard() {
   const { handleProfileExist, handleMyQuizzes } = useFunction();
