@@ -6,6 +6,7 @@ export default function GivenQuizzes({ givenQuizzes }) {
   return (
     <div className="givenQuizzesCon w-full flex justify-center items-center flex-col text-center">
       <h1>Given Quizzes</h1>
+      <h1>Leaderboards</h1>
       <div className="givenQuizzes w-full flex justify-center items-center flex-col text-center">
         {givenQuizzes &&
           givenQuizzes.map((quiz) => (

@@ -50,12 +50,42 @@
       }
       .questionImageContainer {
         height: 250px;
-        div {
+        .questionImageContainerSub {
           @include inputBorder;
           height: 100%;
           img {
             width: 250px;
             height: auto;
+          }
+         
+            .rhap_container {
+              @include neonBorder;
+              padding: 15px 20px 15px 20px;
+              margin-bottom: 10px;
+              width: 90%;
+              background-color: transparent;
+              .rhap_current-time, .rhap_total-time {
+                color: var(--white);
+                text-shadow: 0 0 3px var(--white), 2px 2px 2px rgba(206, 89, 55, 0);
+              }
+              .rhap_download-progress, .rhap_volume-bar {
+                background-color: var(--blue-light);
+              }
+              .rhap_progress-indicator, .rhap_volume-indicator {
+                background-color: var(--blue);
+                box-shadow: 0px 0px 4px 2px var(--blue), 0px 0px 8px 0px rgba(0, 191, 255, 0), inset 0px 0px 4px 2px var(--blue);
+              }
+              .rhap_progress-filled {
+                background-color: var(--blue);
+                box-shadow: 0px 0px 4px 2px var(--blue), 0px 0px 8px 0px rgba(0, 191, 255, 0), inset 0px 0px 4px 2px var(--blue);
+              }
+              svg {
+                path {
+        
+                  fill: var(--blue);
+                }
+              }
+            
           }
         }
       }

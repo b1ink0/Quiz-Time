@@ -35,6 +35,7 @@ export default function SaveQuiz({
         c: quiz[i].c,
         d: quiz[i].d,
         imageUrl: quiz[i].imageUrl,
+        audioUrl: quiz[i].audioUrl,
       };
       let ta = {
         qNo: count,

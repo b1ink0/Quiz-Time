@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import { storage } from "../../../firebase";
-import { v4 as uuidv4 } from "uuid";
 import "./QuizCreateImageUpload.scss";
+import { v4 as uuidv4 } from "uuid";
 
-export default function QuizCreateImageUpload({ setImageUrl }) {
-  const [image, setImage] = useState(null);
+export default function QuizCreateAudioUpload({ setAudioUrl }) {
+  const [audio, setAudio] = useState(null);
   const [progress, setProgress] = useState(0);
   const [ready, setReady] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
-      setImage(e.target.files[0]);
+      setAudio(e.target.files[0]);
       setReady(true);
     }
   };
 
   const handleUpload = () => {
     let name = uuidv4();
-    const uploadTask = storage.ref(`images/${name}`).put(image);
+    const uploadTask = storage.ref(`audios/${name}`).put(audio);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -31,11 +31,11 @@ export default function QuizCreateImageUpload({ setImageUrl }) {
       },
       () => {
         storage
-          .ref("images")
+          .ref("audios")
           .child(name)
           .getDownloadURL()
           .then((url) => {
-            setImageUrl(url);
+            setAudioUrl(url);
           });
       }
     );
@@ -46,20 +46,21 @@ export default function QuizCreateImageUpload({ setImageUrl }) {
       <div className="subImageUploadContainer w-5/6 flex justify-center items-center flex-col">
         <div className="w-full flex justify-center items-center">
           <label htmlFor="files" className="inputLable pointer-events-none">
-            Choose Image
+            Choose Audio
           </label>
           <input
             id="files"
             type="file"
             className=" absolute opacity-0 cursor-pointer"
-            accept="image/png, image/jpeg, image/jpg, image/svg, image/webp"
+            accept="audio/mp3,audio/*;capture=microphone"
             onChange={handleChange}
           />
         </div>
         <button
           type="button"
-          style={{ opacity: !ready ? "0.5" : 1 }}
+          disabled={!ready}
           onClick={handleUpload}
+          style={{ opacity: !ready ? "0.5" : 1 }}
           className="cursor-pointer"
         >
           Upload

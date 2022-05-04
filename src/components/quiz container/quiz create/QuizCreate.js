@@ -5,6 +5,9 @@ import "./QuizCreate.scss";
 import editSvg from "../../media/edit.svg";
 import QuizCreateFirstSection from "./QuizCreateFirstSection";
 import QuizCreateImageUpload from "./QuizCreateImageUpload";
+import QuizCreateAudioUpload from "./QuizCreateAudioUpload";
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
 
 export default function QuizCreate() {
   const { displaySaveQuiz, setDisplaySaveQuiz } = useStateContext();
@@ -22,9 +25,12 @@ export default function QuizCreate() {
   const [createOptionD, setCreateOptionD] = useState("");
   const [createAnswer, setCreateAnswer] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
+  const [playing, setPlaying] = useState(false);
   const [tempQuiz, setTempQuiz] = useState([]);
   const [tempAnswer, setTempAnswer] = useState([]);
   const quizNameInputRef = useRef();
+
   useEffect(() => {
     if (document.getElementById("quizNameInput")) {
       document.getElementById("quizNameInput").focus();
@@ -97,6 +103,7 @@ export default function QuizCreate() {
       if (questionCount === 3) {
         setCreateQuizQuestion(currentQ[0].q);
         setImageUrl(currentQ[0].imageUrl);
+        setAudioUrl(currentQ[0].audioUrl);
         setCreateOptionA(currentQ[0].a);
         setCreateOptionB(currentQ[0].b);
         setCreateOptionC(currentQ[0].c);
@@ -142,6 +149,7 @@ export default function QuizCreate() {
     }, 100);
     setCreateQuizQuestion("");
     setImageUrl("");
+    setAudioUrl("");
     setCreateOptionA("");
     setCreateOptionB("");
     setCreateOptionC("");
@@ -172,6 +180,7 @@ export default function QuizCreate() {
       c: createOptionC,
       d: createOptionD,
       imageUrl: imageUrl,
+      audioUrl: audioUrl,
     };
     currentA[currentQuestion - 1] = {
       answer: createAnswer,
@@ -186,6 +195,7 @@ export default function QuizCreate() {
       let currentA = tempAnswer[currentQuestion - 2];
       setCreateQuizQuestion(currentQ.q);
       setImageUrl(currentQ.imageUrl);
+      setAudioUrl(currentQ.audioUrl);
       setCreateOptionA(currentQ.a);
       setCreateOptionB(currentQ.b);
       setCreateOptionC(currentQ.c);
@@ -218,6 +228,7 @@ export default function QuizCreate() {
         let currentA = tempAnswer[currentQuestion];
         setCreateQuizQuestion(currentQ.q);
         setImageUrl(currentQ.imageUrl);
+        setAudioUrl(currentQ.audioUrl);
         setCreateOptionA(currentQ.a);
         setCreateOptionB(currentQ.b);
         setCreateOptionC(currentQ.c);
@@ -241,6 +252,7 @@ export default function QuizCreate() {
       } else {
         setCreateQuizQuestion("");
         setImageUrl("");
+        setAudioUrl("");
         setCreateOptionA("");
         setCreateOptionB("");
         setCreateOptionC("");
@@ -277,6 +289,7 @@ export default function QuizCreate() {
         c: createOptionC,
         d: createOptionD,
         imageUrl: imageUrl,
+        audioUrl: audioUrl,
       },
     ];
     tempA = [
@@ -291,6 +304,7 @@ export default function QuizCreate() {
     setCurrentQuestion(currentQuestion + 1);
     setCreateQuizQuestion("");
     setImageUrl("");
+    setAudioUrl("");
     setCreateOptionA("");
     setCreateOptionB("");
     setCreateOptionC("");
@@ -371,12 +385,20 @@ export default function QuizCreate() {
                 <QuizCreateImageUpload setImageUrl={setImageUrl} />
                 {imageUrl !== "" && (
                   <div className="questionImageContainer flex justify-center items-center flex-col w-full mt-4">
-                    <div className="flex justify-center items-center flex-col w-5/6">
+                    <div className="questionImageContainerSub flex justify-center items-center flex-col w-5/6">
                       <img
                         className="questionImage"
                         alt="placeholder"
                         src={imageUrl}
                       />
+                    </div>
+                  </div>
+                )}
+                <QuizCreateAudioUpload setAudioUrl={setAudioUrl} />
+                {audioUrl !== "" && (
+                  <div className="questionImageContainer flex justify-center items-center flex-col w-full mt-4">
+                    <div className="questionImageContainerSub flex justify-center items-center flex-col w-5/6">
+                      <AudioPlayer autoPlay="false" src={audioUrl} />
                     </div>
                   </div>
                 )}
