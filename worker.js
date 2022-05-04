@@ -21,8 +21,8 @@ var urlsToCache = [
   "/Quiz-Time/static/media/rank_1.9cdeb73b.svg",
   "/Quiz-Time/static/media/rank_2.3e55031c.svg",
   "/Quiz-Time/static/media/rank_3.4d4a08b6.svg",
-  "/Quiz-Time/static/css/main.0aaad12c.chunk.css",
-  "/Quiz-Time/static/css/main.0aaad12c.chunk.css.map",
+  // "/Quiz-Time/static/css/main.0aaad12c.chunk.css",
+  // "/Quiz-Time/static/css/main.0aaad12c.chunk.css.map",
 ];
 
 // Install a service worker
