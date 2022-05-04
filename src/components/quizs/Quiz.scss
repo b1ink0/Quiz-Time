@@ -9,6 +9,7 @@
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  padding: 20px !important;
 }
 .submitCon {
   opacity: 0;
@@ -16,6 +17,7 @@
   animation: fadeInHalfOpacity 0.5s 0.2s ease forwards;
 }
 .qCon {
+  width: 100% !important;
   opacity: 0;
   animation: fadeInOpacity 0.5s 0.2s ease forwards;
   h1 {
@@ -59,6 +61,7 @@
           fill: var(--blue);
         }
       }
+      
     }
   }
 }
@@ -166,5 +169,27 @@
     font-size: 18px;
     overflow: hidden;
     transition: all 0.2s;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .qConSub  {
+    padding: 0 !important;
+  }
+  .radioBtnCon {
+    margin: 0 0px 20px 0px;
+  }
+  .rhap_container {
+    font-size: 10px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .rhap_progress-indicator, .rhap_volume-indicator {
+    transform: scale(0.5);
+  }
+  .rhap_main {
+    transform: scale(0.8);
   }
 }
