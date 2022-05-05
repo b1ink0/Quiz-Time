@@ -382,7 +382,10 @@ export default function QuizCreate() {
                     onChange={(e) => handleQuestionInput(e)}
                   />
                 </div>
-                <QuizCreateImageUpload setImageUrl={setImageUrl} />
+                <QuizCreateImageUpload
+                  setImageUrl={setImageUrl}
+                  imageUrl={imageUrl}
+                />
                 {imageUrl !== "" && (
                   <div className="questionImageContainer flex justify-center items-center flex-col w-full mt-4">
                     <div className="questionImageContainerSub flex justify-center items-center flex-col w-5/6">
@@ -394,11 +397,14 @@ export default function QuizCreate() {
                     </div>
                   </div>
                 )}
-                <QuizCreateAudioUpload setAudioUrl={setAudioUrl} />
+                <QuizCreateAudioUpload
+                  setAudioUrl={setAudioUrl}
+                  audioUrl={audioUrl}
+                />
                 {audioUrl !== "" && (
                   <div className="questionImageContainer flex justify-center items-center flex-col w-full mt-4">
                     <div className="questionImageContainerSub flex justify-center items-center flex-col w-5/6">
-                      <AudioPlayer autoPlay="false" src={audioUrl} />
+                      <AudioPlayer autoPlay={false} src={audioUrl} />
                     </div>
                   </div>
                 )}

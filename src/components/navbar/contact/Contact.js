@@ -48,7 +48,7 @@ export default function Contact({ setContact }) {
       <div className="points flex justify-center items-center w-full mt-4">
         <a
           rel="noreferrer"
-          href="https://www.instagram.com/stupid__gaming/"
+          href="https://www.instagram.com/a.s.dhade/"
           target="_blank"
           className="text-center w-5/6 text-lg"
         >
