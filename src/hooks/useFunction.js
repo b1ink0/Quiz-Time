@@ -210,7 +210,6 @@ export default function useFunction() {
                 setFlag_2(true);
                 handleLoading();
               } else {
-                console.log(doc_1.data().quizContainer.quiz[0].startTime);
                 let st = doc_1.data().quizContainer.quiz[0].startTime;
                 let et = doc_1.data().quizContainer.quiz[0].endTime;
 

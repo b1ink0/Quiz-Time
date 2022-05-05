@@ -163,12 +163,16 @@ export default function Question({ quiz }) {
           </div>
           <div className="w-5/6 qCon mt-2 flex flex-col justify-center items-center">
             <h1 className="break-all p-2">{quiz[currentQ].q}</h1>
-            <div className="qConSub w-full mt-2 mb-4 p-5 flex flex-col justify-center items-center">
-              {quiz[currentQ].imageUrl && <img src={quiz[currentQ].imageUrl} />}
-              {quiz[currentQ].audioUrl && (
-                <AudioPlayer src={quiz[currentQ].audioUrl} />
-              )}
-            </div>
+            {(quiz[currentQ].imageUrl || quiz[currentQ].audioUrl) && (
+              <div className="qConSub w-full mt-2 mb-4 p-5 flex flex-col justify-center items-center">
+                {quiz[currentQ].imageUrl && (
+                  <img src={quiz[currentQ].imageUrl} alt="Option" />
+                )}
+                {quiz[currentQ].audioUrl && (
+                  <AudioPlayer src={quiz[currentQ].audioUrl} />
+                )}
+              </div>
+            )}
           </div>
           <div className="options w-full">
             <div className="optionsRow1 flex justify-evenly items-center flex-col lg:flex-row">
