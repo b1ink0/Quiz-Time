@@ -97,13 +97,14 @@ export default function useFunction() {
           .then((doc) => {
             if (doc.exists) {
               if (doc.data()) {
-                console.log(doc.data());
                 let array = [];
                 let arrayLength =
                   doc.data().quizResultContainer.submissions.length;
                 doc.data().quizResultContainer.submissions.forEach((s) => {
                   let temp = {
                     username: s.username,
+                    firstName: s.firstName,
+                    lastName: s.lastName,
                     userScore: s.userScore,
                     totalScore: s.totalScore,
                     timeTaken: handleTimeDifference(
@@ -113,6 +114,16 @@ export default function useFunction() {
                   };
                   array.push(temp);
                 });
+
+                array = array.sort(function (vote1, vote2) {
+                  if (vote1.userScore > vote2.userScore) return -1;
+                  if (vote1.userScore < vote2.userScore) return 1;
+                  let t1 = handleTimeToMs(vote1.timeTaken);
+                  let t2 = handleTimeToMs(vote2.timeTaken);
+                  if (t1 > t2) return 1;
+                  if (t1 < t2) return -1;
+                });
+
                 if (arrayLength === array.length) {
                   if (array[0] !== undefined) {
                     for (let i = 0; i < arrayLength; i++) {
@@ -125,24 +136,38 @@ export default function useFunction() {
                       }
                     }
                     let rank = 1;
-                    let tempScore = array[0].userScore;
+                    let tempScore = handleTimeToMs(array[0].timeTaken);
                     for (let i = 0; i < arrayLength; i++) {
-                      if (array[i].userScore === tempScore) {
+                      if (handleTimeToMs(array[i].timeTaken) === tempScore) {
                         array[i] = {
                           ...array[i],
                           rank: rank,
                         };
                       } else {
                         rank++;
-                        tempScore = array[i].userScore;
+                        tempScore = handleTimeToMs(array[i].timeTaken);
                         array[i] = {
                           ...array[i],
                           rank: rank,
                         };
                       }
                     }
-
-                    // handleTimeDifference()
+                    for (let i = 0; i < arrayLength; i++) {
+                      let a = array[i].timeTaken.split(":");
+                      let h = a[0];
+                      let m = a[1];
+                      let s = a[2];
+                      if (h < 10) {
+                        h = "0" + h;
+                      }
+                      if (m < 10) {
+                        m = "0" + m;
+                      }
+                      if (s < 10) {
+                        s = "0" + s;
+                      }
+                      array[i].timeTaken = h + ":" + m + ":" + s;
+                    }
                     setLeaderboard(array);
                     setQuizGivenName(doc.data().quizResultContainer.quizName);
                   }
@@ -342,6 +367,15 @@ export default function useFunction() {
     return hrs + ":" + mins + ":" + secs;
   };
   //
+  const handleTimeToMs = (s) => {
+    let ms =
+      Number(s.split(":")[0]) * 3600000 +
+      Number(s.split(":")[1]) * 60000 +
+      Number(s.split(":")[2]) * 1000;
+    return ms;
+  };
+  //
+  //
   const handleTimeDifference = (st, et) => {
     var time_start = new Date();
     var time_end = new Date();
@@ -366,6 +400,8 @@ export default function useFunction() {
     handleLoading();
     setQuizComplete(true);
     let username = user.fullName.username;
+    let firstName = user.fullName.firstName;
+    let lastName = user.fullName.lastName;
     let com;
     if (currentUser) {
       com = database.results
@@ -379,6 +415,8 @@ export default function useFunction() {
             userScore: count,
             totalScore: tempAnswer.length,
             username: username,
+            firstName: firstName,
+            lastName: lastName,
             submissionTime: handleTime(),
             startTime: data.quizAnswerContainer.quizAnswer[0].startTime,
             endTime: data.quizAnswerContainer.quizAnswer[0].endTime,

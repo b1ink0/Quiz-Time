@@ -27,37 +27,45 @@ export default function Leaderboard({ setDisplayDelete }) {
           <img src={edit} alt="edit" className="pointer-events-none" />
         </button>
         <table className="w-11/12 lg:w-5/6 mt-3 mb-3 text-xs lg:text-xl">
-          {/* <tbody className="flex justify-between items-center w-full text-center flex-col"> */}
-          <tr>
-            <th>Rank</th>
-            <th>Username</th>
-            <th>Score</th>
-            <th>Time Taken</th>
-          </tr>
-          {leaderboard &&
-            leaderboard.map((l) => (
-              <tr key={Math.random()}>
-                <td className="relative">
-                  <div className="w-full h-full flex justify-center items-center">
-                    {l.rank === 1 ? (
-                      <img alt="rank_1" src={rank_1} />
-                    ) : l.rank === 2 ? (
-                      <img alt="rank_2" src={rank_2} />
-                    ) : l.rank === 3 ? (
-                      <img alt="rank_2" src={rank_3} />
-                    ) : (
-                      l.rank
-                    )}
-                  </div>
-                </td>
-                <td>{l.username}</td>
-                <td>
-                  {l.userScore}/{l.totalScore}
-                </td>
-                <td>{l.timeTaken}</td>
-              </tr>
-            ))}
-          {/* </tbody> */}
+          <tbody className="">
+            <tr>
+              <th>Rank</th>
+              <th>Username</th>
+              <th>Score</th>
+              <th>Time Taken</th>
+            </tr>
+            {leaderboard &&
+              leaderboard.map((l) => (
+                <tr key={Math.random()}>
+                  <td className="relative">
+                    <div className="w-full h-full flex justify-center items-center">
+                      {l.rank === 1 ? (
+                        <img alt="rank_1" src={rank_1} />
+                      ) : l.rank === 2 ? (
+                        <img alt="rank_2" src={rank_2} />
+                      ) : l.rank === 3 ? (
+                        <img alt="rank_2" src={rank_3} />
+                      ) : (
+                        l.rank
+                      )}
+                    </div>
+                  </td>
+                  <td
+                    title={
+                      l.firstName && l.lastName
+                        ? `${l.firstName} ${l.lastName}`
+                        : ""
+                    }
+                  >
+                    {l.username}
+                  </td>
+                  <td>
+                    {l.userScore}/{l.totalScore}
+                  </td>
+                  <td>{l.timeTaken}</td>
+                </tr>
+              ))}
+          </tbody>
         </table>
       </div>
     </div>
