@@ -43,7 +43,7 @@ export default function Leaderboard({ setDisplayDelete }) {
         <div className="leaderboard flex justify-center items-center flex-col w-full relative">
           <h1 className="w-10/12 text-center pb-2 mb-2">{quizGivenName}</h1>
           <h1>Leaderboard</h1>
-          <div className="flex justify-center items-center">
+          <div className="w-10/12  flex justify-center items-center">
             <button
               className="readMoreBtn"
               type="button"

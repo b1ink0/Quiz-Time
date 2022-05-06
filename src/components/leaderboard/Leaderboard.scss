@@ -107,3 +107,17 @@
     text-align: start !important;
   }
 }
+
+@media only screen and (max-width: 768px){ 
+  .readMoreBtn, .copyEmailBtn {
+    margin-top: 20px !important;
+    font-size: 13px;
+    transform: scale(0.8) !important;
+  }
+  .readMoreBtn {
+    margin-right: 1px;
+  }
+  .copyEmailBtn {
+    margin-left: 1px;
+  }
+}
