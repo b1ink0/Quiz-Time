@@ -239,9 +239,6 @@ export default function useFunction() {
                 ed.setMinutes(et.split(":")[1]);
                 ed.setSeconds(et.split(":")[2]);
 
-                console.log(sd < cd && ed > cd);
-                console.log(cd && ed > sd);
-                console.log(cd && ed > cd);
                 if (sd < cd && ed > cd) {
                   setQuiz(doc_1.data().quizContainer.quiz[0].quiz);
                   setFlag_1(false);
@@ -465,7 +462,6 @@ export default function useFunction() {
                       quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
                       quizCode: quizCode,
                     };
-                    console.log(t);
                     arr.push(t);
                     database.users.doc(currentUser.uid).update({
                       givenQuizzes: arr,
