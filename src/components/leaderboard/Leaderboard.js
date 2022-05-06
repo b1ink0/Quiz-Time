@@ -8,7 +8,7 @@ import edit from "../media/edit.svg";
 import useFunction from "../../hooks/useFunction";
 
 export default function Leaderboard({ setDisplayDelete }) {
-  const { leaderboard, quizGivenName } = useStateContext();
+  const { leaderboard, quizGivenName, isAdmin } = useStateContext();
   const { handleCopy } = useFunction();
   const [readMore, setReadMore] = useState(false);
   const [copyEmail, setCopyEmail] = useState(false);
@@ -48,16 +48,19 @@ export default function Leaderboard({ setDisplayDelete }) {
               className="readMoreBtn"
               type="button"
               onClick={handleReadMore}
+              style={{ marginRight: isAdmin ? "5px" : "0px" }}
             >
               {readMore ? "Less Details" : "More Details"}
             </button>
-            <button
-              className="copyEmailBtn"
-              type="button"
-              onClick={() => setCopyEmail(!copyEmail)}
-            >
-              Copy Emails
-            </button>
+            {isAdmin && (
+              <button
+                className="copyEmailBtn"
+                type="button"
+                onClick={() => setCopyEmail(!copyEmail)}
+              >
+                Copy Emails
+              </button>
+            )}
           </div>
           <button
             type="button"
@@ -66,7 +69,7 @@ export default function Leaderboard({ setDisplayDelete }) {
           >
             <img src={edit} alt="edit" className="pointer-events-none" />
           </button>
-          {copyEmail && (
+          {copyEmail && isAdmin && (
             <div className="copyEmail mt-3 mb-2 w-11/12 lg:w-5/6 flex justify-center items-center">
               <form
                 className="w-full flex flex-col justify-center items-center"
@@ -158,7 +161,11 @@ export default function Leaderboard({ setDisplayDelete }) {
                         >
                           <h3>Username : {l.username}</h3>
                           <h3>Full Name: {l.firstName + " " + l.lastName}</h3>
-                          <h4>Email : {l.email}</h4>
+                          <h3>Time Taken: {l.timeTaken}</h3>
+                          <h3>
+                            Score: {l.userScore}/{l.totalScore}
+                          </h3>
+                          {isAdmin && <h4>Email : {l.email}</h4>}
                         </td>
                       </tr>
                     ))}

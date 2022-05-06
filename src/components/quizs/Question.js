@@ -5,10 +5,12 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import "../dashboard/Dashboard.scss";
 import "./Quiz.scss";
+import Spinner from "../sub-components/Spinner";
 
 export default function Question({ quiz }) {
   const { tempAnswer, setTempAnswer, setLoading } = useStateContext();
   const { handleSubmission } = useFunction();
+  const [loadingFile, setLoadingFile] = useState(true);
   const [submitBtnOn, setSubmitBtnOn] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [quizLength, setQuizLength] = useState(0);
@@ -21,6 +23,7 @@ export default function Question({ quiz }) {
   const optionBRef = useRef(null);
   const optionCRef = useRef(null);
   const optionDRef = useRef(null);
+  const imageRef = useRef(null);
   let arr = tempAnswer;
   if (arr[0] === undefined) {
     quiz.forEach((a) => {
@@ -34,6 +37,16 @@ export default function Question({ quiz }) {
   useState(() => {
     setQuizLength(quiz.length - 1);
   }, []);
+  const handleImageLoad = () => {
+    setLoadingFile(false);
+    try {
+      if (imageRef) {
+        imageRef.current.style.opacity = 1;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const handleSelection = (e) => {
     arr.forEach((a) => {
       if (parseInt(e.target.name) === a.qNo) {
@@ -135,6 +148,14 @@ export default function Question({ quiz }) {
   };
   const handleNextBtn = (e) => {
     if (arr[e.target.value - 1].answer !== "") {
+      setLoadingFile(true);
+      try {
+        if (imageRef) {
+          imageRef.current.style.opacity = 0;
+        }
+      } catch (e) {
+        // console.log(e);
+      }
       setOptionHeight("auto");
       if (currentQ < quizLength) {
         setCurrentQ(currentQ + 1);
@@ -170,12 +191,23 @@ export default function Question({ quiz }) {
           <div className="w-5/6 qCon mt-2 flex flex-col justify-center items-center">
             <h1 className="break-all p-2">{quiz[currentQ].q}</h1>
             {(quiz[currentQ].imageUrl || quiz[currentQ].audioUrl) && (
-              <div className="qConSub w-full mt-2 mb-4 p-5 flex flex-col justify-center items-center">
+              <div className="relative qConSub w-full mt-2 mb-4 p-5 flex flex-col justify-center items-center">
+                {loadingFile && !quiz[currentQ].audioUrl && <Spinner />}
                 {quiz[currentQ].imageUrl && (
-                  <img src={quiz[currentQ].imageUrl} alt="Option" />
+                  <img
+                    ref={imageRef}
+                    src={quiz[currentQ].imageUrl}
+                    alt="Option"
+                    onLoad={handleImageLoad}
+                  />
                 )}
                 {quiz[currentQ].audioUrl && (
-                  <AudioPlayer autoPlay={false} src={quiz[currentQ].audioUrl} />
+                  <>
+                    <AudioPlayer
+                      autoPlay={false}
+                      src={quiz[currentQ].audioUrl}
+                    />
+                  </>
                 )}
               </div>
             )}

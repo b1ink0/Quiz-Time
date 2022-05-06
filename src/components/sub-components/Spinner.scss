@@ -1,0 +1,15 @@
+.Spinner {
+    svg {
+        animation: spinner 1.5s normal 0s infinite ;
+        width: 100px;
+        height: 100px;
+        path {
+            fill: var(--blue);
+        }
+        g:nth-child(2) {
+              path {
+                filter: blur(5px);
+            }
+          }
+    }
+}

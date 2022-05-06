@@ -7,6 +7,7 @@ export const useStateContext = () => {
 };
 
 export const StateProvider = ({ children }) => {
+  const [isAdmin, setIsAdmin] = useState(false);
   const [logInCheck, setLogInCheck] = useState(false);
   const [alert, setAlert] = useState(false);
   const [profileExist, setProfileExist] = useState(true);
@@ -56,6 +57,8 @@ export const StateProvider = ({ children }) => {
   const [profile, setProfile] = useState(false);
   const [logout, setLogout] = useState(false);
   const value = {
+    isAdmin,
+    setIsAdmin,
     logInCheck,
     alert,
     setAlert,

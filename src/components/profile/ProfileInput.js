@@ -31,6 +31,7 @@ export default function ProfileInput() {
               },
               uid: currentUser.uid,
               email: email,
+              admin: false,
               givenQuizzes: [],
             });
 

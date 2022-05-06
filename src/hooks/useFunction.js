@@ -4,6 +4,7 @@ import { useStateContext } from "../context/StateContext";
 
 export default function useFunction() {
   const {
+    setIsAdmin,
     setAlert,
     setUpdate,
     update,
@@ -44,6 +45,7 @@ export default function useFunction() {
             if (doc.data()) {
               if (doc.data().uid === currentUser.uid) {
                 setUsername(doc.data().fullName.username);
+                setIsAdmin(doc.data().admin);
               }
             }
             setProfileExist(true);
