@@ -189,7 +189,7 @@ export default function Question({ quiz }) {
             </h1>
           </div>
           <div className="w-5/6 qCon mt-2 flex flex-col justify-center items-center">
-            <h1 className="break-all p-2">{quiz[currentQ].q}</h1>
+            <h1 className="p-2 text-justify">{quiz[currentQ].q}</h1>
             {(quiz[currentQ].imageUrl || quiz[currentQ].audioUrl) && (
               <div className="relative qConSub w-full mt-2 mb-4 p-5 flex flex-col justify-center items-center">
                 {loadingFile && !quiz[currentQ].audioUrl && <Spinner />}
