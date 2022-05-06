@@ -1,0 +1,11 @@
+@import "../themes/mixin.scss";
+.copyUrl {
+    @include submitButton;
+    animation: none;
+    opacity: 1;
+    margin: 0;
+    height: 30px;
+    font-size: 15px;
+    width: 150px;
+    margin-bottom: 25px;
+}

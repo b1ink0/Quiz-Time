@@ -56,6 +56,16 @@ export default function useFunction() {
     return com;
   };
   //
+  const handleCopy = (e) => {
+    var input = document.createElement("input");
+    input.setAttribute("value", e);
+    document.body.appendChild(input);
+    input.select();
+    var result = document.execCommand("copy");
+    document.body.removeChild(input);
+    return result;
+  };
+  //
   const handleBackSmooth = () => {
     document.querySelector(".preBack").classList.toggle("fadeOut");
     document.querySelector(".preBackCon").classList.toggle("fadeOut2");
@@ -105,6 +115,7 @@ export default function useFunction() {
                     username: s.username,
                     firstName: s.firstName,
                     lastName: s.lastName,
+                    email: s.email,
                     userScore: s.userScore,
                     totalScore: s.totalScore,
                     timeTaken: handleTimeDifference(
@@ -401,6 +412,7 @@ export default function useFunction() {
     let username = user.fullName.username;
     let firstName = user.fullName.firstName;
     let lastName = user.fullName.lastName;
+    let email = user.email;
     let com;
     if (currentUser) {
       com = database.results
@@ -416,6 +428,7 @@ export default function useFunction() {
             username: username,
             firstName: firstName,
             lastName: lastName,
+            email: email,
             submissionTime: handleTime(),
             startTime: data.quizAnswerContainer.quizAnswer[0].startTime,
             endTime: data.quizAnswerContainer.quizAnswer[0].endTime,
@@ -587,6 +600,7 @@ export default function useFunction() {
   };
   return {
     handleBackSmooth,
+    handleCopy,
     handleBack,
     handleDirectBack,
     handleProfileExist,

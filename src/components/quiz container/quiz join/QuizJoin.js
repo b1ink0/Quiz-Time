@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useStateContext } from "../../../context/StateContext";
 import useFunction from "../../../hooks/useFunction";
 import GivenQuizzes from "../given quizzes/GivenQuizzes";
+import queryString from "query-string/";
 import "./QuizJoin.scss";
 
 export default function QuizJoin() {
+  const joinBtnRef = useRef(null);
   const { quizCode, setQuizCode, givenQuizzes } = useStateContext();
   const { handleQuizSearch, handleGivenQuizzes } = useFunction();
   const [flag_1, setFlag_1] = useState(false);
@@ -18,6 +20,11 @@ export default function QuizJoin() {
 
   useEffect(() => {
     handleGivenQuizzes();
+    const parsed = queryString.parse(window.location.search);
+    if (parsed.quiz_code) {
+      console.log(parsed.quiz_code);
+      setQuizCode(parsed.quiz_code);
+    }
   }, []);
 
   return (
@@ -69,7 +76,9 @@ export default function QuizJoin() {
               <h1>Quiz Has Ended!</h1>
             </div>
           )}
-          <button type="submit">Join</button>
+          <button ref={joinBtnRef} type="submit">
+            Join
+          </button>
         </form>
         {givenQuizzes && givenQuizzes[0] !== undefined && (
           <>

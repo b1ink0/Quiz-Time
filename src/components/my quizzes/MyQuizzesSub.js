@@ -3,10 +3,11 @@ import "./MyQuizzesSub.scss";
 import copySvg from ".././media/copy.svg";
 import edit from ".././media/edit.svg";
 import { useStateContext } from "../../context/StateContext";
+import useFunction from "../../hooks/useFunction";
 
 export default function MyQuizzesSub({ q }) {
   const { setMyQuizEdit, setMyQuizEditCon } = useStateContext();
-
+  const { handleCopy } = useFunction();
   const handleEdit = (quizCode, quizName) => {
     setMyQuizEdit(true);
     setMyQuizEditCon({
@@ -45,6 +46,17 @@ export default function MyQuizzesSub({ q }) {
             alt="copy"
           />
         </p>
+        <button
+          className="copyUrl"
+          type="button"
+          onClick={() =>
+            handleCopy(
+              `https://b1ink0.github.io/Quiz-Time/?quiz_code=${q.quizCode}`
+            )
+          }
+        >
+          Copy Url
+        </button>
       </div>
     </>
   );

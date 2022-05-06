@@ -10,6 +10,7 @@ export default function ProfileInput() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,11 +30,13 @@ export default function ProfileInput() {
                 username: username,
               },
               uid: currentUser.uid,
+              email: email,
               givenQuizzes: [],
             });
 
             setFirstName("");
             setLastName("");
+            setEmail("");
             setProfileExist(true);
           }
         });
@@ -77,6 +80,16 @@ export default function ProfileInput() {
             minLength="4"
             maxLength="10"
             onChange={(e) => setUsername(e.target.value)}
+            className="w-10/12"
+          />
+        </div>
+        <div className="inputCon flex justify-start items-center flex-col w-full mt-5">
+          <label>Email</label>
+          <input
+            type="email"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
             className="w-10/12"
           />
         </div>
