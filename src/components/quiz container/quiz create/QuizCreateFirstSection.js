@@ -31,7 +31,7 @@ export default function QuizCreateFirstSection({
           id="quizNameInput"
           type="text"
           minLength="1"
-          maxLength="20"
+          maxLength="30"
           ref={quizNameInputRef}
           value={createQuizName}
           onChange={(e) => setCreateQuizName(e.target.value)}
