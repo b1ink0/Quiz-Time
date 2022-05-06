@@ -17,6 +17,10 @@ export default function Question({ quiz }) {
   const optionB = useRef(null);
   const optionC = useRef(null);
   const optionD = useRef(null);
+  const optionARef = useRef(null);
+  const optionBRef = useRef(null);
+  const optionCRef = useRef(null);
+  const optionDRef = useRef(null);
   let arr = tempAnswer;
   if (arr[0] === undefined) {
     quiz.forEach((a) => {
@@ -130,11 +134,13 @@ export default function Question({ quiz }) {
     handleSelected(parseInt(e.target.value), true);
   };
   const handleNextBtn = (e) => {
-    setOptionHeight("auto");
-    if (currentQ < quizLength) {
-      setCurrentQ(currentQ + 1);
+    if (arr[e.target.value - 1].answer !== "") {
+      setOptionHeight("auto");
+      if (currentQ < quizLength) {
+        setCurrentQ(currentQ + 1);
+      }
+      handleSelected(parseInt(e.target.value), false);
     }
-    handleSelected(parseInt(e.target.value), false);
   };
 
   useEffect(() => {
@@ -169,7 +175,7 @@ export default function Question({ quiz }) {
                   <img src={quiz[currentQ].imageUrl} alt="Option" />
                 )}
                 {quiz[currentQ].audioUrl && (
-                  <AudioPlayer src={quiz[currentQ].audioUrl} />
+                  <AudioPlayer autoPlay={false} src={quiz[currentQ].audioUrl} />
                 )}
               </div>
             )}
@@ -191,6 +197,7 @@ export default function Question({ quiz }) {
                   {quiz[currentQ].a}
                 </label>
                 <input
+                  ref={optionARef}
                   className="absolute cursor-pointer"
                   type="radio"
                   value="a"
@@ -214,6 +221,7 @@ export default function Question({ quiz }) {
                   {quiz[currentQ].b}
                 </label>
                 <input
+                  ref={optionBRef}
                   className="absolute cursor-pointer"
                   type="radio"
                   value="b"
@@ -239,6 +247,7 @@ export default function Question({ quiz }) {
                   {quiz[currentQ].c}
                 </label>
                 <input
+                  ref={optionCRef}
                   className="absolute cursor-pointer"
                   type="radio"
                   value="c"
@@ -262,6 +271,7 @@ export default function Question({ quiz }) {
                   {quiz[currentQ].d}
                 </label>
                 <input
+                  ref={optionDRef}
                   className="absolute cursor-pointer"
                   type="radio"
                   value="d"
@@ -273,7 +283,7 @@ export default function Question({ quiz }) {
             </div>
           </div>
           <div className="changeButton w-full flex justify-evenly items-center">
-            {currentQ === 0 ? (
+            {/* {currentQ === 0 ? (
               ""
             ) : (
               <button
@@ -284,7 +294,7 @@ export default function Question({ quiz }) {
               >
                 Prev
               </button>
-            )}
+            )} */}
             {currentQ >= quizLength ? (
               ""
             ) : (
