@@ -170,6 +170,9 @@
     font-size: 18px;
     overflow: hidden;
     transition: all 0.2s;
+    .invalid {
+      text-shadow: 0 0 3px var(--red), 2px 2px 2px rgb(206 89 55 / 0%);
+    }
   }
 }
 

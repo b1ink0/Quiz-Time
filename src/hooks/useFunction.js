@@ -30,6 +30,7 @@ export default function useFunction() {
     setDisplayGivenQuiz,
     setQuizGivenName,
     setUsername,
+    setValid,
   } = useStateContext();
   const { currentUser } = useAuth();
   //
@@ -399,6 +400,23 @@ export default function useFunction() {
   };
   //
   const handleScore = (data, user) => {
+    let st = data.quizAnswerContainer.quizAnswer[0].startTime;
+    let et = data.quizAnswerContainer.quizAnswer[0].endTime;
+    st = st + ":00";
+    et = et + ":00";
+
+    let cd = new Date();
+
+    let sd = new Date(cd.getTime());
+    sd.setHours(st.split(":")[0]);
+    sd.setMinutes(st.split(":")[1]);
+    sd.setSeconds(st.split(":")[2]);
+
+    let ed = new Date(cd.getTime());
+    ed.setHours(et.split(":")[0]);
+    ed.setMinutes(et.split(":")[1]);
+    ed.setSeconds(et.split(":")[2]);
+
     let count = 0;
     data.quizAnswerContainer.quizAnswer[0].quizAnswer.forEach((q) => {
       if (q.answer === tempAnswer[q.qNo - 1].answer) {
@@ -413,107 +431,117 @@ export default function useFunction() {
     let lastName = user.fullName.lastName;
     let email = user.email;
     let com;
-    if (currentUser) {
-      com = database.results
-        .doc(quizCode)
-        .get()
-        .then((doc) => {
-          let arr = doc.data().quizResultContainer.submissions;
-          arr.push({
-            uid: currentUser.uid,
-            quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
-            userScore: count,
-            totalScore: tempAnswer.length,
-            username: username,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            submissionTime: handleTime(),
-            startTime: data.quizAnswerContainer.quizAnswer[0].startTime,
-            endTime: data.quizAnswerContainer.quizAnswer[0].endTime,
+    if (sd < cd && ed > cd) {
+      console.log("valid");
+      setValid(true);
+      if (currentUser) {
+        com = database.results
+          .doc(quizCode)
+          .get()
+          .then((doc) => {
+            let arr = doc.data().quizResultContainer.submissions;
+            arr.push({
+              uid: currentUser.uid,
+              quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
+              userScore: count,
+              totalScore: tempAnswer.length,
+              username: username,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              submissionTime: handleTime(),
+              startTime: data.quizAnswerContainer.quizAnswer[0].startTime,
+              endTime: data.quizAnswerContainer.quizAnswer[0].endTime,
+            });
+            if (doc.data().quizResultContainer.submissions[0] !== undefined) {
+              let condition = false;
+              doc.data().quizResultContainer.submissions.forEach((r) => {
+                if (r.uid === currentUser.uid) {
+                  condition = true;
+                }
+              });
+              if (condition === false) {
+                database.results
+                  .doc(quizCode)
+                  .update({
+                    quizResultContainer: {
+                      quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
+                      submissions: arr,
+                    },
+                  })
+                  .then(() => {
+                    let temp = database.users
+                      .doc(currentUser.uid)
+                      .get()
+                      .then((doc) => {
+                        return doc.data().givenQuizzes;
+                      });
+                    temp.then((data_1) => {
+                      let arr = [];
+                      if (data !== undefined) {
+                        arr = data_1;
+                      }
+                      let t = {
+                        quizName:
+                          data.quizAnswerContainer.quizAnswer[0].quizName,
+                        quizCode: quizCode,
+                      };
+                      arr.push(t);
+                      database.users.doc(currentUser.uid).update({
+                        givenQuizzes: arr,
+                      });
+                    });
+                  });
+              }
+            } else {
+              let condition = false;
+              doc.data().quizResultContainer.submissions.forEach((r) => {
+                if (r.uid === currentUser.uid) {
+                  condition = true;
+                }
+              });
+              if (condition === false) {
+                database.results
+                  .doc(quizCode)
+                  .update({
+                    quizResultContainer: {
+                      quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
+                      submissions: arr,
+                    },
+                  })
+                  .then(() => {
+                    let temp = database.users
+                      .doc(currentUser.uid)
+                      .get()
+                      .then((doc) => {
+                        return doc.data().givenQuizzes;
+                      });
+                    temp.then((data_1) => {
+                      let arr = [];
+                      if (data_1 !== undefined) {
+                        arr = data_1;
+                      }
+                      let t = {
+                        quizName:
+                          data.quizAnswerContainer.quizAnswer[0].quizName,
+                        quizCode: quizCode,
+                      };
+                      arr.push(t);
+                      database.users.doc(currentUser.uid).update({
+                        givenQuizzes: arr,
+                      });
+                    });
+                  });
+              }
+            }
+            count = 0;
           });
-          if (doc.data().quizResultContainer.submissions[0] !== undefined) {
-            let condition = false;
-            doc.data().quizResultContainer.submissions.forEach((r) => {
-              if (r.uid === currentUser.uid) {
-                condition = true;
-              }
-            });
-            if (condition === false) {
-              database.results
-                .doc(quizCode)
-                .update({
-                  quizResultContainer: {
-                    quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
-                    submissions: arr,
-                  },
-                })
-                .then(() => {
-                  let temp = database.users
-                    .doc(currentUser.uid)
-                    .get()
-                    .then((doc) => {
-                      return doc.data().givenQuizzes;
-                    });
-                  temp.then((data_1) => {
-                    let arr = [];
-                    if (data !== undefined) {
-                      arr = data_1;
-                    }
-                    let t = {
-                      quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
-                      quizCode: quizCode,
-                    };
-                    arr.push(t);
-                    database.users.doc(currentUser.uid).update({
-                      givenQuizzes: arr,
-                    });
-                  });
-                });
-            }
-          } else {
-            let condition = false;
-            doc.data().quizResultContainer.submissions.forEach((r) => {
-              if (r.uid === currentUser.uid) {
-                condition = true;
-              }
-            });
-            if (condition === false) {
-              database.results
-                .doc(quizCode)
-                .update({
-                  quizResultContainer: {
-                    quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
-                    submissions: arr,
-                  },
-                })
-                .then(() => {
-                  let temp = database.users
-                    .doc(currentUser.uid)
-                    .get()
-                    .then((doc) => {
-                      return doc.data().givenQuizzes;
-                    });
-                  temp.then((data_1) => {
-                    let arr = [];
-                    if (data_1 !== undefined) {
-                      arr = data_1;
-                    }
-                    let t = {
-                      quizName: data.quizAnswerContainer.quizAnswer[0].quizName,
-                      quizCode: quizCode,
-                    };
-                    arr.push(t);
-                    database.users.doc(currentUser.uid).update({
-                      givenQuizzes: arr,
-                    });
-                  });
-                });
-            }
-          }
-          count = 0;
-        });
+      }
+    } else {
+      console.log("invalid");
+      setValid(false);
     }
+
     return com;
   };
   //

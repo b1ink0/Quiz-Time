@@ -56,6 +56,7 @@ export const StateProvider = ({ children }) => {
   const [contact, setContact] = useState(false);
   const [profile, setProfile] = useState(false);
   const [logout, setLogout] = useState(false);
+  const [valid, setValid] = useState(true);
   const value = {
     isAdmin,
     setIsAdmin,
@@ -144,6 +145,8 @@ export const StateProvider = ({ children }) => {
     setLogout,
     profile,
     setProfile,
+    valid,
+    setValid,
   };
 
   return (
